@@ -16873,3 +16873,39 @@ Double Battle: No
 Kyogre
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+=== TRAINER_DEBUG_COOP_OPP_GEN3 ===
+Name: GEN3
+Class: Pkmn Trainer 1
+Pic: Hiker
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Basic Trainer
+
+Treecko
+Level: 30
+
+Torchic
+Level: 30
+
+Mudkip
+Level: 30
+
+=== TRAINER_DEBUG_COOP_OPP_GEN4 ===
+Name: GEN4
+Class: Pkmn Trainer 1
+Pic: Hiker
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Basic Trainer
+
+Turtwig
+Level: 30
+
+Chimchar
+Level: 30
+
+Piplup
+Level: 30
