@@ -7430,19 +7430,20 @@ static bool8 TrySwitchInPokemon(void)
     u8 slot = GetCursorSelectionMonId();
     u8 newSlot;
 
-    // In a multi battle, displayed slots 1, 4, and 5 are the partner's Pokémon (party ids 3, 4, 5).
+    // In a multi battle, party ids >= MULTI_PARTY_SIZE (3, 4, 5) are the partner's Pokémon.
     // Vanilla rejects switching across the side boundary because only the player at slot 0 ever
     // opens this menu — the partner-AI handles slot 2 internally. With PARTNER_PLAYER_CONTROLLED
     // the human also opens this menu from slot 2, so the side restriction inverts based on who
-    // opened the menu: slot 0 keeps the original "no partner mons", slot 2 gets the mirror "no
-    // player mons".
+    // opened the menu. Note: BufferBattlePartyOrder uses different display orderings for flankId
+    // 0 vs 1, so the displayed slot position is *not* a reliable indicator of which side a mon
+    // belongs to. The underlying party id always is.
     if (IsMultiBattle() == TRUE)
     {
-        bool8 isPartnerSlot = (slot == 1 || slot == 4 || slot == 5);
+        bool8 isPartnerMon = (GetPartyIdFromBattleSlot(slot) >= MULTI_PARTY_SIZE);
         bool8 menuOpenedByPartnerBattler =
             (gPartnerTrainerId == TRAINER_PARTNER(PARTNER_PLAYER_CONTROLLED))
             && (gBattlerInMenuId == GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT));
-        bool8 wrongSide = menuOpenedByPartnerBattler ? !isPartnerSlot : isPartnerSlot;
+        bool8 wrongSide = menuOpenedByPartnerBattler ? !isPartnerMon : isPartnerMon;
 
         if (wrongSide)
         {
