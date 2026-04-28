@@ -676,13 +676,13 @@ static bool32 FindMonThatAbsorbsOpponentsMove(enum BattlerId battler)
     {
         if (!IsValidForBattle(&party[monIndex]))
             continue;
-        if (monIndex == gBattlerPartyIndexes[battlerIn1])
+        if (GetBattlerParty(battlerIn1) == GetBattlerParty(battler) && monIndex == gBattlerPartyIndexes[battlerIn1])
             continue;
-        if (monIndex == gBattlerPartyIndexes[battlerIn2])
+        if (GetBattlerParty(battlerIn2) == GetBattlerParty(battler) && monIndex == gBattlerPartyIndexes[battlerIn2])
             continue;
-        if (monIndex == gBattleStruct->monToSwitchIntoId[battlerIn1])
+        if (GetBattlerParty(battlerIn1) == GetBattlerParty(battler) && monIndex == gBattleStruct->monToSwitchIntoId[battlerIn1])
             continue;
-        if (monIndex == gBattleStruct->monToSwitchIntoId[battlerIn2])
+        if (GetBattlerParty(battlerIn2) == GetBattlerParty(battler) && monIndex == gBattleStruct->monToSwitchIntoId[battlerIn2])
             continue;
         if (IsAceMon(battler, monIndex))
             continue;
@@ -1070,7 +1070,7 @@ static bool32 FindMonWithFlagsAndSuperEffective(enum BattlerId battler, u16 flag
 
         if (!IsValidForBattle(&party[monIndex]))
             continue;
-        if (IsPartyMonOnFieldOrChosenToSwitch(monIndex, battlerIn1, battlerIn2))
+        if (IsPartyMonOnFieldOrChosenToSwitch(monIndex, battler, battlerIn1, battlerIn2))
             continue;
         if (IsAceMon(battler, monIndex))
             continue;
@@ -1123,7 +1123,7 @@ static bool32 CanMonSurviveHazardSwitchin(enum BattlerId battler)
         {
             if (!IsValidForBattle(&party[monIndex]))
                 continue;
-            if (IsPartyMonOnFieldOrChosenToSwitch(monIndex, battlerIn1, battlerIn2))
+            if (IsPartyMonOnFieldOrChosenToSwitch(monIndex, battler, battlerIn1, battlerIn2))
                 continue;
             if (IsAceMon(battler, monIndex))
                 continue;
@@ -1314,7 +1314,7 @@ bool32 ShouldSwitch(enum BattlerId battler)
     {
         if (!IsValidForBattle(&party[monIndex]))
             continue;
-        if (IsPartyMonOnFieldOrChosenToSwitch(monIndex, battlerIn1, battlerIn2))
+        if (IsPartyMonOnFieldOrChosenToSwitch(monIndex, battler, battlerIn1, battlerIn2))
             continue;
         if (IsAceMon(battler, monIndex))
             continue;
@@ -1461,13 +1461,13 @@ void ModifySwitchAfterMoveScoring(enum BattlerId battler)
     {
         if (!IsValidForBattle(&party[monIndex]))
             continue;
-        if (monIndex == gBattlerPartyIndexes[battlerIn1])
+        if (GetBattlerParty(battlerIn1) == GetBattlerParty(battler) && monIndex == gBattlerPartyIndexes[battlerIn1])
             continue;
-        if (monIndex == gBattlerPartyIndexes[battlerIn2])
+        if (GetBattlerParty(battlerIn2) == GetBattlerParty(battler) && monIndex == gBattlerPartyIndexes[battlerIn2])
             continue;
-        if (monIndex == gBattleStruct->monToSwitchIntoId[battlerIn1])
+        if (GetBattlerParty(battlerIn1) == GetBattlerParty(battler) && monIndex == gBattleStruct->monToSwitchIntoId[battlerIn1])
             continue;
-        if (monIndex == gBattleStruct->monToSwitchIntoId[battlerIn2])
+        if (GetBattlerParty(battlerIn2) == GetBattlerParty(battler) && monIndex == gBattleStruct->monToSwitchIntoId[battlerIn2])
             continue;
         if (IsAceMon(battler, monIndex))
             continue;
@@ -2145,7 +2145,7 @@ static u32 GetBestMonIntegrated(struct Pokemon *party, int firstId, int lastId, 
     for (u32 monIndex = firstId; monIndex < lastId; monIndex++)
     {
         // Check mon validity
-        if (!IsValidForBattle(&party[monIndex]) || IsPartyMonOnFieldOrChosenToSwitch(monIndex, battlerIn1, battlerIn2))
+        if (!IsValidForBattle(&party[monIndex]) || IsPartyMonOnFieldOrChosenToSwitch(monIndex, battler, battlerIn1, battlerIn2))
         {
             continue;
         }
@@ -2402,7 +2402,7 @@ static u32 GetBestMonVanilla(struct Pokemon *party, int firstId, int lastId, enu
     for (u32 monIndex = firstId; monIndex < lastId; monIndex++)
     {
         // Check mon validity
-        if (!IsValidForBattle(&party[monIndex]) || IsPartyMonOnFieldOrChosenToSwitch(monIndex, battlerIn1, battlerIn2))
+        if (!IsValidForBattle(&party[monIndex]) || IsPartyMonOnFieldOrChosenToSwitch(monIndex, battler, battlerIn1, battlerIn2))
         {
             continue;
         }
@@ -2483,13 +2483,13 @@ static u32 GetBestMonVanilla(struct Pokemon *party, int firstId, int lastId, enu
     return PARTY_SIZE;
 }
 
-static u32 GetNextMonInParty(struct Pokemon *party, int firstId, int lastId, enum BattlerId battlerIn1, enum BattlerId battlerIn2)
+static u32 GetNextMonInParty(struct Pokemon *party, int firstId, int lastId, enum BattlerId battler, enum BattlerId battlerIn1, enum BattlerId battlerIn2)
 {
     // Iterate through mons
     for (u32 monIndex = firstId; monIndex < lastId; monIndex++)
     {
         // Check mon validity
-        if (!IsValidForBattle(&party[monIndex]) || IsPartyMonOnFieldOrChosenToSwitch(monIndex, battlerIn1, battlerIn2))
+        if (!IsValidForBattle(&party[monIndex]) || IsPartyMonOnFieldOrChosenToSwitch(monIndex, battler, battlerIn1, battlerIn2))
         {
             continue;
         }
@@ -2518,7 +2518,7 @@ u32 GetMostSuitableMonToSwitchInto(enum BattlerId battler, enum SwitchType switc
 
     if (gAiThinkingStruct->aiFlags[battler] & AI_FLAG_SEQUENCE_SWITCHING)
     {
-        bestMonId = GetNextMonInParty(party, firstId, lastId, battlerIn1, battlerIn2);
+        bestMonId = GetNextMonInParty(party, firstId, lastId, battler, battlerIn1, battlerIn2);
         return bestMonId;
     }
 
