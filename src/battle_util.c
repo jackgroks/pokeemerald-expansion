@@ -2049,6 +2049,18 @@ bool32 HasNoMonsToSwitch(enum BattlerId battler, u8 partyIdBattlerOn1, u8 partyI
     }
     else if ((gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS) && !isPlayerside)
     {
+        if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL)
+        {
+            // Under FULL each opponent has their own 6-mon array.
+            party = GetBattlerParty(battler);
+            for (i = 0; i < PARTY_SIZE; i++)
+            {
+                if (IsValidForBattle(&party[i]))
+                    break;
+            }
+            return (i == PARTY_SIZE);
+        }
+
         party = gEnemyParty;
 
         if (battler == 1)
