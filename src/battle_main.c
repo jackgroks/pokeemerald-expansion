@@ -612,7 +612,12 @@ static void CB2_InitBattleInternal(void)
         {
             CreateNPCTrainerParty(&gEnemyParty[0], TRAINER_BATTLE_PARAM.opponentA, TRUE);
             if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS && !BATTLE_TWO_VS_ONE_OPPONENT)
-                CreateNPCTrainerParty(&gEnemyParty[PARTY_SIZE / 2], TRAINER_BATTLE_PARAM.opponentB, FALSE);
+            {
+                struct Pokemon *bDest = (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL)
+                    ? &gPartnerEnemyParty[0]
+                    : &gEnemyParty[PARTY_SIZE / 2];
+                CreateNPCTrainerParty(bDest, TRAINER_BATTLE_PARAM.opponentB, FALSE);
+            }
             SetWildMonHeldItem();
             CalculateEnemyPartyCount();
         }
@@ -628,6 +633,12 @@ static void CB2_InitBattleInternal(void)
         // Apply party-wide start-of-battle form changes for both sides.
         TryFormChange(&gPlayerParty[i], FORM_CHANGE_BEGIN_BATTLE);
         TryFormChange(&gEnemyParty[i], FORM_CHANGE_BEGIN_BATTLE);
+    }
+
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL)
+    {
+        for (i = 0; i < PARTY_SIZE; i++)
+            TryFormChange(&gPartnerEnemyParty[i], FORM_CHANGE_BEGIN_BATTLE);
     }
 
     if (!(gBattleTypeFlags & BATTLE_TYPE_TRAINER))
@@ -1949,7 +1960,8 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
         if (firstTrainer == TRUE)
             ZeroEnemyPartyMons();
 
-        if (battleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+        if ((battleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+            && !(battleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL))
         {
             if (trainer->partySize > PARTY_SIZE / 2)
                 monsCount = PARTY_SIZE / 2;
