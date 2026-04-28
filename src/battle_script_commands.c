@@ -5213,7 +5213,7 @@ static bool32 IsValidSwitchIn(enum BattlerId battler, u32 index)
     enum BattleSide side = GetBattlerSide(battler);
     for (enum BattlerId i = 0; i < gBattlersCount; i++)
     {
-        if (GetBattlerSide(i) == side && gBattlerPartyIndexes[i] == index && IsBattlerAlive(i))
+        if (GetBattlerSide(i) == side && GetBattlerParty(i) == GetBattlerParty(battler) && gBattlerPartyIndexes[i] == index && IsBattlerAlive(i))
             return FALSE;
     }
 
