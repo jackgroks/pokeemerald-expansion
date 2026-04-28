@@ -3502,6 +3502,8 @@ u8 CalculatePlayerPartyCount(void)
 u8 CalculateEnemyPartyCount(void)
 {
     gEnemyPartyCount = CalculatePartyCount(gEnemyParty);
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL)
+        gEnemyPartyCount += CalculatePartyCount(gPartnerEnemyParty);
     return gEnemyPartyCount;
 }
 
