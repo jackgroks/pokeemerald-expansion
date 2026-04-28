@@ -515,6 +515,19 @@ static void CB2_InitBattleInternal(void)
 {
     s32 i;
 
+    // Defensive: BATTLE_TYPE_TWO_OPPONENTS_FULL is incompatible with these flags.
+    // Silently allowing the combination produces consumer-mismatch bugs.
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL)
+    {
+        AGB_ASSERT(!(gBattleTypeFlags & (BATTLE_TYPE_INGAME_PARTNER
+                                       | BATTLE_TYPE_MULTI
+                                       | BATTLE_TYPE_FRONTIER
+                                       | BATTLE_TYPE_LINK
+                                       | BATTLE_TYPE_RECORDED
+                                       | BATTLE_TYPE_TRAINER_HILL
+                                       | BATTLE_TYPE_BATTLE_TOWER)));
+    }
+
     SetHBlankCallback(NULL);
     SetVBlankCallback(NULL);
 
