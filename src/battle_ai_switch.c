@@ -94,10 +94,7 @@ static u32 GetWishHealAmountForBattler(enum BattlerId battler)
 
     if (B_WISH_HP_SOURCE >= GEN_5)
     {
-        if (IsOnPlayerSide(battler))
-            wishHeal = GetMonData(&gPlayerParty[gBattleStruct->wish[battler].partyId], MON_DATA_MAX_HP) / 2;
-        else
-            wishHeal = GetMonData(&gEnemyParty[gBattleStruct->wish[battler].partyId], MON_DATA_MAX_HP) / 2;
+        wishHeal = GetMonData(&GetBattlerParty(battler)[gBattleStruct->wish[battler].partyId], MON_DATA_MAX_HP) / 2;
     }
     else
     {
