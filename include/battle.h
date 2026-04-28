@@ -1133,20 +1133,24 @@ static inline enum BattlerId GetOpposingSideBattler(enum BattlerId battler)
     return GetBattlerAtPosition(BATTLE_OPPOSITE(GetBattlerSide(battler)));
 }
 
+static inline struct Pokemon *GetBattlerParty(enum BattlerId battler)
+{
+    if (IsOnPlayerSide(battler))
+        return gPlayerParty;
+    if ((gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL)
+        && battler == B_BATTLER_3)
+        return gPartnerEnemyParty;
+    return gEnemyParty;
+}
+
 static inline struct Pokemon* GetBattlerMon(enum BattlerId battler)
 {
-    u32 index = gBattlerPartyIndexes[battler];
-    return !IsOnPlayerSide(battler) ? &gEnemyParty[index] : &gPlayerParty[index];
+    return &GetBattlerParty(battler)[gBattlerPartyIndexes[battler]];
 }
 
 static inline struct Pokemon *GetSideParty(enum BattleSide side)
 {
     return side == B_SIDE_PLAYER ? gPlayerParty : gEnemyParty;
-}
-
-static inline struct Pokemon *GetBattlerParty(enum BattlerId battler)
-{
-    return GetSideParty(GetBattlerSide(battler));
 }
 
 static inline struct PartyState *GetBattlerPartyState(enum BattlerId battler)
