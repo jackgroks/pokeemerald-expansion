@@ -6448,13 +6448,13 @@ u32 GetActiveBattlerIds(enum BattlerId battler, enum BattlerId *battlerIn1, enum
     return opposingBattler;
 }
 
-bool32 IsPartyMonOnFieldOrChosenToSwitch(u32 partyIndex, enum BattlerId battlerIn1, enum BattlerId battlerIn2)
+bool32 IsPartyMonOnFieldOrChosenToSwitch(u32 partyIndex, enum BattlerId battler, enum BattlerId battlerIn1, enum BattlerId battlerIn2)
 {
-    if (partyIndex == gBattlerPartyIndexes[battlerIn1]
-            || partyIndex == gBattlerPartyIndexes[battlerIn2])
+    if ((GetBattlerParty(battlerIn1) == GetBattlerParty(battler) && partyIndex == gBattlerPartyIndexes[battlerIn1])
+            || (GetBattlerParty(battlerIn2) == GetBattlerParty(battler) && partyIndex == gBattlerPartyIndexes[battlerIn2]))
         return TRUE;
-    if (partyIndex == gBattleStruct->monToSwitchIntoId[battlerIn1]
-            || partyIndex == gBattleStruct->monToSwitchIntoId[battlerIn2])
+    if ((GetBattlerParty(battlerIn1) == GetBattlerParty(battler) && partyIndex == gBattleStruct->monToSwitchIntoId[battlerIn1])
+            || (GetBattlerParty(battlerIn2) == GetBattlerParty(battler) && partyIndex == gBattleStruct->monToSwitchIntoId[battlerIn2]))
         return TRUE;
     return FALSE;
 }
