@@ -590,9 +590,13 @@ static void OpponentHandleChoosePokemon(enum BattlerId battler)
             GetAIPartyIndexes(battler, &firstId, &lastId);
             for (chosenMonId = firstId; chosenMonId < lastId; chosenMonId++)
             {
+                bool32 collidesBattler1 = (GetBattlerParty(battler1) == GetBattlerParty(battler))
+                                          && chosenMonId == gBattlerPartyIndexes[battler1];
+                bool32 collidesBattler2 = (GetBattlerParty(battler2) == GetBattlerParty(battler))
+                                          && chosenMonId == gBattlerPartyIndexes[battler2];
                 if (IsValidForBattle(&GetBattlerParty(battler)[chosenMonId])
-                 && chosenMonId != gBattlerPartyIndexes[battler1]
-                 && chosenMonId != gBattlerPartyIndexes[battler2])
+                 && !collidesBattler1
+                 && !collidesBattler2)
                     break;
             }
         }
