@@ -4508,6 +4508,14 @@ static bool32 NoAliveMonsForOpponent(void)
             HP_count += GetMonData(&gEnemyParty[i], MON_DATA_HP);
         }
     }
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL)
+    {
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (GetMonData(&gPartnerEnemyParty[i], MON_DATA_SPECIES) && !GetMonData(&gPartnerEnemyParty[i], MON_DATA_IS_EGG))
+                HP_count += GetMonData(&gPartnerEnemyParty[i], MON_DATA_HP);
+        }
+    }
 
     return (HP_count == 0);
 }
