@@ -16927,3 +16927,45 @@ Level: 50
 
 Empoleon
 Level: 50
+
+=== TRAINER_DEBUG_FIRE_4MON ===
+Name: FIRE4
+Class: Pkmn Trainer 1
+Pic: Hiker
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Basic Trainer
+
+Charmander
+Level: 30
+
+Cyndaquil
+Level: 30
+
+Torchic
+Level: 30
+
+Chimchar
+Level: 30
+
+=== TRAINER_DEBUG_WATER_4MON ===
+Name: WATER4
+Class: Pkmn Trainer 1
+Pic: Hiker
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Basic Trainer
+
+Squirtle
+Level: 30
+
+Totodile
+Level: 30
+
+Mudkip
+Level: 30
+
+Piplup
+Level: 30
