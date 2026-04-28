@@ -3876,18 +3876,22 @@ bool32 AnyPartyMemberStatused(enum BattlerId battlerId, bool32 checkSoundproof)
     struct Pokemon *party;
     u32 battlerOnField1, battlerOnField2;
     bool32 hasStatusToCure = FALSE;
+    bool32 partnerSharesParty;
 
     party = GetBattlerParty(battlerId);
 
     if (HasPartner(battlerId))
     {
+        enum BattlerId partner = GetPartnerBattler(battlerId);
+        struct Pokemon *partnerParty = GetBattlerParty(partner);
         battlerOnField1 = gBattlerPartyIndexes[battlerId];
-        battlerOnField2 = gBattlerPartyIndexes[GetPartnerBattler(battlerId)];
+        battlerOnField2 = gBattlerPartyIndexes[partner];
+        partnerSharesParty = (partnerParty == party);
         // Check partner's status
         if ((GetConfig(B_HEAL_BELL_SOUNDPROOF) == GEN_5
             || gAiLogicData->abilities[BATTLE_PARTNER(battlerId)] != ABILITY_SOUNDPROOF
             || !checkSoundproof)
-         && GetMonData(&party[battlerOnField2], MON_DATA_STATUS) != STATUS1_NONE
+         && GetMonData(&partnerParty[battlerOnField2], MON_DATA_STATUS) != STATUS1_NONE
          && ShouldCureStatus(battlerId, BATTLE_PARTNER(battlerId), gAiLogicData))
             hasStatusToCure = TRUE;
     }
@@ -3895,6 +3899,7 @@ bool32 AnyPartyMemberStatused(enum BattlerId battlerId, bool32 checkSoundproof)
     {
         battlerOnField1 = gBattlerPartyIndexes[battlerId];
         battlerOnField2 = gBattlerPartyIndexes[battlerId];
+        partnerSharesParty = TRUE;
     }
 
     // Check attacker's status
@@ -3908,7 +3913,7 @@ bool32 AnyPartyMemberStatused(enum BattlerId battlerId, bool32 checkSoundproof)
     // Check inactive party mons' status
     for (u32 monIndex = 0; monIndex < PARTY_SIZE; monIndex++)
     {
-        if (monIndex == battlerOnField1 || monIndex == battlerOnField2)
+        if (monIndex == battlerOnField1 || (partnerSharesParty && monIndex == battlerOnField2))
             continue;
         if (GetConfig(B_HEAL_BELL_SOUNDPROOF) < GEN_5
          && checkSoundproof
@@ -4562,17 +4567,21 @@ s32 CountUsablePartyMons(enum BattlerId battlerId)
 {
     s32 battlerOnField1, battlerOnField2, ret;
     struct Pokemon *party;
+    bool32 partnerSharesParty;
     party = GetBattlerParty(battlerId);
 
     if (IsDoubleBattle())
     {
+        enum BattlerId partner = GetPartnerBattler(battlerId);
         battlerOnField1 = gBattlerPartyIndexes[battlerId];
-        battlerOnField2 = gBattlerPartyIndexes[GetPartnerBattler(battlerId)];
+        battlerOnField2 = gBattlerPartyIndexes[partner];
+        partnerSharesParty = (GetBattlerParty(partner) == party);
     }
     else // In singles there's only one battlerId by side.
     {
         battlerOnField1 = gBattlerPartyIndexes[battlerId];
         battlerOnField2 = gBattlerPartyIndexes[battlerId];
+        partnerSharesParty = TRUE;
     }
 
     ret = 0;
@@ -4580,7 +4589,8 @@ s32 CountUsablePartyMons(enum BattlerId battlerId)
     GetAIPartyIndexes(battlerId, &firstId, &lastId);
     for (u32 monIndex = firstId; monIndex < lastId; monIndex++)
     {
-        if (monIndex != battlerOnField1 && monIndex != battlerOnField2
+        if (monIndex != battlerOnField1
+         && (!partnerSharesParty || monIndex != battlerOnField2)
          && GetMonData(&party[monIndex], MON_DATA_HP) != 0
          && GetMonData(&party[monIndex], MON_DATA_SPECIES_OR_EGG) != SPECIES_NONE
          && GetMonData(&party[monIndex], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG)
