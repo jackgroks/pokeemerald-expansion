@@ -4195,7 +4195,17 @@ static void HandleTurnActionSelectionState(void)
             // fallthrough
         case STATE_BEFORE_ACTION_CHOSEN: // Choose an action.
             gBattleStruct->monToSwitchIntoId[battler] = PARTY_SIZE;
-            if (gBattleTypeFlags & BATTLE_TYPE_MULTI
+            // BATTLE_TYPE_MULTI normally short-circuits per-flank serialization because
+            // partner-AI auto-handles slot 2 with no UI contention. With
+            // PARTNER_PLAYER_CONTROLLED slot 2 is also player-controlled, so two action
+            // menus would race for the same global windows and slot 0's prompt would
+            // get painted over by slot 2's. Suppress the MULTI fast-path for the player-
+            // side right-flank case so it falls back to the per-flank wait used by
+            // normal double battles.
+            if (((gBattleTypeFlags & BATTLE_TYPE_MULTI)
+                 && !(gPartnerTrainerId == TRAINER_PARTNER(PARTNER_PLAYER_CONTROLLED)
+                      && IsOnPlayerSide(battler)
+                      && (position & BIT_FLANK) != B_FLANK_LEFT))
                 || (position & BIT_FLANK) == B_FLANK_LEFT
                 || gAbsentBattlerFlags & 1u << GetBattlerAtPosition(BATTLE_PARTNER(position))
                 || gBattleCommunication[GetBattlerAtPosition(BATTLE_PARTNER(position))] == STATE_WAIT_ACTION_CONFIRMED)

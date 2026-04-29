@@ -30,7 +30,9 @@
 #include "util.h"
 #include "wild_encounter.h"
 #include "constants/abilities.h"
+#include "constants/battle_partner.h"
 #include "constants/item_effects.h"
+#include "constants/opponents.h"
 #include "constants/songs.h"
 #include "test/battle.h"
 #include "test/test.h"
@@ -290,7 +292,8 @@ static void InitBtlControllersInternal(void)
                 else
                     gBattlerControllerFuncs[GetBattlerPosition(B_BATTLER_2)] = SetControllerToRecordedPartner;
             }
-            else if ((isInGamePartner && !isRecorded)
+            else if ((isInGamePartner && !isRecorded
+                     && gPartnerTrainerId != TRAINER_PARTNER(PARTNER_PLAYER_CONTROLLED))
                     || isAIvsAI)
             {
                 gBattlerControllerFuncs[GetBattlerPosition(B_BATTLER_2)] = SetControllerToPlayerPartner;
