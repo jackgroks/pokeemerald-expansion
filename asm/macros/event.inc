@@ -803,6 +803,12 @@
 	trainerbattle TRAINER_BATTLE_TWO_TRAINERS_NO_INTRO, OBJ_ID_NONE, \trainer_a, NULL, \lose_text_a, NULL, OBJ_ID_NONE, \trainer_b, NULL, \lose_text_b, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
 	.endm
 
+	@ Starts a 6+6 two-opponents battle (BATTLE_TYPE_TWO_OPPONENTS_FULL).
+	@ Same signature as trainerbattle_two_trainers; sets the FULL flag so each trainer uses a full 6-mon party.
+	.macro trainerbattle_two_trainers_full_party trainer_a:req, lose_text_a:req, trainer_b:req, lose_text_b:req
+	trainerbattle TRAINER_BATTLE_TWO_TRAINERS_FULL_PARTY, OBJ_ID_NONE, \trainer_a, NULL, \lose_text_a, NULL, OBJ_ID_NONE, \trainer_b, NULL, \lose_text_b, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
+	.endm
+
 	@ Starts a trainer battle with victory text if the player loses. If flags is nonzero, the player will be healed after battle (and its assumed to be the tutorial battle)
 	.macro trainerbattle_earlyrival trainer:req, flags:req, lose_text:req, victory_text:req
 	trainerbattle TRAINER_BATTLE_EARLY_RIVAL, OBJ_ID_NONE, \trainer, NULL, \lose_text, NULL, OBJ_ID_NONE, TRAINER_NONE, NULL, NULL, NULL, \victory_text, NULL, FALSE, TRUE, FALSE, FALSE, \flags

@@ -1151,6 +1151,10 @@ const u8 *BattleSetup_ConfigureTrainerBattle(const u8 *data)
         gNoOfApproachingTrainers = 2; // set TWO_OPPONENTS gBattleTypeFlags
         gApproachingTrainerId = 1; // prevent trainer approach
         return EventScript_DoNoIntroTrainerBattle;
+    case TRAINER_BATTLE_TWO_TRAINERS_FULL_PARTY:
+        gNoOfApproachingTrainers = 2; // set TWO_OPPONENTS gBattleTypeFlags
+        gApproachingTrainerId = 1; // prevent trainer approach
+        return EventScript_DoNoIntroTrainerBattle;
     default:
         if (gApproachingTrainerId == 0)
         {
@@ -1321,6 +1325,9 @@ void BattleSetup_StartTrainerBattle(void)
 
     if (GetTrainerBattleMode() == TRAINER_BATTLE_EARLY_RIVAL && GetRivalBattleFlags() & RIVAL_BATTLE_TUTORIAL)
         gBattleTypeFlags |= BATTLE_TYPE_FIRST_BATTLE;
+
+    if (GetTrainerBattleMode() == TRAINER_BATTLE_TWO_TRAINERS_FULL_PARTY)
+        gBattleTypeFlags |= BATTLE_TYPE_TWO_OPPONENTS_FULL;
 
     if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
     {
