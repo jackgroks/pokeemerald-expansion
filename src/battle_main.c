@@ -1521,6 +1521,13 @@ static void CB2_PreInitIngamePlayerPartnerBattle(void)
 {
     u32 *savedBattleTypeFlags;
     void (**savedCallback)(void);
+    // Defensive: save/restore gTrainerBattleParameter across the
+    // ShowPartyMenuToShowcaseMultiBattleParty interlude. The showcase
+    // may clobber EWRAM globals (including gTrainerBattleParameter) while
+    // the party-menu task runs, zeroing opponentA and causing the
+    // "OPPONENT NEEDS A VALID NAME" assert. Mirror the existing
+    // gBattleTypeFlags save/restore pattern.
+    static TrainerBattleParameter sSavedTrainerBattleParam;
 
     savedCallback = &gBattleStruct->savedCallback;
     savedBattleTypeFlags = &gBattleStruct->savedBattleTypeFlags;
@@ -1537,6 +1544,7 @@ static void CB2_PreInitIngamePlayerPartnerBattle(void)
         gBattleCommunication[MULTIUSE_STATE]++;
         *savedCallback = gMain.savedCallback;
         *savedBattleTypeFlags = gBattleTypeFlags;
+        sSavedTrainerBattleParam = gTrainerBattleParameter;
         gMain.savedCallback = CB2_PreInitIngamePlayerPartnerBattle;
         if (!PlayerHasFollowerNPC() || !FollowerNPCIsBattlePartner() || (FNPC_NPC_FOLLOWER_PARTY_PREVIEW && FollowerNPCIsBattlePartner()))
             ShowPartyMenuToShowcaseMultiBattleParty();
@@ -1547,6 +1555,7 @@ static void CB2_PreInitIngamePlayerPartnerBattle(void)
         {
             gBattleCommunication[MULTIUSE_STATE] = 2;
             gBattleTypeFlags = *savedBattleTypeFlags;
+            gTrainerBattleParameter = sSavedTrainerBattleParam;
             gMain.savedCallback = *savedCallback;
             SetMainCallback2(CB2_InitBattleInternal);
             FREE_AND_SET_NULL(sMultiPartnerPartyBuffer);

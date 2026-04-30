@@ -337,6 +337,12 @@ static void InitBtlControllersInternal(void)
                 gBattlerPartyIndexes[3] = 1;
             else
                 gBattlerPartyIndexes[3] = 3;
+
+            // Under FULL flags each partner owns a separate linear array starting at slot 0.
+            if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL)
+                gBattlerPartyIndexes[B_BATTLER_3] = 0;  // opponentB lead = gPartnerEnemyParty[0]
+            if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+                gBattlerPartyIndexes[B_BATTLER_2] = 0;  // partnerPlayer lead = gPartnerPlayerParty[0]
         }
     }
     else

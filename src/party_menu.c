@@ -7574,6 +7574,22 @@ static void BufferBattlePartyOrderBySide(u8 *partyBattleOrder, u8 flankId, enum 
     else
         leftBattler = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
 
+    // Under FULL flags each partner battler owns a separate linear 6-mon array;
+    // skip the vanilla interleaved MULTI layout and map slots 0-5 linearly.
+    if ((gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL) && !IsOnPlayerSide(battler))
+    {
+        partyBattleOrder[0] = 0 | (1 << 4);
+        partyBattleOrder[1] = 2 | (3 << 4);
+        partyBattleOrder[2] = 4 | (5 << 4);
+        return;
+    }
+    if ((gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL) && IsOnPlayerSide(battler) && battler == B_BATTLER_2)
+    {
+        partyBattleOrder[0] = 0 | (1 << 4);
+        partyBattleOrder[1] = 2 | (3 << 4);
+        partyBattleOrder[2] = 4 | (5 << 4);
+        return;
+    }
     if (IsMultiBattle() == TRUE)
     {
         if (flankId != 0)

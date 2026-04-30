@@ -609,6 +609,10 @@ void Ai_InitPartyStruct(void)
     // Under TWO_PLAYERS_FULL, also populate partner player's party.
     if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
         InitAiPartyMonsForBattler(B_BATTLER_2, gPartnerPlayerParty, isOmniscient, hasPartyKnowledge);
+
+    // Under TWO_OPPONENTS_FULL, populate partner opponent's party.
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL)
+        InitAiPartyMonsForBattler(B_BATTLER_3, gPartnerEnemyParty, isOmniscient, hasPartyKnowledge);
 }
 
 void Ai_UpdateSwitchInData(enum BattlerId battler)
