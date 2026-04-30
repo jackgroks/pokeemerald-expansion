@@ -1246,12 +1246,21 @@ static void CreatePartyMonSprites(u8 slot)
             CreatePartyMonStatusSpriteParameterized(gMultiPartnerParty[actualSlot].species, status, &sPartyMenuBoxes[slot]);
         }
     }
-    else if (GetMonData(&gPlayerParty[slot], MON_DATA_SPECIES) != SPECIES_NONE)
+    else
     {
-        CreatePartyMonIconSprite(&gPlayerParty[slot], &sPartyMenuBoxes[slot], slot);
-        CreatePartyMonHeldItemSprite(&gPlayerParty[slot], &sPartyMenuBoxes[slot]);
-        CreatePartyMonPokeballSprite(&gPlayerParty[slot], &sPartyMenuBoxes[slot]);
-        CreatePartyMonStatusSprite(&gPlayerParty[slot], &sPartyMenuBoxes[slot]);
+        // Under TWO_PLAYERS_FULL the partner battler (B_BATTLER_2) has its own separate
+        // 6-mon party in gPartnerPlayerParty. GetBattlerParty dispatches to the correct
+        // array so the icons shown match the party being offered for selection.
+        struct Pokemon *partyForSprites = (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+            ? GetBattlerParty(gBattlerInMenuId)
+            : gPlayerParty;
+        if (GetMonData(&partyForSprites[slot], MON_DATA_SPECIES) != SPECIES_NONE)
+        {
+            CreatePartyMonIconSprite(&partyForSprites[slot], &sPartyMenuBoxes[slot], slot);
+            CreatePartyMonHeldItemSprite(&partyForSprites[slot], &sPartyMenuBoxes[slot]);
+            CreatePartyMonPokeballSprite(&partyForSprites[slot], &sPartyMenuBoxes[slot]);
+            CreatePartyMonStatusSprite(&partyForSprites[slot], &sPartyMenuBoxes[slot]);
+        }
     }
 }
 
