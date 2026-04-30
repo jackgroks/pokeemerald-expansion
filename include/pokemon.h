@@ -706,6 +706,7 @@ extern struct Pokemon gPlayerParty[PARTY_SIZE];
 extern u8 gEnemyPartyCount;
 extern struct Pokemon gEnemyParty[PARTY_SIZE];
 extern struct Pokemon gPartnerEnemyParty[PARTY_SIZE];
+extern struct Pokemon gPartnerPlayerParty[PARTY_SIZE]; // Populated only under BATTLE_TYPE_TWO_PLAYERS_FULL
 extern struct SpriteTemplate gMultiuseSpriteTemplate;
 extern u16 gFollowerSteps;
 extern bool32 consumeItem;
