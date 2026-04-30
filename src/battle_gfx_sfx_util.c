@@ -1122,10 +1122,10 @@ void HandleBattleLowHpMusicChange(void)
         u8 battler1PartyId = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[playerBattler1]);
         u8 battler2PartyId = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[playerBattler2]);
 
-        if (GetMonData(&gPlayerParty[battler1PartyId], MON_DATA_HP) != 0)
-            HandleLowHpMusicChange(&gPlayerParty[battler1PartyId], playerBattler1);
-        if (IsDoubleBattle() && GetMonData(&gPlayerParty[battler2PartyId], MON_DATA_HP) != 0)
-            HandleLowHpMusicChange(&gPlayerParty[battler2PartyId], playerBattler2);
+        if (GetMonData(&GetBattlerParty(playerBattler1)[battler1PartyId], MON_DATA_HP) != 0)
+            HandleLowHpMusicChange(&GetBattlerParty(playerBattler1)[battler1PartyId], playerBattler1);
+        if (IsDoubleBattle() && GetMonData(&GetBattlerParty(playerBattler2)[battler2PartyId], MON_DATA_HP) != 0)
+            HandleLowHpMusicChange(&GetBattlerParty(playerBattler2)[battler2PartyId], playerBattler2);
     }
 }
 
