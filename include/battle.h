@@ -1136,7 +1136,12 @@ static inline enum BattlerId GetOpposingSideBattler(enum BattlerId battler)
 static inline struct Pokemon *GetBattlerParty(enum BattlerId battler)
 {
     if (IsOnPlayerSide(battler))
+    {
+        if ((gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+            && battler == B_BATTLER_2)
+            return gPartnerPlayerParty;
         return gPlayerParty;
+    }
     if ((gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL)
         && battler == B_BATTLER_3)
         return gPartnerEnemyParty;
