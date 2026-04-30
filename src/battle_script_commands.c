@@ -4295,7 +4295,7 @@ static void Cmd_getexp(void)
                     // get exp getter battler
                     if (IsDoubleBattle())
                     {
-                        if (gBattlerPartyIndexes[2] == *expMonId && !(gAbsentBattlerFlags & 4))
+                        if (GetBattlerParty(2) == gPlayerParty && gBattlerPartyIndexes[2] == *expMonId && !(gAbsentBattlerFlags & 4))
                             gBattleStruct->expGetterBattlerId = 2;
                         else if (!(gAbsentBattlerFlags & 1))
                             gBattleStruct->expGetterBattlerId = 0;
@@ -4370,9 +4370,9 @@ static void Cmd_getexp(void)
                 AdjustFriendship(&gPlayerParty[*expMonId], FRIENDSHIP_EVENT_GROW_LEVEL);
 
                 // update battle mon structure after level up
-                if (gBattlerPartyIndexes[0] == *expMonId && gBattleMons[0].hp)
+                if (GetBattlerParty(0) == gPlayerParty && gBattlerPartyIndexes[0] == *expMonId && gBattleMons[0].hp)
                     battler = 0;
-                else if (gBattlerPartyIndexes[2] == *expMonId && gBattleMons[2].hp && (IsDoubleBattle()))
+                else if (GetBattlerParty(2) == gPlayerParty && gBattlerPartyIndexes[2] == *expMonId && gBattleMons[2].hp && (IsDoubleBattle()))
                     battler = 2;
 
                 if (battler != 0xFF)
@@ -5975,7 +5975,7 @@ static void Cmd_handlelearnnewmove(void)
     {
         enum BattlerId battler = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
 
-        if (gBattlerPartyIndexes[battler] == monId
+        if (GetBattlerParty(battler) == gPlayerParty && gBattlerPartyIndexes[battler] == monId
             && !(gBattleMons[battler].volatiles.transformed))
         {
             GiveMoveToBattleMon(&gBattleMons[battler], learnMove);
@@ -5983,7 +5983,7 @@ static void Cmd_handlelearnnewmove(void)
         if (IsDoubleBattle())
         {
             battler = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
-            if (gBattlerPartyIndexes[battler] == monId
+            if (GetBattlerParty(battler) == gPlayerParty && gBattlerPartyIndexes[battler] == monId
                 && !(gBattleMons[battler].volatiles.transformed))
             {
                 GiveMoveToBattleMon(&gBattleMons[battler], learnMove);
@@ -6081,12 +6081,13 @@ static void Cmd_yesnoboxlearnmove(void)
                     RemoveMonPPBonus(&gPlayerParty[gBattleStruct->expGetterMonId], movePosition);
                     SetMonMoveSlot(&gPlayerParty[gBattleStruct->expGetterMonId], gMoveToLearn, movePosition);
 
-                    if (gBattlerPartyIndexes[0] == gBattleStruct->expGetterMonId && MOVE_IS_PERMANENT(0, movePosition))
+                    if (GetBattlerParty(0) == gPlayerParty && gBattlerPartyIndexes[0] == gBattleStruct->expGetterMonId && MOVE_IS_PERMANENT(0, movePosition))
                     {
                         RemoveBattleMonPPBonus(&gBattleMons[0], movePosition);
                         SetBattleMonMoveSlot(&gBattleMons[0], gMoveToLearn, movePosition);
                     }
                     if (IsDoubleBattle()
+                        && GetBattlerParty(2) == gPlayerParty
                         && gBattlerPartyIndexes[2] == gBattleStruct->expGetterMonId
                         && MOVE_IS_PERMANENT(2, movePosition))
                     {
@@ -6883,9 +6884,9 @@ static void SpriteCB_MonIconOnLvlUpBanner(struct Sprite *sprite)
 
 static bool32 IsMonGettingExpSentOut(void)
 {
-    if (gBattlerPartyIndexes[0] == gBattleStruct->expGetterMonId)
+    if (GetBattlerParty(0) == gPlayerParty && gBattlerPartyIndexes[0] == gBattleStruct->expGetterMonId)
         return TRUE;
-    if (IsDoubleBattle() && gBattlerPartyIndexes[2] == gBattleStruct->expGetterMonId)
+    if (IsDoubleBattle() && GetBattlerParty(2) == gPlayerParty && gBattlerPartyIndexes[2] == gBattleStruct->expGetterMonId)
         return TRUE;
 
     return FALSE;
@@ -13710,10 +13711,11 @@ void BS_ResetSwitchInAbilityBits(void)
 void BS_UpdateChoiceMoveOnLvlUp(void)
 {
     NATIVE_ARGS();
-    if (gBattlerPartyIndexes[0] == gBattleStruct->expGetterMonId || gBattlerPartyIndexes[2] == gBattleStruct->expGetterMonId)
+    if ((GetBattlerParty(0) == gPlayerParty && gBattlerPartyIndexes[0] == gBattleStruct->expGetterMonId)
+        || (GetBattlerParty(2) == gPlayerParty && gBattlerPartyIndexes[2] == gBattleStruct->expGetterMonId))
     {
         enum BattlerId battler;
-        if (gBattlerPartyIndexes[0] == gBattleStruct->expGetterMonId)
+        if (GetBattlerParty(0) == gPlayerParty && gBattlerPartyIndexes[0] == gBattleStruct->expGetterMonId)
             battler = 0;
         else
             battler = 2;
