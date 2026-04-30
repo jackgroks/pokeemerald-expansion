@@ -809,6 +809,24 @@
 	trainerbattle TRAINER_BATTLE_TWO_TRAINERS_FULL_PARTY, OBJ_ID_NONE, \trainer_a, NULL, \lose_text_a, NULL, OBJ_ID_NONE, \trainer_b, NULL, \lose_text_b, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
 	.endm
 
+	@ Starts a 6+6 doubles battle: two AI opponents with full 6-mon parties vs single player (BATTLE_TYPE_TWO_OPPONENTS_FULL).
+	@ Same semantics as trainerbattle_two_trainers_full_party; replaces it under the new mode-9 surface.
+	.macro trainerbattle_double_full_opponents trainer_a:req, lose_text_a:req, trainer_b:req, lose_text_b:req
+	trainerbattle TRAINER_BATTLE_DOUBLE_FULL_OPPONENTS, OBJ_ID_NONE, \trainer_a, NULL, \lose_text_a, NULL, OBJ_ID_NONE, \trainer_b, NULL, \lose_text_b, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
+	.endm
+
+	@ Starts a 12v6 doubles battle: player + 6-mon partner vs single AI trainer (BATTLE_TYPE_TWO_PLAYERS_FULL).
+	@ Caller must set gPartnerTrainerId before invocation (e.g. via the scripted partner-setup mechanism).
+	.macro trainerbattle_double_full_players trainer:req, lose_text:req
+	trainerbattle TRAINER_BATTLE_DOUBLE_FULL_PLAYERS, OBJ_ID_NONE, \trainer, NULL, \lose_text, NULL, OBJ_ID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
+	.endm
+
+	@ Starts a 12v12 doubles battle: both sides have full 6-mon parties (BATTLE_TYPE_TWO_OPPONENTS_FULL | BATTLE_TYPE_TWO_PLAYERS_FULL).
+	@ Caller must set gPartnerTrainerId before invocation (e.g. via the scripted partner-setup mechanism).
+	.macro trainerbattle_double_full_both trainer_a:req, lose_text_a:req, trainer_b:req, lose_text_b:req
+	trainerbattle TRAINER_BATTLE_DOUBLE_FULL_BOTH, OBJ_ID_NONE, \trainer_a, NULL, \lose_text_a, NULL, OBJ_ID_NONE, \trainer_b, NULL, \lose_text_b, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
+	.endm
+
 	@ Starts a trainer battle with victory text if the player loses. If flags is nonzero, the player will be healed after battle (and its assumed to be the tutorial battle)
 	.macro trainerbattle_earlyrival trainer:req, flags:req, lose_text:req, victory_text:req
 	trainerbattle TRAINER_BATTLE_EARLY_RIVAL, OBJ_ID_NONE, \trainer, NULL, \lose_text, NULL, OBJ_ID_NONE, TRAINER_NONE, NULL, NULL, NULL, \victory_text, NULL, FALSE, TRUE, FALSE, FALSE, \flags
