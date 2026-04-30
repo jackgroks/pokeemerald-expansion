@@ -1155,6 +1155,17 @@ const u8 *BattleSetup_ConfigureTrainerBattle(const u8 *data)
         gNoOfApproachingTrainers = 2; // set TWO_OPPONENTS gBattleTypeFlags
         gApproachingTrainerId = 1; // prevent trainer approach
         return EventScript_DoNoIntroTrainerBattle;
+    case TRAINER_BATTLE_DOUBLE_FULL_OPPONENTS:
+        gNoOfApproachingTrainers = 2; // set TWO_OPPONENTS gBattleTypeFlags
+        gApproachingTrainerId = 1; // prevent trainer approach
+        return EventScript_DoNoIntroTrainerBattle;
+    case TRAINER_BATTLE_DOUBLE_FULL_PLAYERS:
+        SetMapVarsToTrainerA();
+        return EventScript_TryDoDoubleTrainerBattle;
+    case TRAINER_BATTLE_DOUBLE_FULL_BOTH:
+        gNoOfApproachingTrainers = 2; // set TWO_OPPONENTS gBattleTypeFlags
+        gApproachingTrainerId = 1; // prevent trainer approach
+        return EventScript_DoNoIntroTrainerBattle;
     default:
         if (gApproachingTrainerId == 0)
         {
@@ -1326,8 +1337,19 @@ void BattleSetup_StartTrainerBattle(void)
     if (GetTrainerBattleMode() == TRAINER_BATTLE_EARLY_RIVAL && GetRivalBattleFlags() & RIVAL_BATTLE_TUTORIAL)
         gBattleTypeFlags |= BATTLE_TYPE_FIRST_BATTLE;
 
-    if (GetTrainerBattleMode() == TRAINER_BATTLE_TWO_TRAINERS_FULL_PARTY)
+    switch (GetTrainerBattleMode())
+    {
+    case TRAINER_BATTLE_DOUBLE_FULL_OPPONENTS:
+    case TRAINER_BATTLE_TWO_TRAINERS_FULL_PARTY: // legacy alias, removed in a later commit
         gBattleTypeFlags |= BATTLE_TYPE_TWO_OPPONENTS_FULL;
+        break;
+    case TRAINER_BATTLE_DOUBLE_FULL_PLAYERS:
+        gBattleTypeFlags |= BATTLE_TYPE_TWO_PLAYERS_FULL;
+        break;
+    case TRAINER_BATTLE_DOUBLE_FULL_BOTH:
+        gBattleTypeFlags |= BATTLE_TYPE_TWO_OPPONENTS_FULL | BATTLE_TYPE_TWO_PLAYERS_FULL;
+        break;
+    }
 
     if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
     {
