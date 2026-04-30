@@ -5398,6 +5398,20 @@ bool32 CanBattlerSwitch(enum BattlerId battler)
             }
             ret = (i != PARTY_SIZE);
         }
+        else if ((gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL) && !IsOnPlayerSide(battler))
+        {
+            // Under TWO_OPPONENTS_FULL each opponent battler owns a separate 6-mon array.
+            // party is already GetBattlerParty(battler); scan all 6 slots.
+            for (i = 0; i < PARTY_SIZE; i++)
+            {
+                if (GetMonData(&party[i], MON_DATA_SPECIES) != SPECIES_NONE
+                 && !GetMonData(&party[i], MON_DATA_IS_EGG)
+                 && GetMonData(&party[i], MON_DATA_HP) != 0
+                 && gBattlerPartyIndexes[battler] != i)
+                    break;
+            }
+            ret = (i != PARTY_SIZE);
+        }
         else
         {
             lastMonId = 0;
@@ -8226,6 +8240,13 @@ static void Cmd_forcerandomswitch(void)
             {
                 // Under FULL each player battler has their own 6-mon array; scan all of it.
                 // party is already GetBattlerParty(gBattlerTarget) from above.
+                firstMonId = 0;
+                lastMonId = PARTY_SIZE;
+            }
+            else if ((gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL) && !IsOnPlayerSide(gBattlerTarget))
+            {
+                // Under TWO_OPPONENTS_FULL each opponent battler owns a separate 6-mon array;
+                // skip the vanilla half-split so Roar can reach the full 6-mon pool.
                 firstMonId = 0;
                 lastMonId = PARTY_SIZE;
             }

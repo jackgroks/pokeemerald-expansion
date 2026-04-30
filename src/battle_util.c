@@ -2014,6 +2014,18 @@ bool32 HasNoMonsToSwitch(enum BattlerId battler, u8 partyIdBattlerOn1, u8 partyI
             }
             return (i == PARTY_SIZE);
         }
+        else if ((gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL) && !IsOnPlayerSide(battler))
+        {
+            // Under TWO_OPPONENTS_FULL each opponent battler owns a separate 6-mon array.
+            // party is already GetBattlerParty(battler) which returns gPartnerEnemyParty for
+            // B_BATTLER_3. Scan all 6 slots rather than the vanilla half-split.
+            for (i = 0; i < PARTY_SIZE; i++)
+            {
+                if (IsValidForBattle(&party[i]))
+                    break;
+            }
+            return (i == PARTY_SIZE);
+        }
         else
         {
             playerId = ((battler & BIT_FLANK) / 2);

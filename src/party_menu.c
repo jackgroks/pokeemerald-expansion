@@ -7381,6 +7381,11 @@ void ChooseMonForWirelessMinigame(void)
 
 static u8 GetPartyLayoutFromBattleType(void)
 {
+    // Under FULL flags each player battler has a separate 6-mon array; use the linear
+    // SINGLE layout rather than the interleaved MULTI 3+3 view so all 6 slots are
+    // reachable from the in-battle switch UI.
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+        return PARTY_LAYOUT_SINGLE;
     if (IsMultiBattle() == TRUE)
         return PARTY_LAYOUT_MULTI;
     if (!IsDoubleBattle() || gPlayerPartyCount == 1) // Draw the single layout in a double battle where the player has only one pokemon.
