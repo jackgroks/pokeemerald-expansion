@@ -8796,8 +8796,9 @@ static bool32 CanBattlerFormChange(enum BattlerId battler, enum FormChanges meth
 
 bool32 TryRevertPartyMonFormChange(u32 partyIndex)
 {
-     bool32 changedForm = FALSE;
+    bool32 changedForm = FALSE;
 
+    // gPlayerParty[partyIndex] — primary player party (battler 0)
     // Appeared in battle and didn't faint
     if (gBattleStruct->partyState[B_BATTLER_0][partyIndex].sentOut && GetMonData(&gPlayerParty[partyIndex], MON_DATA_HP) != 0)
         changedForm = TryFormChange(&gPlayerParty[partyIndex], FORM_CHANGE_END_BATTLE_ENVIRONMENT);
@@ -8807,6 +8808,20 @@ bool32 TryRevertPartyMonFormChange(u32 partyIndex)
 
     // Clear original species field
     gBattleStruct->partyState[B_BATTLER_0][partyIndex].changedSpecies = SPECIES_NONE;
+
+    // gPartnerPlayerParty[partyIndex] — partner player party (battler 2), only under TWO_PLAYERS_FULL
+    // Vanilla AI mons don't persist post-battle so no opponent-side revert path is needed.
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+    {
+        bool32 partnerChangedForm = FALSE;
+        if (gBattleStruct->partyState[B_BATTLER_2][partyIndex].sentOut
+            && GetMonData(&gPartnerPlayerParty[partyIndex], MON_DATA_HP) != 0)
+            partnerChangedForm = TryFormChange(&gPartnerPlayerParty[partyIndex], FORM_CHANGE_END_BATTLE_ENVIRONMENT);
+        if (!partnerChangedForm)
+            partnerChangedForm = TryFormChange(&gPartnerPlayerParty[partyIndex], FORM_CHANGE_END_BATTLE);
+        gBattleStruct->partyState[B_BATTLER_2][partyIndex].changedSpecies = SPECIES_NONE;
+        changedForm = changedForm || partnerChangedForm;
+    }
 
     return changedForm;
 }
