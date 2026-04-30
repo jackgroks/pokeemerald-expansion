@@ -998,7 +998,10 @@ static void RenderPartyMenuBox(u8 slot)
     }
     else if (gPlayerPartyCount != 0)
     {
-        if (GetMonData(&gPlayerParty[slot], MON_DATA_SPECIES) == SPECIES_NONE)
+        struct Pokemon *partyForRender = (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+            ? GetBattlerParty(gBattlerInMenuId)
+            : gPlayerParty;
+        if (GetMonData(&partyForRender[slot], MON_DATA_SPECIES) == SPECIES_NONE)
         {
             DrawEmptySlot(sPartyMenuBoxes[slot].windowId);
             LoadPartyBoxPalette(&sPartyMenuBoxes[slot], PARTY_PAL_NO_MON);
@@ -1033,20 +1036,26 @@ static void RenderPartyMenuBox(u8 slot)
 
 static void DisplayPartyPokemonData(u8 slot)
 {
-    if (GetMonData(&gPlayerParty[slot], MON_DATA_IS_EGG))
+    // Under TWO_PLAYERS_FULL the partner battler (B_BATTLER_2) has its own
+    // separate 6-mon party in gPartnerPlayerParty. GetBattlerParty dispatches
+    // to the correct array; for all other battle modes it returns gPlayerParty.
+    struct Pokemon *partyToUse = (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+        ? GetBattlerParty(gBattlerInMenuId)
+        : gPlayerParty;
+    if (GetMonData(&partyToUse[slot], MON_DATA_IS_EGG))
     {
         sPartyMenuBoxes[slot].infoRects->blitFunc(sPartyMenuBoxes[slot].windowId, 0, 0, 0, 0, TRUE);
-        DisplayPartyPokemonNickname(&gPlayerParty[slot], &sPartyMenuBoxes[slot], 0);
+        DisplayPartyPokemonNickname(&partyToUse[slot], &sPartyMenuBoxes[slot], 0);
     }
     else
     {
         sPartyMenuBoxes[slot].infoRects->blitFunc(sPartyMenuBoxes[slot].windowId, 0, 0, 0, 0, FALSE);
-        DisplayPartyPokemonNickname(&gPlayerParty[slot], &sPartyMenuBoxes[slot], 0);
-        DisplayPartyPokemonLevelCheck(&gPlayerParty[slot], &sPartyMenuBoxes[slot], 0);
-        DisplayPartyPokemonGenderNidoranCheck(&gPlayerParty[slot], &sPartyMenuBoxes[slot], 0);
-        DisplayPartyPokemonHPCheck(&gPlayerParty[slot], &sPartyMenuBoxes[slot], 0);
-        DisplayPartyPokemonMaxHPCheck(&gPlayerParty[slot], &sPartyMenuBoxes[slot], 0);
-        DisplayPartyPokemonHPBarCheck(&gPlayerParty[slot], &sPartyMenuBoxes[slot]);
+        DisplayPartyPokemonNickname(&partyToUse[slot], &sPartyMenuBoxes[slot], 0);
+        DisplayPartyPokemonLevelCheck(&partyToUse[slot], &sPartyMenuBoxes[slot], 0);
+        DisplayPartyPokemonGenderNidoranCheck(&partyToUse[slot], &sPartyMenuBoxes[slot], 0);
+        DisplayPartyPokemonHPCheck(&partyToUse[slot], &sPartyMenuBoxes[slot], 0);
+        DisplayPartyPokemonMaxHPCheck(&partyToUse[slot], &sPartyMenuBoxes[slot], 0);
+        DisplayPartyPokemonHPBarCheck(&partyToUse[slot], &sPartyMenuBoxes[slot]);
     }
 }
 
