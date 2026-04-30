@@ -515,17 +515,24 @@ static void CB2_InitBattleInternal(void)
 {
     s32 i;
 
-    // Defensive: BATTLE_TYPE_TWO_OPPONENTS_FULL is incompatible with these flags.
-    // Silently allowing the combination produces consumer-mismatch bugs.
-    if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL)
+    // Both FULL flags refuse a shared list of incompatible orthogonal modes.
+    // (NOTE: BATTLE_TYPE_INGAME_PARTNER is REMOVED from the refusal list —
+    // full-doubles explicitly supports INGAME_PARTNER + FULL combinations.)
+    if (gBattleTypeFlags & (BATTLE_TYPE_TWO_OPPONENTS_FULL | BATTLE_TYPE_TWO_PLAYERS_FULL))
     {
-        AGB_ASSERT(!(gBattleTypeFlags & (BATTLE_TYPE_INGAME_PARTNER
-                                       | BATTLE_TYPE_MULTI
+        AGB_ASSERT(!(gBattleTypeFlags & (BATTLE_TYPE_MULTI
                                        | BATTLE_TYPE_FRONTIER
                                        | BATTLE_TYPE_LINK
                                        | BATTLE_TYPE_RECORDED
                                        | BATTLE_TYPE_TRAINER_HILL
                                        | BATTLE_TYPE_BATTLE_TOWER)));
+    }
+
+    // TWO_PLAYERS_FULL preconditions: needs a partner of some kind.
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+    {
+        AGB_ASSERT(gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER);
+        AGB_ASSERT(gPartnerTrainerId != TRAINER_PARTNER(PARTNER_NONE));
     }
 
     SetHBlankCallback(NULL);
