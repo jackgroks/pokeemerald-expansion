@@ -211,11 +211,13 @@ Route101_EventScript_Boy::
 	msgbox Route101_Text_WildPokemonInTallGrass, MSGBOX_NPC
 	end
 
-@ Test event for two-opponents-full-party Phase 2 manual test.
-@ Player interacts with the Hiker → 6+6 doubles battle launches via the new
-@ trainerbattle_two_trainers_full_party script command.
+@ Test event for the 6+6 (TWO_OPPONENTS_FULL) configuration.
+@ Player interacts with the Hiker → 6+6 doubles battle launches via the
+@ trainerbattle_double_full_opponents script command (mode 9). The legacy
+@ mode-15 macro this used to call (trainerbattle_two_trainers_full_party)
+@ has identical semantics and is removed in a follow-up commit.
 Route101_EventScript_FullDuo::
-	trainerbattle_two_trainers_full_party TRAINER_DEBUG_FULL_OPP_GEN3, Route101_Text_FullDuoDefeat, TRAINER_DEBUG_FULL_OPP_GEN4, Route101_Text_FullDuoDefeat
+	trainerbattle_double_full_opponents TRAINER_DEBUG_FULL_OPP_GEN3, Route101_Text_FullDuoDefeat, TRAINER_DEBUG_FULL_OPP_GEN4, Route101_Text_FullDuoDefeat
 	msgbox Route101_Text_FullDuoAfter, MSGBOX_AUTOCLOSE
 	end
 
