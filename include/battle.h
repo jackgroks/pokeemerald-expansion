@@ -191,10 +191,10 @@ struct AiPartyMon
     u8 padding:4;
 };
 
-struct AiPartyData // Opposing battlers - party mons.
+struct AiPartyData // Per-battler party knowledge cache.
 {
-    struct AiPartyMon mons[NUM_BATTLE_SIDES][PARTY_SIZE]; // 2 parties(player, opponent). Used to save information on opposing party.
-    u8 count[NUM_BATTLE_SIDES];
+    struct AiPartyMon mons[MAX_BATTLERS_COUNT][PARTY_SIZE]; // Per-battler keying — under FULL flags two battlers share a side with non-overlapping pools.
+    u8 count[MAX_BATTLERS_COUNT];
 };
 
 struct SimulatedDamage
