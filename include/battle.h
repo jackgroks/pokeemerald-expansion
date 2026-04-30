@@ -549,7 +549,7 @@ struct EventStates
 struct BattleStruct
 {
     struct BattlerState battlerState[MAX_BATTLERS_COUNT];
-    struct PartyState partyState[NUM_BATTLE_SIDES][PARTY_SIZE];
+    struct PartyState partyState[MAX_BATTLERS_COUNT][PARTY_SIZE];
     struct EventStates eventState;
     struct FutureSight futureSight[MAX_BATTLERS_COUNT];
     struct Wish wish[MAX_BATTLERS_COUNT];
@@ -1160,7 +1160,7 @@ static inline struct Pokemon *GetSideParty(enum BattleSide side)
 
 static inline struct PartyState *GetBattlerPartyState(enum BattlerId battler)
 {
-    return &gBattleStruct->partyState[GetBattlerSide(battler)][gBattlerPartyIndexes[battler]];
+    return &gBattleStruct->partyState[battler][gBattlerPartyIndexes[battler]];
 }
 
 static inline bool32 IsDoubleBattle(void)

@@ -7001,7 +7001,12 @@ static struct PartyState *GetBattlerPartyStateByPokemon(struct Pokemon *partyMon
         {
             struct Pokemon *mon = &GetSideParty(i)[j];
             if (partyMon == mon)
-                return &gBattleStruct->partyState[i][j];
+            {
+                // Map [side][slot] back to a battler whose state lives at this slot.
+                // Pure migration: side-equivalent to a primary battler under non-FULL.
+                enum BattlerId b = (i == B_SIDE_PLAYER) ? B_BATTLER_0 : B_BATTLER_1;
+                return &gBattleStruct->partyState[b][j];
+            }
         }
     }
     return NULL;
