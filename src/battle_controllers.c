@@ -517,6 +517,9 @@ static void SetBattlePartyIds(void)
             gBattlerPartyIndexes[1] = 0;
             gBattlerPartyIndexes[3] = (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL) ? 0 : 3;
         }
+
+        if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+            gBattlerPartyIndexes[B_BATTLER_2] = 0; // Lead of gPartnerPlayerParty
     }
 }
 
