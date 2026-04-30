@@ -9344,6 +9344,23 @@ void TryRestoreHeldItems(void)
                 SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &lostItem);
         }
     }
+    // Under TWO_PLAYERS_FULL the partner player's items are tracked at itemLost[B_BATTLER_2].
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+    {
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (B_RESTORE_HELD_BATTLE_ITEMS >= GEN_9 || gBattleStruct->itemLost[B_BATTLER_2][i].stolen || returnNPCItems)
+            {
+                u16 lostItem = gBattleStruct->itemLost[B_BATTLER_2][i].originalItem;
+
+                if (GetItemPocket(lostItem) == POCKET_BERRIES && GetMonData(&gPartnerPlayerParty[i], MON_DATA_HELD_ITEM) != lostItem)
+                    lostItem = ITEM_NONE;
+
+                if ((lostItem != ITEM_NONE || returnNPCItems) && GetItemPocket(lostItem) != POCKET_BERRIES)
+                    SetMonData(&gPartnerPlayerParty[i], MON_DATA_HELD_ITEM, &lostItem);
+            }
+        }
+    }
 }
 
 bool32 CanStealItem(enum BattlerId battlerStealing, enum BattlerId battlerItem, enum Item item)

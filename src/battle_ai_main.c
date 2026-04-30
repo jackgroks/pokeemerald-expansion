@@ -842,6 +842,24 @@ static u32 PpStallReduction(enum Move move, enum BattlerId battlerAtk)
          || CalcTypeEffectivenessMultiplier(&ctx) == UQ_4_12(0.0))
             totalStallValue += currentStallValue;
     }
+    // Under TWO_PLAYERS_FULL the partner player's mons live in gPartnerPlayerParty;
+    // evaluate them as additional stall candidates.
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+    {
+        for (u32 partyIndex = 0; partyIndex < PARTY_SIZE; partyIndex++)
+        {
+            u32 currentStallValue = gAiBattleData->playerStallMons[partyIndex];
+            if (currentStallValue == 0 || GetMonData(&gPartnerPlayerParty[partyIndex], MON_DATA_HP) == 0)
+                continue;
+            PokemonToBattleMon(&gPartnerPlayerParty[partyIndex], &gBattleMons[tempBattleMonIndex]);
+            ctx.battlerDef = tempBattleMonIndex;
+            ctx.abilityDef = GetBattlerAbility(ctx.battlerDef);
+            ctx.holdEffectDef = GetBattlerHoldEffect(ctx.battlerDef);
+            if (AI_CanMoveBeBlockedByTarget(&ctx)
+             || CalcTypeEffectivenessMultiplier(&ctx) == UQ_4_12(0.0))
+                totalStallValue += currentStallValue;
+        }
+    }
 
     for (u32 i = 0; returnValue == 0 && i < totalStallValue; i++)
     {

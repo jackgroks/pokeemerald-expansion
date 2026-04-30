@@ -6374,6 +6374,11 @@ void GetAIPartyIndexes(enum BattlerId battler, s32 *firstId, s32 *lastId)
         // Under FULL, each opponent has their own 6-mon array; iterate all of it.
         *firstId = 0, *lastId = PARTY_SIZE;
     }
+    else if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL && IsOnPlayerSide(battler))
+    {
+        // Under TWO_PLAYERS_FULL, each player battler has their own 6-mon array.
+        *firstId = 0, *lastId = PARTY_SIZE;
+    }
     else if (gBattleTypeFlags & (BATTLE_TYPE_TWO_OPPONENTS | BATTLE_TYPE_INGAME_PARTNER | BATTLE_TYPE_TOWER_LINK_MULTI))
     {
         if ((battler & BIT_FLANK) == B_FLANK_LEFT)
