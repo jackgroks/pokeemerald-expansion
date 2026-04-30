@@ -4458,7 +4458,8 @@ bool32 NoAliveMonsForPlayer(void)
     u32 HP_count = 0;
     u32 ineligibleMonsCount = 0;
 
-    if (B_MULTI_BATTLE_WHITEOUT < GEN_4 && gBattleTypeFlags & (BATTLE_TYPE_MULTI | BATTLE_TYPE_INGAME_PARTNER))
+    if (B_MULTI_BATTLE_WHITEOUT < GEN_4 && gBattleTypeFlags & (BATTLE_TYPE_MULTI | BATTLE_TYPE_INGAME_PARTNER)
+        && !(gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL))
         maxI = MULTI_PARTY_SIZE;
 
     // Get total HP for the player's party to determine if the player has lost
@@ -4473,6 +4474,15 @@ bool32 NoAliveMonsForPlayer(void)
         if (i < 3 && ((GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) && !GetMonData(&gPlayerParty[i], MON_DATA_HP))
          || GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG)))
             ineligibleMonsCount++;
+    }
+    // Under TWO_PLAYERS_FULL, partner player has their own 6-mon array; count those too.
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+    {
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (GetMonData(&gPartnerPlayerParty[i], MON_DATA_SPECIES) && !GetMonData(&gPartnerPlayerParty[i], MON_DATA_IS_EGG))
+                HP_count += GetMonData(&gPartnerPlayerParty[i], MON_DATA_HP);
+        }
     }
 
     if (B_MULTI_BATTLE_WHITEOUT > GEN_3 && gBattleTypeFlags & (BATTLE_TYPE_MULTI | BATTLE_TYPE_INGAME_PARTNER)
@@ -5375,20 +5385,36 @@ bool32 CanBattlerSwitch(enum BattlerId battler)
     {
         party = GetBattlerParty(battler);
 
-        lastMonId = 0;
-        if (battler & 2)
-            lastMonId = MULTI_PARTY_SIZE;
-
-        for (i = lastMonId; i < lastMonId + MULTI_PARTY_SIZE; i++)
+        if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
         {
-            if (GetMonData(&party[i], MON_DATA_SPECIES) != SPECIES_NONE
-             && !GetMonData(&party[i], MON_DATA_IS_EGG)
-             && GetMonData(&party[i], MON_DATA_HP) != 0
-             && gBattlerPartyIndexes[battler] != i)
-                break;
+            // Under FULL each player battler has their own 6-mon array; scan all of it.
+            for (i = 0; i < PARTY_SIZE; i++)
+            {
+                if (GetMonData(&party[i], MON_DATA_SPECIES) != SPECIES_NONE
+                 && !GetMonData(&party[i], MON_DATA_IS_EGG)
+                 && GetMonData(&party[i], MON_DATA_HP) != 0
+                 && gBattlerPartyIndexes[battler] != i)
+                    break;
+            }
+            ret = (i != PARTY_SIZE);
         }
+        else
+        {
+            lastMonId = 0;
+            if (battler & 2)
+                lastMonId = MULTI_PARTY_SIZE;
 
-        ret = (i != lastMonId + MULTI_PARTY_SIZE);
+            for (i = lastMonId; i < lastMonId + MULTI_PARTY_SIZE; i++)
+            {
+                if (GetMonData(&party[i], MON_DATA_SPECIES) != SPECIES_NONE
+                 && !GetMonData(&party[i], MON_DATA_IS_EGG)
+                 && GetMonData(&party[i], MON_DATA_HP) != 0
+                 && gBattlerPartyIndexes[battler] != i)
+                    break;
+            }
+
+            ret = (i != lastMonId + MULTI_PARTY_SIZE);
+        }
     }
     else if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
     {
@@ -8196,7 +8222,14 @@ static void Cmd_forcerandomswitch(void)
             || (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER && gBattleTypeFlags & BATTLE_TYPE_RECORDED_LINK)
             || (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER))
         {
-            if ((gBattlerTarget & BIT_FLANK) != B_FLANK_LEFT)
+            if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+            {
+                // Under FULL each player battler has their own 6-mon array; scan all of it.
+                // party is already GetBattlerParty(gBattlerTarget) from above.
+                firstMonId = 0;
+                lastMonId = PARTY_SIZE;
+            }
+            else if ((gBattlerTarget & BIT_FLANK) != B_FLANK_LEFT)
             {
                 firstMonId = PARTY_SIZE / 2;
                 lastMonId = PARTY_SIZE;
@@ -11859,9 +11892,10 @@ u8 GetFirstFaintedPartyIndex(enum BattlerId battler)
     struct Pokemon *party = GetBattlerParty(battler);
 
     // Check whether partner is separate trainer (each has their own half of gPlayerParty/gEnemyParty).
-    // Under BATTLE_TYPE_TWO_OPPONENTS_FULL the enemy side uses separate per-battler arrays
-    // (GetBattlerParty already returns the right one); no half-split needed.
-    if ((IsOnPlayerSide(battler) && gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER)
+    // Under BATTLE_TYPE_TWO_OPPONENTS_FULL / BATTLE_TYPE_TWO_PLAYERS_FULL each battler has their own
+    // 6-mon array (GetBattlerParty already returns the right one); no half-split needed.
+    if ((IsOnPlayerSide(battler) && gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER
+            && !(gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL))
         || (!IsOnPlayerSide(battler) && gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS
             && !(gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL)))
     {

@@ -2003,6 +2003,17 @@ bool32 HasNoMonsToSwitch(enum BattlerId battler, u8 partyIdBattlerOn1, u8 partyI
             }
             return (i == PARTY_SIZE);
         }
+        else if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+        {
+            // Under FULL each player battler has their own 6-mon array; scan all of it.
+            // party is already GetBattlerParty(battler) from above.
+            for (i = 0; i < PARTY_SIZE; i++)
+            {
+                if (IsValidForBattle(&party[i]))
+                    break;
+            }
+            return (i == PARTY_SIZE);
+        }
         else
         {
             playerId = ((battler & BIT_FLANK) / 2);
