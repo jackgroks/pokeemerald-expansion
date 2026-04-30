@@ -1305,6 +1305,18 @@ u8 CreatePartyStatusSummarySprites(enum BattlerId battler, struct HpAndStatus *p
     isFullSide = (!isOpponent && (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL))
               || ( isOpponent && (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL));
 
+    // Reset row-2 sprite IDs for this battler unconditionally before any writes.
+    // sRow2BallIconSpriteIds is a file-static array, zero-initialized at program start
+    // but never reset between battles. After a FULL battle the IDs (0..63) remain; the
+    // next non-FULL battle's Task_HidePartyStatusSummary checks != MAX_SPRITES and calls
+    // DestroySprite() on the stale IDs, corrupting active healthbox/summary sprites and
+    // stalling BATTLE_INTRO_STATE_WAIT_FOR_PARTY_SUMMARY indefinitely.
+    {
+        s32 k;
+        for (k = 0; k < PARTY_SIZE; k++)
+            sRow2BallIconSpriteIds[battler][k] = MAX_SPRITES;
+    }
+
     if (isFullSide)
     {
         // Create row-2 balls (partner-party slots 0..PARTY_SIZE-1) positioned

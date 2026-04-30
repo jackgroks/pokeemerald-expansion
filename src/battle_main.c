@@ -518,10 +518,12 @@ static void CB2_InitBattleInternal(void)
     // Both FULL flags refuse a shared list of incompatible orthogonal modes.
     // (NOTE: BATTLE_TYPE_INGAME_PARTNER is REMOVED from the refusal list —
     // full-doubles explicitly supports INGAME_PARTNER + FULL combinations.)
+    // (NOTE: BATTLE_TYPE_MULTI is also permitted — it is always set alongside
+    // BATTLE_TYPE_INGAME_PARTNER for every partner-doubles battle. Refusing MULTI
+    // here would block all INGAME_PARTNER + FULL configurations.)
     if (gBattleTypeFlags & (BATTLE_TYPE_TWO_OPPONENTS_FULL | BATTLE_TYPE_TWO_PLAYERS_FULL))
     {
-        AGB_ASSERT(!(gBattleTypeFlags & (BATTLE_TYPE_MULTI
-                                       | BATTLE_TYPE_FRONTIER
+        AGB_ASSERT(!(gBattleTypeFlags & (BATTLE_TYPE_FRONTIER
                                        | BATTLE_TYPE_LINK
                                        | BATTLE_TYPE_RECORDED
                                        | BATTLE_TYPE_TRAINER_HILL
@@ -1374,20 +1376,47 @@ static void SetMultiPartnerMenuParty(u8 offset)
 {
     s32 i;
 
-    for (i = 0; i < MULTI_PARTY_SIZE; i++)
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
     {
-        gMultiPartnerParty[i].species     = GetMonData(&gPlayerParty[offset + i], MON_DATA_SPECIES);
-        gMultiPartnerParty[i].heldItem    = GetMonData(&gPlayerParty[offset + i], MON_DATA_HELD_ITEM);
-        GetMonData(&gPlayerParty[offset + i], MON_DATA_NICKNAME, gMultiPartnerParty[i].nickname);
-        gMultiPartnerParty[i].level       = GetMonData(&gPlayerParty[offset + i], MON_DATA_LEVEL);
-        gMultiPartnerParty[i].hp          = GetMonData(&gPlayerParty[offset + i], MON_DATA_HP);
-        gMultiPartnerParty[i].maxhp       = GetMonData(&gPlayerParty[offset + i], MON_DATA_MAX_HP);
-        gMultiPartnerParty[i].status      = GetMonData(&gPlayerParty[offset + i], MON_DATA_STATUS);
-        gMultiPartnerParty[i].personality = GetMonData(&gPlayerParty[offset + i], MON_DATA_PERSONALITY);
-        gMultiPartnerParty[i].gender      = GetMonGender(&gPlayerParty[offset + i]);
-        StripExtCtrlCodes(gMultiPartnerParty[i].nickname);
-        if (GetMonData(&gPlayerParty[offset + i], MON_DATA_LANGUAGE) != LANGUAGE_JAPANESE)
-            PadNameString(gMultiPartnerParty[i].nickname, CHAR_SPACE);
+        // Under TWO_PLAYERS_FULL the partner has its own 6-mon party in
+        // gPartnerPlayerParty, not in gPlayerParty[3..5]. gMultiPartnerParty is
+        // sized MULTI_PARTY_SIZE (3) so we copy only the first 3 mons as a
+        // preview showcase — the full 6-mon party is still at gPartnerPlayerParty
+        // for actual battle use.
+        for (i = 0; i < MULTI_PARTY_SIZE; i++)
+        {
+            gMultiPartnerParty[i].species     = GetMonData(&gPartnerPlayerParty[i], MON_DATA_SPECIES);
+            gMultiPartnerParty[i].heldItem    = GetMonData(&gPartnerPlayerParty[i], MON_DATA_HELD_ITEM);
+            GetMonData(&gPartnerPlayerParty[i], MON_DATA_NICKNAME, gMultiPartnerParty[i].nickname);
+            gMultiPartnerParty[i].level       = GetMonData(&gPartnerPlayerParty[i], MON_DATA_LEVEL);
+            gMultiPartnerParty[i].hp          = GetMonData(&gPartnerPlayerParty[i], MON_DATA_HP);
+            gMultiPartnerParty[i].maxhp       = GetMonData(&gPartnerPlayerParty[i], MON_DATA_MAX_HP);
+            gMultiPartnerParty[i].status      = GetMonData(&gPartnerPlayerParty[i], MON_DATA_STATUS);
+            gMultiPartnerParty[i].personality = GetMonData(&gPartnerPlayerParty[i], MON_DATA_PERSONALITY);
+            gMultiPartnerParty[i].gender      = GetMonGender(&gPartnerPlayerParty[i]);
+            StripExtCtrlCodes(gMultiPartnerParty[i].nickname);
+            if (GetMonData(&gPartnerPlayerParty[i], MON_DATA_LANGUAGE) != LANGUAGE_JAPANESE)
+                PadNameString(gMultiPartnerParty[i].nickname, CHAR_SPACE);
+        }
+    }
+    else
+    {
+        // Vanilla path: partner mons occupy gPlayerParty[offset..offset+MULTI_PARTY_SIZE-1].
+        for (i = 0; i < MULTI_PARTY_SIZE; i++)
+        {
+            gMultiPartnerParty[i].species     = GetMonData(&gPlayerParty[offset + i], MON_DATA_SPECIES);
+            gMultiPartnerParty[i].heldItem    = GetMonData(&gPlayerParty[offset + i], MON_DATA_HELD_ITEM);
+            GetMonData(&gPlayerParty[offset + i], MON_DATA_NICKNAME, gMultiPartnerParty[i].nickname);
+            gMultiPartnerParty[i].level       = GetMonData(&gPlayerParty[offset + i], MON_DATA_LEVEL);
+            gMultiPartnerParty[i].hp          = GetMonData(&gPlayerParty[offset + i], MON_DATA_HP);
+            gMultiPartnerParty[i].maxhp       = GetMonData(&gPlayerParty[offset + i], MON_DATA_MAX_HP);
+            gMultiPartnerParty[i].status      = GetMonData(&gPlayerParty[offset + i], MON_DATA_STATUS);
+            gMultiPartnerParty[i].personality = GetMonData(&gPlayerParty[offset + i], MON_DATA_PERSONALITY);
+            gMultiPartnerParty[i].gender      = GetMonGender(&gPlayerParty[offset + i]);
+            StripExtCtrlCodes(gMultiPartnerParty[i].nickname);
+            if (GetMonData(&gPlayerParty[offset + i], MON_DATA_LANGUAGE) != LANGUAGE_JAPANESE)
+                PadNameString(gMultiPartnerParty[i].nickname, CHAR_SPACE);
+        }
     }
     memcpy(sMultiPartnerPartyBuffer, gMultiPartnerParty, sizeof(gMultiPartnerParty));
 }
