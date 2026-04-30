@@ -3524,7 +3524,7 @@ void SetMoveEffect(enum BattlerId battlerAtk, enum BattlerId effectBattler, enum
                 gBattlescriptCurrInstr = BattleScript_TargetPRLZHeal;
                 break;
             case STATUS1_SLEEP:
-                TryDeactivateSleepClause(GetBattlerSide(gEffectBattler), gBattlerPartyIndexes[gBattlerTarget]);
+                TryDeactivateSleepClause(gEffectBattler, gBattlerPartyIndexes[gBattlerTarget]);
                 gBattlescriptCurrInstr = BattleScript_TargetWokeUp;
                 break;
             case STATUS1_BURN:
@@ -3880,7 +3880,7 @@ static void Cmd_tryfaintmon(void)
                 gSideTimers[B_SIDE_OPPONENT].retaliateTimer = 2;
             }
 
-            TryDeactivateSleepClause(GetBattlerSide(battler), gBattlerPartyIndexes[battler]);
+            TryDeactivateSleepClause(battler, gBattlerPartyIndexes[battler]);
         }
         else
         {
@@ -9186,7 +9186,7 @@ static void Cmd_healpartystatus(void)
             if (!(isSoundMove && ability == ABILITY_SOUNDPROOF))
             {
                 toHeal |= (1 << i);
-                TryDeactivateSleepClause(GetBattlerSide(gBattlerAttacker), i);
+                TryDeactivateSleepClause(gBattlerAttacker, i);
             }
         }
     }
@@ -9662,7 +9662,7 @@ static void Cmd_curestatuswithmove(void)
     if (shouldHeal)
     {
         if (gBattleMons[gBattlerAttacker].status1 & STATUS1_SLEEP)
-            TryDeactivateSleepClause(GetBattlerSide(gBattlerAttacker), gBattlerPartyIndexes[gBattlerAttacker]);
+            TryDeactivateSleepClause(gBattlerAttacker, gBattlerPartyIndexes[gBattlerAttacker]);
 
         gBattleMons[gBattlerAttacker].status1 = 0;
         gBattlescriptCurrInstr = cmd->nextInstr;
@@ -10215,7 +10215,7 @@ static void Cmd_switchoutabilities(void)
     {
     case ABILITY_NATURAL_CURE:
         if (gBattleMons[battler].status1 & STATUS1_SLEEP)
-            TryDeactivateSleepClause(GetBattlerSide(battler), gBattlerPartyIndexes[battler]);
+            TryDeactivateSleepClause(battler, gBattlerPartyIndexes[battler]);
 
         gBattleMons[battler].status1 = 0;
         BtlController_EmitSetMonData(battler, B_COMM_TO_CONTROLLER, REQUEST_STATUS_BATTLE,
@@ -11092,7 +11092,7 @@ static void Cmd_givecaughtmon(void)
                     GetMonNickname(&gPlayerParty[gSelectedMonPartyId], gStringVar2);
                     StringCopy(gStringVar1, GetBoxNamePtr(GetPCBoxToSendMon()));
                     ZeroMonData(&gPlayerParty[gSelectedMonPartyId]);
-                    gBattleStruct->itemLost[B_SIDE_PLAYER][gSelectedMonPartyId].originalItem = ITEM_NONE;
+                    gBattleStruct->itemLost[B_BATTLER_0][gSelectedMonPartyId].originalItem = ITEM_NONE;
                     gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SWAPPED_INTO_PARTY;
                     gSelectedMonPartyId = PARTY_SIZE;
                     gBattleCommunication[MULTIUSE_STATE] = GIVECAUGHTMON_GIVE_AND_SHOW_MSG;
@@ -11110,7 +11110,7 @@ static void Cmd_givecaughtmon(void)
         struct Pokemon *caughtMon = GetBattlerMon(GetCatchingBattler());
         if (B_RESTORE_HELD_BATTLE_ITEMS >= GEN_9)
         {
-            u16 lostItem = gBattleStruct->itemLost[B_SIDE_OPPONENT][gBattlerPartyIndexes[GetCatchingBattler()]].originalItem;
+            u16 lostItem = gBattleStruct->itemLost[GetCatchingBattler()][gBattlerPartyIndexes[GetCatchingBattler()]].originalItem;
             if (lostItem != ITEM_NONE && GetItemPocket(lostItem) != POCKET_BERRIES)
                 SetMonData(caughtMon, MON_DATA_HELD_ITEM, &lostItem);  // Restore non-berry items
         }
@@ -12680,7 +12680,7 @@ void BS_JumpIfSleepClause(void)
     }
     gBattleStruct->battlerState[gBattlerTarget].sleepClauseEffectExempt = FALSE;
     // Can't sleep if clause is active otherwise
-    if (IsSleepClauseActiveForSide(GetBattlerSide(gBattlerTarget)))
+    if (IsSleepClauseActiveForSide(gBattlerTarget))
         gBattlescriptCurrInstr = cmd->jumpInstr;
     else
         gBattlescriptCurrInstr = cmd->nextInstr;
@@ -14332,7 +14332,7 @@ void BS_TryPsychoShift(void)
     {
         gBattleCommunication[MULTISTRING_CHOOSER] = 5;
     }
-    else if (IsSleepClauseActiveForSide(GetBattlerSide(gBattlerTarget)))
+    else if (IsSleepClauseActiveForSide(gBattlerTarget))
     {
         gBattlescriptCurrInstr = cmd->sleepClauseFailInstr;
         return;
@@ -14361,7 +14361,7 @@ void BS_CureStatus(void)
     enum BattlerId battler = GetBattlerForBattleScript(cmd->battler);
 
     if (gBattleMons[battler].status1 & STATUS1_SLEEP)
-        TryDeactivateSleepClause(GetBattlerSide(battler), gBattlerPartyIndexes[battler]);
+        TryDeactivateSleepClause(battler, gBattlerPartyIndexes[battler]);
 
     gBattleMons[battler].status1 = 0;
     BtlController_EmitSetMonData(battler, B_COMM_TO_CONTROLLER, REQUEST_STATUS_BATTLE, 0, sizeof(gBattleMons[battler].status1), &gBattleMons[battler].status1);

@@ -3182,8 +3182,11 @@ static void BattleStartClearSetData(void)
         s32 b;
         for (b = 0; b < MAX_BATTLERS_COUNT; b++)
             gBattleStruct->partyState[b][i].usedHeldItem = ITEM_NONE;
-        gBattleStruct->itemLost[B_SIDE_PLAYER][i].originalItem = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
-        gBattleStruct->itemLost[B_SIDE_OPPONENT][i].originalItem = GetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM);
+        {
+            s32 b;
+            for (b = 0; b < MAX_BATTLERS_COUNT; b++)
+                gBattleStruct->itemLost[b][i].originalItem = GetMonData(&GetBattlerParty(b)[i], MON_DATA_HELD_ITEM);
+        }
         gPartyCriticalHits[i] = 0;
     }
 
@@ -3196,9 +3199,9 @@ static void BattleStartClearSetData(void)
 
     if (IsSleepClauseEnabled())
     {
-        // If monCausingSleepClause[side] equals PARTY_SIZE, Sleep Clause is not active for the given side.
-        gBattleStruct->monCausingSleepClause[B_SIDE_PLAYER] = PARTY_SIZE;
-        gBattleStruct->monCausingSleepClause[B_SIDE_OPPONENT] = PARTY_SIZE;
+        // If monCausingSleepClause[battler] equals PARTY_SIZE, Sleep Clause is not active for the given battler.
+        for (i = 0; i < MAX_BATTLERS_COUNT; i++)
+            gBattleStruct->monCausingSleepClause[i] = PARTY_SIZE;
     }
 }
 

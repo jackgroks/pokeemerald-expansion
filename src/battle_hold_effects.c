@@ -739,7 +739,7 @@ static enum ItemEffect TryCureSleep(enum BattlerId battler)
         gBattleMons[battler].status1 &= ~STATUS1_SLEEP;
         gBattleMons[battler].volatiles.nightmare = FALSE;
         gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_CURED_SLEEP;
-        TryDeactivateSleepClause(GetBattlerSide(battler), gBattlerPartyIndexes[battler]);
+        TryDeactivateSleepClause(battler, gBattlerPartyIndexes[battler]);
         BattleScriptCall(BattleScript_BerryCureStatusRet);
         effect = ITEM_STATUS_CHANGE;
     }
@@ -777,7 +777,7 @@ static enum ItemEffect TryCureAnyStatus(enum BattlerId battler)
         {
             gBattleMons[battler].volatiles.nightmare = FALSE;
             StringCopy(gBattleTextBuff1, gStatusConditionString_SleepJpn);
-            TryDeactivateSleepClause(GetBattlerSide(battler), gBattlerPartyIndexes[battler]);
+            TryDeactivateSleepClause(battler, gBattlerPartyIndexes[battler]);
             string++;
         }
         if (gBattleMons[battler].status1 & STATUS1_PARALYSIS)
