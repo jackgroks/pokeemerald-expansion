@@ -227,6 +227,26 @@ Route101_Text_FullDuoDefeat:
 Route101_Text_FullDuoAfter:
 	.string "Great battle!$"
 
+@ Test event for the 12v12 (TWO_OPPONENTS_FULL | TWO_PLAYERS_FULL) configuration.
+@ Player interacts with the Hiker → 12v12 doubles battle launches via the
+@ trainerbattle_double_full_both script command (mode 11). The script sets
+@ gPartnerTrainerId to PARTNER_PLAYER_CONTROLLED so the human pilots the
+@ player-side partner; SetPartnerTrainerIdFromVar reads VAR_0x8004 and
+@ writes gPartnerTrainerId before the trainerbattle dispatch fires.
+Route101_EventScript_FullDoubles::
+	special SavePlayerParty
+	setvar VAR_0x8004, PARTNER_PLAYER_CONTROLLED
+	special SetPartnerTrainerIdFromVar
+	trainerbattle_double_full_both TRAINER_DEBUG_FULL_OPP_GEN3, Route101_Text_FullDoublesDefeat, TRAINER_DEBUG_FULL_OPP_GEN4, Route101_Text_FullDoublesDefeat
+	msgbox Route101_Text_FullDoublesAfter, MSGBOX_AUTOCLOSE
+	end
+
+Route101_Text_FullDoublesDefeat:
+	.string "We lost!$"
+
+Route101_Text_FullDoublesAfter:
+	.string "Quite a battle!$"
+
 Route101_EventScript_RouteSign::
 	msgbox Route101_Text_RouteSign, MSGBOX_SIGN
 	end
