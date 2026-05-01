@@ -1344,10 +1344,16 @@ void BattleSetup_StartTrainerBattle(void)
         gBattleTypeFlags |= BATTLE_TYPE_TWO_OPPONENTS_FULL;
         break;
     case TRAINER_BATTLE_DOUBLE_FULL_PLAYERS:
-        gBattleTypeFlags |= BATTLE_TYPE_TWO_PLAYERS_FULL;
+        // Player-side full party + scripted partner (e.g. PARTNER_PLAYER_CONTROLLED).
+        // The vanilla flag-init above doesn't set MULTI/INGAME_PARTNER unless a follower NPC
+        // is the battle partner; for these script-driven partners the script sets
+        // gPartnerTrainerId before calling trainerbattle, and we layer the multi flags here.
+        gBattleTypeFlags |= BATTLE_TYPE_TWO_PLAYERS_FULL | BATTLE_TYPE_DOUBLE | BATTLE_TYPE_MULTI | BATTLE_TYPE_INGAME_PARTNER;
         break;
     case TRAINER_BATTLE_DOUBLE_FULL_BOTH:
-        gBattleTypeFlags |= BATTLE_TYPE_TWO_OPPONENTS_FULL | BATTLE_TYPE_TWO_PLAYERS_FULL;
+        // 12v12. gNoOfApproachingTrainers==2 already gave us DOUBLE | TWO_OPPONENTS | TRAINER;
+        // layer FULL flags on both sides and the multi/partner flags for the player-side partner.
+        gBattleTypeFlags |= BATTLE_TYPE_TWO_OPPONENTS_FULL | BATTLE_TYPE_TWO_PLAYERS_FULL | BATTLE_TYPE_MULTI | BATTLE_TYPE_INGAME_PARTNER;
         break;
     }
 
@@ -2159,4 +2165,12 @@ void SetMultiTrainerBattle(struct ScriptContext *ctx)
     TRAINER_BATTLE_PARAM.defeatTextB = (u8*)ScriptReadWord(ctx);
     gPartnerTrainerId = TRAINER_PARTNER(ScriptReadHalfword(ctx));
 };
+
+// Sets gPartnerTrainerId from gSpecialVar_0x8004 (interpreted as a PARTNER_* constant).
+// Companion to the trainerbattle_double_full_players / _both macros: scripts can set
+// the partner id without going through the multi-battle/frontier setup pipeline.
+void SetPartnerTrainerIdFromVar(void)
+{
+    gPartnerTrainerId = TRAINER_PARTNER(gSpecialVar_0x8004);
+}
 
