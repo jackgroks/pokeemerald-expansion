@@ -4176,6 +4176,11 @@ void SwitchTwoBattlersInParty(enum BattlerId battler, enum BattlerId battler2)
 {
     s32 i;
     u32 partyId1, partyId2;
+    // Under TWO_PLAYERS_FULL / TWO_OPPONENTS_FULL the two flanks of a side own
+    // disjoint linear parties (gPlayerParty vs gPartnerPlayerParty, and
+    // gEnemyParty vs gPartnerEnemyParty). Mirroring the order onto the partner
+    // would clobber its independent ordering.
+    bool32 mirrorToPartner = (GetBattlerParty(battler) == GetBattlerParty(BATTLE_PARTNER(battler)));
 
     for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
         gBattlePartyCurrentOrder[i] = *(battler * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders));
@@ -4187,7 +4192,8 @@ void SwitchTwoBattlersInParty(enum BattlerId battler, enum BattlerId battler2)
     for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
     {
         *(battler * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
-        *(BATTLE_PARTNER(battler) * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
+        if (mirrorToPartner)
+            *(BATTLE_PARTNER(battler) * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
     }
 }
 
@@ -4195,6 +4201,8 @@ void SwitchPartyOrder(enum BattlerId battler)
 {
     s32 i;
     u32 partyId1, partyId2;
+    // See SwitchTwoBattlersInParty above — disjoint flanks under FULL flags.
+    bool32 mirrorToPartner = (GetBattlerParty(battler) == GetBattlerParty(BATTLE_PARTNER(battler)));
 
     for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
         gBattlePartyCurrentOrder[i] = *(battler * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders));
@@ -4208,7 +4216,8 @@ void SwitchPartyOrder(enum BattlerId battler)
         for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
         {
             *(battler * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
-            *(BATTLE_PARTNER(battler) * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
+            if (mirrorToPartner)
+                *(BATTLE_PARTNER(battler) * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
         }
     }
     else

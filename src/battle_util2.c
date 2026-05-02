@@ -111,13 +111,17 @@ void SwitchPartyOrderInGameMulti(enum BattlerId battler, u8 arg1)
     if (IsOnPlayerSide(battler))
     {
         s32 i;
+        // Per-battler offset (battler * 3) — without it, this function reads/writes
+        // B_BATTLER_0's slot regardless of caller. Vanilla MULTI mirrored slot 0 ↔
+        // slot 2 via SwitchTwoBattlersInParty's cross-write; under TWO_PLAYERS_FULL
+        // the cross-write is suppressed, so the missing offset becomes a hard bug.
         for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
-            gBattlePartyCurrentOrder[i] = *(i + (u8 *)(gBattleStruct->battlerPartyOrders));
+            gBattlePartyCurrentOrder[i] = *(battler * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders));
 
         SwitchPartyMonSlots(GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[battler]), GetPartyIdFromBattlePartyId(arg1));
 
         for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
-            *(i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
+            *(battler * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
     }
 }
 
