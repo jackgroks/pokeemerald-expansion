@@ -1197,11 +1197,18 @@ void SwapHpBarsWithHpText(void)
 #undef tPosX
 #undef tLevelXDelta
 
+// Row-2 ball sprite IDs for FULL-flag sides (12-ball 2-row layout).
+// Indexed [battler][0..PARTY_SIZE-1]. Set to MAX_SPRITES when unused.
+static u8 sRow2BallIconSpriteIds[MAX_BATTLERS_COUNT][PARTY_SIZE];
+
 #define tBattler                data[0]
 #define tSummaryBarSpriteId     data[1]
 #define tBallIconSpriteId(n)    data[3 + n]
 #define tIsBattleStart          data[10]
 #define tBlend                  data[15]
+
+// Vertical offset between the two rows: ball sprite height (8 px) + 2 px gap.
+#define BALL_ROW2_Y_OFFSET      10
 
 u8 CreatePartyStatusSummarySprites(enum BattlerId battler, struct HpAndStatus *partyInfo, bool8 skipPlayer, bool8 isBattleStart)
 {
@@ -1210,6 +1217,7 @@ u8 CreatePartyStatusSummarySprites(enum BattlerId battler, struct HpAndStatus *p
     s32 i, j, var;
     u8 summaryBarSpriteId;
     u8 ballIconSpritesIds[PARTY_SIZE];
+    bool32 isFullSide;
     u8 taskId;
 
     if (!skipPlayer || GetBattlerPosition(battler) != B_POSITION_OPPONENT_RIGHT)
@@ -1291,6 +1299,89 @@ u8 CreatePartyStatusSummarySprites(enum BattlerId battler, struct HpAndStatus *p
         }
 
         gSprites[ballIconSpritesIds[i]].data[2] = isOpponent;
+    }
+
+    // Determine whether this side needs the 12-ball two-row layout.
+    isFullSide = (!isOpponent && (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL))
+              || ( isOpponent && (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL));
+
+    // Reset row-2 sprite IDs for this battler unconditionally before any writes.
+    // sRow2BallIconSpriteIds is a file-static array, zero-initialized at program start
+    // but never reset between battles. After a FULL battle the IDs (0..63) remain; the
+    // next non-FULL battle's Task_HidePartyStatusSummary checks != MAX_SPRITES and calls
+    // DestroySprite() on the stale IDs, corrupting active healthbox/summary sprites and
+    // stalling BATTLE_INTRO_STATE_WAIT_FOR_PARTY_SUMMARY indefinitely.
+    {
+        s32 k;
+        for (k = 0; k < PARTY_SIZE; k++)
+            sRow2BallIconSpriteIds[battler][k] = MAX_SPRITES;
+    }
+
+    if (isFullSide)
+    {
+        // Create row-2 balls (partner-party slots 0..PARTY_SIZE-1) positioned
+        // BALL_ROW2_Y_OFFSET pixels below the first row.
+        struct Pokemon *partnerParty = isOpponent ? gPartnerEnemyParty : gPartnerPlayerParty;
+
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            sRow2BallIconSpriteIds[battler][i] = CreateSpriteAtEnd(
+                &sStatusSummaryBallsSpriteTemplates[isOpponent],
+                bar_X, bar_Y - 4 + BALL_ROW2_Y_OFFSET, 9);
+
+            if (!isBattleStart)
+                gSprites[sRow2BallIconSpriteIds[battler][i]].callback = SpriteCB_StatusSummaryBalls_OnSwitchout;
+
+            if (!isOpponent)
+            {
+                gSprites[sRow2BallIconSpriteIds[battler][i]].x2 = 0;
+                gSprites[sRow2BallIconSpriteIds[battler][i]].y2 = 0;
+            }
+
+            gSprites[sRow2BallIconSpriteIds[battler][i]].data[0] = summaryBarSpriteId;
+
+            if (!isOpponent)
+            {
+                gSprites[sRow2BallIconSpriteIds[battler][i]].x += 10 * i + 24;
+                gSprites[sRow2BallIconSpriteIds[battler][i]].data[1] = i * 7 + 10;
+                gSprites[sRow2BallIconSpriteIds[battler][i]].x2 = 120;
+            }
+            else
+            {
+                gSprites[sRow2BallIconSpriteIds[battler][i]].x -= 10 * (5 - i) + 24;
+                gSprites[sRow2BallIconSpriteIds[battler][i]].data[1] = (6 - i) * 7 + 10;
+                gSprites[sRow2BallIconSpriteIds[battler][i]].x2 = -120;
+            }
+
+            gSprites[sRow2BallIconSpriteIds[battler][i]].data[2] = isOpponent;
+
+            // Apply status tile for each partner mon.
+            {
+                u16 hp     = GetMonData(&partnerParty[i], MON_DATA_HP);
+                u32 status = GetMonData(&partnerParty[i], MON_DATA_STATUS);
+                u16 species = GetMonData(&partnerParty[i], MON_DATA_SPECIES_OR_EGG);
+
+                if (species == SPECIES_NONE || species == SPECIES_EGG)
+                {
+                    gSprites[sRow2BallIconSpriteIds[battler][i]].oam.tileNum += 1;
+                    gSprites[sRow2BallIconSpriteIds[battler][i]].data[7] = 1;
+                }
+                else if (hp == 0)
+                {
+                    gSprites[sRow2BallIconSpriteIds[battler][i]].oam.tileNum += 3;
+                }
+                else if (status != 0)
+                {
+                    gSprites[sRow2BallIconSpriteIds[battler][i]].oam.tileNum += 2;
+                }
+            }
+        }
+    }
+    else
+    {
+        // Mark row-2 slots unused for this battler.
+        for (i = 0; i < PARTY_SIZE; i++)
+            sRow2BallIconSpriteIds[battler][i] = MAX_SPRITES;
     }
 
     if (IsOnPlayerSide(battler))
@@ -1447,6 +1538,13 @@ void Task_HidePartyStatusSummary(u8 taskId)
     for (i = 0; i < PARTY_SIZE; i++)
         gSprites[ballIconSpriteIds[i]].oam.objMode = ST_OAM_OBJ_BLEND;
 
+    // Blend-mode row-2 balls if present.
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (sRow2BallIconSpriteIds[battler][i] != MAX_SPRITES)
+            gSprites[sRow2BallIconSpriteIds[battler][i]].oam.objMode = ST_OAM_OBJ_BLEND;
+    }
+
     gSprites[summaryBarSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
 
     if (isBattleStart)
@@ -1466,6 +1564,18 @@ void Task_HidePartyStatusSummary(u8 taskId)
                 gSprites[ballIconSpriteIds[i]].data[3] = 0;
                 gSprites[ballIconSpriteIds[i]].data[4] = 0;
                 gSprites[ballIconSpriteIds[i]].callback = SpriteCB_StatusSummaryBalls_Exit;
+            }
+        }
+        // Set exit callbacks on row-2 balls (same slide-out direction as row 1).
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            u8 idx = IsOnPlayerSide(battler) ? i : (PARTY_SIZE - 1 - i);
+            if (sRow2BallIconSpriteIds[battler][idx] != MAX_SPRITES)
+            {
+                gSprites[sRow2BallIconSpriteIds[battler][idx]].data[1] = 7 * i;
+                gSprites[sRow2BallIconSpriteIds[battler][idx]].data[3] = 0;
+                gSprites[sRow2BallIconSpriteIds[battler][idx]].data[4] = 0;
+                gSprites[sRow2BallIconSpriteIds[battler][idx]].callback = SpriteCB_StatusSummaryBalls_Exit;
             }
         }
         gSprites[summaryBarSpriteId].data[0] /= 2;
@@ -1522,6 +1632,16 @@ static void Task_HidePartyStatusSummary_BattleStart_2(u8 taskId)
 
         for (i = 1; i < PARTY_SIZE; i++)
             DestroySprite(&gSprites[ballIconSpriteIds[i]]);
+
+        // Destroy row-2 balls if present.
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (sRow2BallIconSpriteIds[battler][i] != MAX_SPRITES)
+            {
+                DestroySprite(&gSprites[sRow2BallIconSpriteIds[battler][i]]);
+                sRow2BallIconSpriteIds[battler][i] = MAX_SPRITES;
+            }
+        }
     }
     else if (gTasks[taskId].tBlend == -3)
     {
@@ -1554,6 +1674,16 @@ static void Task_HidePartyStatusSummary_DuringBattle(u8 taskId)
 
         for (i = 1; i < PARTY_SIZE; i++)
             DestroySprite(&gSprites[ballIconSpriteIds[i]]);
+
+        // Destroy row-2 balls if present.
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (sRow2BallIconSpriteIds[battler][i] != MAX_SPRITES)
+            {
+                DestroySprite(&gSprites[sRow2BallIconSpriteIds[battler][i]]);
+                sRow2BallIconSpriteIds[battler][i] = MAX_SPRITES;
+            }
+        }
     }
     else if (gTasks[taskId].tBlend == -3)
     {

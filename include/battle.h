@@ -191,10 +191,10 @@ struct AiPartyMon
     u8 padding:4;
 };
 
-struct AiPartyData // Opposing battlers - party mons.
+struct AiPartyData // Per-battler party knowledge cache.
 {
-    struct AiPartyMon mons[NUM_BATTLE_SIDES][PARTY_SIZE]; // 2 parties(player, opponent). Used to save information on opposing party.
-    u8 count[NUM_BATTLE_SIDES];
+    struct AiPartyMon mons[MAX_BATTLERS_COUNT][PARTY_SIZE]; // Per-battler keying — under FULL flags two battlers share a side with non-overlapping pools.
+    u8 count[MAX_BATTLERS_COUNT];
 };
 
 struct SimulatedDamage
@@ -450,7 +450,7 @@ struct BattleGimmickData
     u8 triggerSpriteId;
     u8 indicatorSpriteId[MAX_BATTLERS_COUNT];
     u8 toActivate;                                       // stores whether a battler should transform at start of turn as bitfield
-    u8 activeGimmick[NUM_BATTLE_SIDES][PARTY_SIZE];      // stores the active gimmick for each party member
+    u8 activeGimmick[MAX_BATTLERS_COUNT][PARTY_SIZE];     // stores the active gimmick for each party member (per battler)
     bool8 activated[MAX_BATTLERS_COUNT][GIMMICKS_COUNT]; // stores whether a trainer has used gimmick
 };
 
@@ -549,7 +549,7 @@ struct EventStates
 struct BattleStruct
 {
     struct BattlerState battlerState[MAX_BATTLERS_COUNT];
-    struct PartyState partyState[NUM_BATTLE_SIDES][PARTY_SIZE];
+    struct PartyState partyState[MAX_BATTLERS_COUNT][PARTY_SIZE];
     struct EventStates eventState;
     struct FutureSight futureSight[MAX_BATTLERS_COUNT];
     struct Wish wish[MAX_BATTLERS_COUNT];
@@ -645,7 +645,7 @@ struct BattleStruct
     enum BattlerId soulheartBattlerId;
     enum BattlerId friskedBattler; // Frisk needs to identify 2 battlers in double battles.
     enum BattlerId quickClawBattlerId;
-    struct LostItem itemLost[NUM_BATTLE_SIDES][PARTY_SIZE];  // Pokemon that had items consumed or stolen (two bytes per party member per side)
+    struct LostItem itemLost[MAX_BATTLERS_COUNT][PARTY_SIZE];  // Pokemon that had items consumed or stolen (two bytes per party member per battler)
     u8 blunderPolicy:1; // should blunder policy activate
     u8 swapDamageCategory:1; // Photon Geyser, Shell Side Arm, Light That Burns the Sky
     u8 bouncedMoveIsUsed:1;
@@ -673,8 +673,8 @@ struct BattleStruct
     u8 shellSideArmCategory[MAX_BATTLERS_COUNT][MAX_BATTLERS_COUNT];
     u8 speedTieBreaks; // MAX_BATTLERS_COUNT! values.
     enum DamageCategory categoryOverride:8; // for Z-Moves and Max Moves
-    u32 stellarBoostFlags[NUM_BATTLE_SIDES]; // stored as a bitfield of flags for all types for each side
-    u8 monCausingSleepClause[NUM_BATTLE_SIDES]; // Stores which pokemon on a given side is causing Sleep Clause to be active as the mon's index in the party
+    u32 stellarBoostFlags[MAX_BATTLERS_COUNT]; // stored as a bitfield of flags for all types for each battler
+    u8 monCausingSleepClause[MAX_BATTLERS_COUNT]; // Stores which pokemon for a given battler is causing Sleep Clause to be active as the mon's index in the party
     u16 opponentMonCanTera:6;
     u16 opponentMonCanDynamax:6;
     u16 additionalEffectsCounter:4; // A counter for the additionalEffects applied by the current move in Cmd_setadditionaleffects
@@ -1136,7 +1136,12 @@ static inline enum BattlerId GetOpposingSideBattler(enum BattlerId battler)
 static inline struct Pokemon *GetBattlerParty(enum BattlerId battler)
 {
     if (IsOnPlayerSide(battler))
+    {
+        if ((gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+            && battler == B_BATTLER_2)
+            return gPartnerPlayerParty;
         return gPlayerParty;
+    }
     if ((gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL)
         && battler == B_BATTLER_3)
         return gPartnerEnemyParty;
@@ -1155,7 +1160,7 @@ static inline struct Pokemon *GetSideParty(enum BattleSide side)
 
 static inline struct PartyState *GetBattlerPartyState(enum BattlerId battler)
 {
-    return &gBattleStruct->partyState[GetBattlerSide(battler)][gBattlerPartyIndexes[battler]];
+    return &gBattleStruct->partyState[battler][gBattlerPartyIndexes[battler]];
 }
 
 static inline bool32 IsDoubleBattle(void)

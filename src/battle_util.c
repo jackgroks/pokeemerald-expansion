@@ -2003,6 +2003,29 @@ bool32 HasNoMonsToSwitch(enum BattlerId battler, u8 partyIdBattlerOn1, u8 partyI
             }
             return (i == PARTY_SIZE);
         }
+        else if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+        {
+            // Under FULL each player battler has their own 6-mon array; scan all of it.
+            // party is already GetBattlerParty(battler) from above.
+            for (i = 0; i < PARTY_SIZE; i++)
+            {
+                if (IsValidForBattle(&party[i]))
+                    break;
+            }
+            return (i == PARTY_SIZE);
+        }
+        else if ((gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL) && !IsOnPlayerSide(battler))
+        {
+            // Under TWO_OPPONENTS_FULL each opponent battler owns a separate 6-mon array.
+            // party is already GetBattlerParty(battler) which returns gPartnerEnemyParty for
+            // B_BATTLER_3. Scan all 6 slots rather than the vanilla half-split.
+            for (i = 0; i < PARTY_SIZE; i++)
+            {
+                if (IsValidForBattle(&party[i]))
+                    break;
+            }
+            return (i == PARTY_SIZE);
+        }
         else
         {
             playerId = ((battler & BIT_FLANK) / 2);
@@ -3712,7 +3735,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
                     if (gBattleMons[battler].status1 & STATUS1_SLEEP)
                     {
                         StringCopy(gBattleTextBuff1, gStatusConditionString_SleepJpn);
-                        TryDeactivateSleepClause(GetBattlerSide(battler), gBattlerPartyIndexes[battler]);
+                        TryDeactivateSleepClause(battler, gBattlerPartyIndexes[battler]);
                     }
 
                     if (gBattleMons[battler].status1 & STATUS1_PARALYSIS)
@@ -5264,7 +5287,7 @@ enum Stat GetParadoxBoostedStatId(enum BattlerId battler)
 
 bool32 CanBeSlept(enum BattlerId battlerAtk, enum BattlerId battlerDef, enum Ability abilityDef, enum SleepClauseBlock isBlockedBySleepClause)
 {
-    if (IsSleepClauseActiveForSide(GetBattlerSide(battlerDef)) && isBlockedBySleepClause != NOT_BLOCKED_BY_SLEEP_CLAUSE)
+    if (IsSleepClauseActiveForSide(battlerDef) && isBlockedBySleepClause != NOT_BLOCKED_BY_SLEEP_CLAUSE)
         return FALSE;
 
     if (isBlockedBySleepClause == NOT_BLOCKED_BY_SLEEP_CLAUSE)
@@ -5566,7 +5589,7 @@ static bool32 CanSleepDueToSleepClause(enum BattlerId battlerAtk, enum BattlerId
     if (option == RUN_SCRIPT)
         gBattleStruct->battlerState[battlerDef].sleepClauseEffectExempt = FALSE;
     // Can't sleep if clause is active otherwise
-    if (IsSleepClauseActiveForSide(GetBattlerSide(battlerDef)))
+    if (IsSleepClauseActiveForSide(battlerDef))
         return TRUE;
 
     return FALSE;
@@ -5742,7 +5765,7 @@ enum Obedience GetAttackerObedienceForAction(void)
     if (GetActiveGimmick(gBattlerAttacker) == GIMMICK_Z_MOVE)
     {
         gBattleStruct->gimmick.activated[gBattlerAttacker][GIMMICK_Z_MOVE] = FALSE;
-        gBattleStruct->gimmick.activeGimmick[GetBattlerSide(gBattlerAttacker)][gBattlerPartyIndexes[gBattlerAttacker]] = GIMMICK_NONE;
+        gBattleStruct->gimmick.activeGimmick[gBattlerAttacker][gBattlerPartyIndexes[gBattlerAttacker]] = GIMMICK_NONE;
     }
 
     // is not obedient
@@ -8796,17 +8819,32 @@ static bool32 CanBattlerFormChange(enum BattlerId battler, enum FormChanges meth
 
 bool32 TryRevertPartyMonFormChange(u32 partyIndex)
 {
-     bool32 changedForm = FALSE;
+    bool32 changedForm = FALSE;
 
+    // gPlayerParty[partyIndex] — primary player party (battler 0)
     // Appeared in battle and didn't faint
-    if (gBattleStruct->partyState[B_SIDE_PLAYER][partyIndex].sentOut && GetMonData(&gPlayerParty[partyIndex], MON_DATA_HP) != 0)
+    if (gBattleStruct->partyState[B_BATTLER_0][partyIndex].sentOut && GetMonData(&gPlayerParty[partyIndex], MON_DATA_HP) != 0)
         changedForm = TryFormChange(&gPlayerParty[partyIndex], FORM_CHANGE_END_BATTLE_ENVIRONMENT);
 
     if (!changedForm)
         changedForm = TryFormChange(&gPlayerParty[partyIndex], FORM_CHANGE_END_BATTLE);
 
     // Clear original species field
-    gBattleStruct->partyState[B_SIDE_PLAYER][partyIndex].changedSpecies = SPECIES_NONE;
+    gBattleStruct->partyState[B_BATTLER_0][partyIndex].changedSpecies = SPECIES_NONE;
+
+    // gPartnerPlayerParty[partyIndex] — partner player party (battler 2), only under TWO_PLAYERS_FULL
+    // Vanilla AI mons don't persist post-battle so no opponent-side revert path is needed.
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+    {
+        bool32 partnerChangedForm = FALSE;
+        if (gBattleStruct->partyState[B_BATTLER_2][partyIndex].sentOut
+            && GetMonData(&gPartnerPlayerParty[partyIndex], MON_DATA_HP) != 0)
+            partnerChangedForm = TryFormChange(&gPartnerPlayerParty[partyIndex], FORM_CHANGE_END_BATTLE_ENVIRONMENT);
+        if (!partnerChangedForm)
+            partnerChangedForm = TryFormChange(&gPartnerPlayerParty[partyIndex], FORM_CHANGE_END_BATTLE);
+        gBattleStruct->partyState[B_BATTLER_2][partyIndex].changedSpecies = SPECIES_NONE;
+        changedForm = changedForm || partnerChangedForm;
+    }
 
     return changedForm;
 }
@@ -9041,7 +9079,7 @@ enum ImmunityHealStatusOutcome TryImmunityAbilityHealStatus(enum BattlerId battl
     case ABILITY_VITAL_SPIRIT:
         if (gBattleMons[battler].status1 & STATUS1_SLEEP)
         {
-            TryDeactivateSleepClause(GetBattlerSide(battler), gBattlerPartyIndexes[battler]);
+            TryDeactivateSleepClause(battler, gBattlerPartyIndexes[battler]);
             gBattleMons[battler].volatiles.nightmare = FALSE;
             StringCopy(gBattleTextBuff1, gStatusConditionString_SleepJpn);
             outcome = IMMUNITY_STATUS_CLEARED;
@@ -9305,9 +9343,9 @@ void TryRestoreHeldItems(void)
     for (i = 0; i < PARTY_SIZE; i++)
     {
         // Check if held items should be restored after battle based on generation
-        if (B_RESTORE_HELD_BATTLE_ITEMS >= GEN_9 || gBattleStruct->itemLost[B_SIDE_PLAYER][i].stolen || returnNPCItems)
+        if (B_RESTORE_HELD_BATTLE_ITEMS >= GEN_9 || gBattleStruct->itemLost[B_BATTLER_0][i].stolen || returnNPCItems)
         {
-            u16 lostItem = gBattleStruct->itemLost[B_SIDE_PLAYER][i].originalItem;
+            u16 lostItem = gBattleStruct->itemLost[B_BATTLER_0][i].originalItem;
 
             // Check if the lost item is a berry and the mon is not holding it
             if (GetItemPocket(lostItem) == POCKET_BERRIES && GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM) != lostItem)
@@ -9316,6 +9354,23 @@ void TryRestoreHeldItems(void)
             // Check if the lost item should be restored
             if ((lostItem != ITEM_NONE || returnNPCItems) && GetItemPocket(lostItem) != POCKET_BERRIES)
                 SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &lostItem);
+        }
+    }
+    // Under TWO_PLAYERS_FULL the partner player's items are tracked at itemLost[B_BATTLER_2].
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+    {
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (B_RESTORE_HELD_BATTLE_ITEMS >= GEN_9 || gBattleStruct->itemLost[B_BATTLER_2][i].stolen || returnNPCItems)
+            {
+                u16 lostItem = gBattleStruct->itemLost[B_BATTLER_2][i].originalItem;
+
+                if (GetItemPocket(lostItem) == POCKET_BERRIES && GetMonData(&gPartnerPlayerParty[i], MON_DATA_HELD_ITEM) != lostItem)
+                    lostItem = ITEM_NONE;
+
+                if ((lostItem != ITEM_NONE || returnNPCItems) && GetItemPocket(lostItem) != POCKET_BERRIES)
+                    SetMonData(&gPartnerPlayerParty[i], MON_DATA_HELD_ITEM, &lostItem);
+            }
         }
     }
 }
@@ -9373,8 +9428,8 @@ void TrySaveExchangedItem(enum BattlerId battler, enum Item stolenItem)
     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER
       && !(gBattleTypeFlags & BATTLE_TYPE_FRONTIER)
       && IsOnPlayerSide(battler)
-      && stolenItem == gBattleStruct->itemLost[B_SIDE_PLAYER][gBattlerPartyIndexes[battler]].originalItem)
-        gBattleStruct->itemLost[B_SIDE_PLAYER][gBattlerPartyIndexes[battler]].stolen = TRUE;
+      && stolenItem == gBattleStruct->itemLost[battler][gBattlerPartyIndexes[battler]].originalItem)
+        gBattleStruct->itemLost[battler][gBattlerPartyIndexes[battler]].stolen = TRUE;
 }
 
 bool32 IsBattlerAffectedByHazards(enum BattlerId battler, enum HoldEffect holdEffect, bool32 toxicSpikes)
@@ -9900,23 +9955,23 @@ void TryActivateSleepClause(enum BattlerId battler, u32 indexInParty)
     }
 
     if (IsSleepClauseEnabled())
-        gBattleStruct->monCausingSleepClause[GetBattlerSide(battler)] = indexInParty;
+        gBattleStruct->monCausingSleepClause[battler] = indexInParty;
 }
 
-void TryDeactivateSleepClause(enum BattleSide battlerSide, u32 indexInParty)
+void TryDeactivateSleepClause(enum BattlerId battler, u32 indexInParty)
 {
-    // If the pokemon on the given side at the given index in the party is the one causing Sleep Clause to be active,
-    // set monCausingSleepClause[battlerSide] = PARTY_SIZE, which means Sleep Clause is not active for the given side
-    if (IsSleepClauseEnabled() && gBattleStruct->monCausingSleepClause[battlerSide] == indexInParty)
-        gBattleStruct->monCausingSleepClause[battlerSide] = PARTY_SIZE;
+    // If the pokemon for the given battler at the given index in the party is the one causing Sleep Clause to be active,
+    // set monCausingSleepClause[battler] = PARTY_SIZE, which means Sleep Clause is not active for the given battler
+    if (IsSleepClauseEnabled() && gBattleStruct->monCausingSleepClause[battler] == indexInParty)
+        gBattleStruct->monCausingSleepClause[battler] = PARTY_SIZE;
 }
 
-bool32 IsSleepClauseActiveForSide(enum BattleSide battlerSide)
+bool32 IsSleepClauseActiveForSide(enum BattlerId battler)
 {
-    // If monCausingSleepClause[battlerSide] == PARTY_SIZE, Sleep Clause is not active for the given side.
-    // If monCausingSleepClause[battlerSide] < PARTY_SIZE, it means it is storing the index of the mon that is causing Sleep Clause to be active,
+    // If monCausingSleepClause[battler] == PARTY_SIZE, Sleep Clause is not active for the given battler.
+    // If monCausingSleepClause[battler] < PARTY_SIZE, it means it is storing the index of the mon that is causing Sleep Clause to be active,
     // from which it follows that Sleep Clause is active.
-    return (IsSleepClauseEnabled() && (gBattleStruct->monCausingSleepClause[battlerSide] < PARTY_SIZE));
+    return (IsSleepClauseEnabled() && (gBattleStruct->monCausingSleepClause[battler] < PARTY_SIZE));
 }
 
 bool32 IsSleepClauseEnabled(void)
@@ -10157,7 +10212,7 @@ bool32 TryTriggerSymbiosis(enum BattlerId battler, u32 ally)
 // Called by Cmd_removeitem. itemId represents the item that was removed, not being given.
 bool32 TrySymbiosis(enum BattlerId battler, enum Item itemId, bool32 moveEnd)
 {
-    if (!gBattleStruct->itemLost[B_SIDE_PLAYER][gBattlerPartyIndexes[battler]].stolen
+    if (!gBattleStruct->itemLost[battler][gBattlerPartyIndexes[battler]].stolen
         && GetBattlerHoldEffect(battler) != HOLD_EFFECT_EJECT_BUTTON
         && GetBattlerHoldEffect(battler) != HOLD_EFFECT_EJECT_PACK
         && (GetConfig(B_SYMBIOSIS_GEMS) < GEN_7 || !(gSpecialStatuses[battler].gemBoost))

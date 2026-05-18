@@ -515,17 +515,26 @@ static void CB2_InitBattleInternal(void)
 {
     s32 i;
 
-    // Defensive: BATTLE_TYPE_TWO_OPPONENTS_FULL is incompatible with these flags.
-    // Silently allowing the combination produces consumer-mismatch bugs.
-    if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL)
+    // Both FULL flags refuse a shared list of incompatible orthogonal modes.
+    // (NOTE: BATTLE_TYPE_INGAME_PARTNER is REMOVED from the refusal list —
+    // full-doubles explicitly supports INGAME_PARTNER + FULL combinations.)
+    // (NOTE: BATTLE_TYPE_MULTI is also permitted — it is always set alongside
+    // BATTLE_TYPE_INGAME_PARTNER for every partner-doubles battle. Refusing MULTI
+    // here would block all INGAME_PARTNER + FULL configurations.)
+    if (gBattleTypeFlags & (BATTLE_TYPE_TWO_OPPONENTS_FULL | BATTLE_TYPE_TWO_PLAYERS_FULL))
     {
-        AGB_ASSERT(!(gBattleTypeFlags & (BATTLE_TYPE_INGAME_PARTNER
-                                       | BATTLE_TYPE_MULTI
-                                       | BATTLE_TYPE_FRONTIER
+        AGB_ASSERT(!(gBattleTypeFlags & (BATTLE_TYPE_FRONTIER
                                        | BATTLE_TYPE_LINK
                                        | BATTLE_TYPE_RECORDED
                                        | BATTLE_TYPE_TRAINER_HILL
                                        | BATTLE_TYPE_BATTLE_TOWER)));
+    }
+
+    // TWO_PLAYERS_FULL preconditions: needs a partner of some kind.
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+    {
+        AGB_ASSERT(gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER);
+        AGB_ASSERT(gPartnerTrainerId != TRAINER_PARTNER(PARTNER_NONE));
     }
 
     SetHBlankCallback(NULL);
@@ -639,6 +648,12 @@ static void CB2_InitBattleInternal(void)
     {
         for (i = 0; i < PARTY_SIZE; i++)
             TryFormChange(&gPartnerEnemyParty[i], FORM_CHANGE_BEGIN_BATTLE);
+    }
+
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+    {
+        for (i = 0; i < PARTY_SIZE; i++)
+            TryFormChange(&gPartnerPlayerParty[i], FORM_CHANGE_BEGIN_BATTLE);
     }
 
     if (!(gBattleTypeFlags & BATTLE_TYPE_TRAINER))
@@ -1361,20 +1376,47 @@ static void SetMultiPartnerMenuParty(u8 offset)
 {
     s32 i;
 
-    for (i = 0; i < MULTI_PARTY_SIZE; i++)
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
     {
-        gMultiPartnerParty[i].species     = GetMonData(&gPlayerParty[offset + i], MON_DATA_SPECIES);
-        gMultiPartnerParty[i].heldItem    = GetMonData(&gPlayerParty[offset + i], MON_DATA_HELD_ITEM);
-        GetMonData(&gPlayerParty[offset + i], MON_DATA_NICKNAME, gMultiPartnerParty[i].nickname);
-        gMultiPartnerParty[i].level       = GetMonData(&gPlayerParty[offset + i], MON_DATA_LEVEL);
-        gMultiPartnerParty[i].hp          = GetMonData(&gPlayerParty[offset + i], MON_DATA_HP);
-        gMultiPartnerParty[i].maxhp       = GetMonData(&gPlayerParty[offset + i], MON_DATA_MAX_HP);
-        gMultiPartnerParty[i].status      = GetMonData(&gPlayerParty[offset + i], MON_DATA_STATUS);
-        gMultiPartnerParty[i].personality = GetMonData(&gPlayerParty[offset + i], MON_DATA_PERSONALITY);
-        gMultiPartnerParty[i].gender      = GetMonGender(&gPlayerParty[offset + i]);
-        StripExtCtrlCodes(gMultiPartnerParty[i].nickname);
-        if (GetMonData(&gPlayerParty[offset + i], MON_DATA_LANGUAGE) != LANGUAGE_JAPANESE)
-            PadNameString(gMultiPartnerParty[i].nickname, CHAR_SPACE);
+        // Under TWO_PLAYERS_FULL the partner has its own 6-mon party in
+        // gPartnerPlayerParty, not in gPlayerParty[3..5]. gMultiPartnerParty is
+        // sized MULTI_PARTY_SIZE (3) so we copy only the first 3 mons as a
+        // preview showcase — the full 6-mon party is still at gPartnerPlayerParty
+        // for actual battle use.
+        for (i = 0; i < MULTI_PARTY_SIZE; i++)
+        {
+            gMultiPartnerParty[i].species     = GetMonData(&gPartnerPlayerParty[i], MON_DATA_SPECIES);
+            gMultiPartnerParty[i].heldItem    = GetMonData(&gPartnerPlayerParty[i], MON_DATA_HELD_ITEM);
+            GetMonData(&gPartnerPlayerParty[i], MON_DATA_NICKNAME, gMultiPartnerParty[i].nickname);
+            gMultiPartnerParty[i].level       = GetMonData(&gPartnerPlayerParty[i], MON_DATA_LEVEL);
+            gMultiPartnerParty[i].hp          = GetMonData(&gPartnerPlayerParty[i], MON_DATA_HP);
+            gMultiPartnerParty[i].maxhp       = GetMonData(&gPartnerPlayerParty[i], MON_DATA_MAX_HP);
+            gMultiPartnerParty[i].status      = GetMonData(&gPartnerPlayerParty[i], MON_DATA_STATUS);
+            gMultiPartnerParty[i].personality = GetMonData(&gPartnerPlayerParty[i], MON_DATA_PERSONALITY);
+            gMultiPartnerParty[i].gender      = GetMonGender(&gPartnerPlayerParty[i]);
+            StripExtCtrlCodes(gMultiPartnerParty[i].nickname);
+            if (GetMonData(&gPartnerPlayerParty[i], MON_DATA_LANGUAGE) != LANGUAGE_JAPANESE)
+                PadNameString(gMultiPartnerParty[i].nickname, CHAR_SPACE);
+        }
+    }
+    else
+    {
+        // Vanilla path: partner mons occupy gPlayerParty[offset..offset+MULTI_PARTY_SIZE-1].
+        for (i = 0; i < MULTI_PARTY_SIZE; i++)
+        {
+            gMultiPartnerParty[i].species     = GetMonData(&gPlayerParty[offset + i], MON_DATA_SPECIES);
+            gMultiPartnerParty[i].heldItem    = GetMonData(&gPlayerParty[offset + i], MON_DATA_HELD_ITEM);
+            GetMonData(&gPlayerParty[offset + i], MON_DATA_NICKNAME, gMultiPartnerParty[i].nickname);
+            gMultiPartnerParty[i].level       = GetMonData(&gPlayerParty[offset + i], MON_DATA_LEVEL);
+            gMultiPartnerParty[i].hp          = GetMonData(&gPlayerParty[offset + i], MON_DATA_HP);
+            gMultiPartnerParty[i].maxhp       = GetMonData(&gPlayerParty[offset + i], MON_DATA_MAX_HP);
+            gMultiPartnerParty[i].status      = GetMonData(&gPlayerParty[offset + i], MON_DATA_STATUS);
+            gMultiPartnerParty[i].personality = GetMonData(&gPlayerParty[offset + i], MON_DATA_PERSONALITY);
+            gMultiPartnerParty[i].gender      = GetMonGender(&gPlayerParty[offset + i]);
+            StripExtCtrlCodes(gMultiPartnerParty[i].nickname);
+            if (GetMonData(&gPlayerParty[offset + i], MON_DATA_LANGUAGE) != LANGUAGE_JAPANESE)
+                PadNameString(gMultiPartnerParty[i].nickname, CHAR_SPACE);
+        }
     }
     memcpy(sMultiPartnerPartyBuffer, gMultiPartnerParty, sizeof(gMultiPartnerParty));
 }
@@ -1479,6 +1521,13 @@ static void CB2_PreInitIngamePlayerPartnerBattle(void)
 {
     u32 *savedBattleTypeFlags;
     void (**savedCallback)(void);
+    // Defensive: save/restore gTrainerBattleParameter across the
+    // ShowPartyMenuToShowcaseMultiBattleParty interlude. The showcase
+    // may clobber EWRAM globals (including gTrainerBattleParameter) while
+    // the party-menu task runs, zeroing opponentA and causing the
+    // "OPPONENT NEEDS A VALID NAME" assert. Mirror the existing
+    // gBattleTypeFlags save/restore pattern.
+    static TrainerBattleParameter sSavedTrainerBattleParam;
 
     savedCallback = &gBattleStruct->savedCallback;
     savedBattleTypeFlags = &gBattleStruct->savedBattleTypeFlags;
@@ -1495,6 +1544,7 @@ static void CB2_PreInitIngamePlayerPartnerBattle(void)
         gBattleCommunication[MULTIUSE_STATE]++;
         *savedCallback = gMain.savedCallback;
         *savedBattleTypeFlags = gBattleTypeFlags;
+        sSavedTrainerBattleParam = gTrainerBattleParameter;
         gMain.savedCallback = CB2_PreInitIngamePlayerPartnerBattle;
         if (!PlayerHasFollowerNPC() || !FollowerNPCIsBattlePartner() || (FNPC_NPC_FOLLOWER_PARTY_PREVIEW && FollowerNPCIsBattlePartner()))
             ShowPartyMenuToShowcaseMultiBattleParty();
@@ -1505,6 +1555,7 @@ static void CB2_PreInitIngamePlayerPartnerBattle(void)
         {
             gBattleCommunication[MULTIUSE_STATE] = 2;
             gBattleTypeFlags = *savedBattleTypeFlags;
+            gTrainerBattleParameter = sSavedTrainerBattleParam;
             gMain.savedCallback = *savedCallback;
             SetMainCallback2(CB2_InitBattleInternal);
             FREE_AND_SET_NULL(sMultiPartnerPartyBuffer);
@@ -3173,10 +3224,14 @@ static void BattleStartClearSetData(void)
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        gBattleStruct->partyState[B_SIDE_PLAYER][i].usedHeldItem = ITEM_NONE;
-        gBattleStruct->partyState[B_SIDE_OPPONENT][i].usedHeldItem = ITEM_NONE;
-        gBattleStruct->itemLost[B_SIDE_PLAYER][i].originalItem = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
-        gBattleStruct->itemLost[B_SIDE_OPPONENT][i].originalItem = GetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM);
+        s32 b;
+        for (b = 0; b < MAX_BATTLERS_COUNT; b++)
+            gBattleStruct->partyState[b][i].usedHeldItem = ITEM_NONE;
+        {
+            s32 b;
+            for (b = 0; b < MAX_BATTLERS_COUNT; b++)
+                gBattleStruct->itemLost[b][i].originalItem = GetMonData(&GetBattlerParty(b)[i], MON_DATA_HELD_ITEM);
+        }
         gPartyCriticalHits[i] = 0;
     }
 
@@ -3189,9 +3244,9 @@ static void BattleStartClearSetData(void)
 
     if (IsSleepClauseEnabled())
     {
-        // If monCausingSleepClause[side] equals PARTY_SIZE, Sleep Clause is not active for the given side.
-        gBattleStruct->monCausingSleepClause[B_SIDE_PLAYER] = PARTY_SIZE;
-        gBattleStruct->monCausingSleepClause[B_SIDE_OPPONENT] = PARTY_SIZE;
+        // If monCausingSleepClause[battler] equals PARTY_SIZE, Sleep Clause is not active for the given battler.
+        for (i = 0; i < MAX_BATTLERS_COUNT; i++)
+            gBattleStruct->monCausingSleepClause[i] = PARTY_SIZE;
     }
 }
 
@@ -4121,6 +4176,11 @@ void SwitchTwoBattlersInParty(enum BattlerId battler, enum BattlerId battler2)
 {
     s32 i;
     u32 partyId1, partyId2;
+    // Under TWO_PLAYERS_FULL / TWO_OPPONENTS_FULL the two flanks of a side own
+    // disjoint linear parties (gPlayerParty vs gPartnerPlayerParty, and
+    // gEnemyParty vs gPartnerEnemyParty). Mirroring the order onto the partner
+    // would clobber its independent ordering.
+    bool32 mirrorToPartner = (GetBattlerParty(battler) == GetBattlerParty(BATTLE_PARTNER(battler)));
 
     for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
         gBattlePartyCurrentOrder[i] = *(battler * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders));
@@ -4132,7 +4192,8 @@ void SwitchTwoBattlersInParty(enum BattlerId battler, enum BattlerId battler2)
     for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
     {
         *(battler * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
-        *(BATTLE_PARTNER(battler) * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
+        if (mirrorToPartner)
+            *(BATTLE_PARTNER(battler) * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
     }
 }
 
@@ -4140,6 +4201,8 @@ void SwitchPartyOrder(enum BattlerId battler)
 {
     s32 i;
     u32 partyId1, partyId2;
+    // See SwitchTwoBattlersInParty above — disjoint flanks under FULL flags.
+    bool32 mirrorToPartner = (GetBattlerParty(battler) == GetBattlerParty(BATTLE_PARTNER(battler)));
 
     for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
         gBattlePartyCurrentOrder[i] = *(battler * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders));
@@ -4153,7 +4216,8 @@ void SwitchPartyOrder(enum BattlerId battler)
         for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
         {
             *(battler * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
-            *(BATTLE_PARTNER(battler) * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
+            if (mirrorToPartner)
+                *(BATTLE_PARTNER(battler) * 3 + i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
         }
     }
     else
@@ -5620,16 +5684,19 @@ static void HandleEndTurn_FinishBattle(void)
                                   | BATTLE_TYPE_TRAINER_HILL
                                   | BATTLE_TYPE_FRONTIER)))
         {
-            for (enum BattleSide side = 0; side < NUM_BATTLE_SIDES; side++)
+            for (enum BattlerId b = 0; b < MAX_BATTLERS_COUNT; b++)
             {
-                struct Pokemon *party = GetSideParty(side);
+                struct Pokemon *party = GetBattlerParty(b);
 
-                if (side == B_SIDE_PLAYER && !B_PARTNER_MONS_MARKED_SEEN)
+                if (party == NULL)
+                    continue;
+
+                if (IsOnPlayerSide(b) && !B_PARTNER_MONS_MARKED_SEEN)
                     continue;
 
                 for (u32 partySlot = 0; partySlot < PARTY_SIZE; partySlot++)
                 {
-                    if (gBattleStruct->partyState[side][partySlot].sentOut)
+                    if (gBattleStruct->partyState[b][partySlot].sentOut)
                         HandleSetPokedexFlagFromMon(&party[partySlot], FLAG_SET_SEEN);
                 }
             }

@@ -112,7 +112,7 @@ static enum CancelerResult CancelerAsleepOrFrozen(struct BattleContext *ctx)
     {
         if (UproarWakeUpCheck(ctx->battlerAtk))
         {
-            TryDeactivateSleepClause(GetBattlerSide(ctx->battlerAtk), gBattlerPartyIndexes[ctx->battlerAtk]);
+            TryDeactivateSleepClause(ctx->battlerAtk, gBattlerPartyIndexes[ctx->battlerAtk]);
             gBattleMons[ctx->battlerAtk].status1 &= ~STATUS1_SLEEP;
             gBattleMons[ctx->battlerAtk].volatiles.nightmare = FALSE;
             gEffectBattler = ctx->battlerAtk;
@@ -153,7 +153,7 @@ static enum CancelerResult CancelerAsleepOrFrozen(struct BattleContext *ctx)
             }
             else
             {
-                TryDeactivateSleepClause(GetBattlerSide(ctx->battlerAtk), gBattlerPartyIndexes[ctx->battlerAtk]);
+                TryDeactivateSleepClause(ctx->battlerAtk, gBattlerPartyIndexes[ctx->battlerAtk]);
                 gBattleMons[ctx->battlerAtk].volatiles.nightmare = FALSE;
                 gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_WOKE_UP;
                 result = CANCELER_RESULT_BREAK;
@@ -2554,7 +2554,7 @@ static enum MoveEndResult MoveEndFaintBlock(void)
         case FAINT_BLOCK_FAINT_TARGET:
             gBattlerFainted = gBattlerTarget;
             TryUpdateEvolutionTracker(IF_DEFEAT_X_WITH_ITEMS, 1, MOVE_NONE);
-            TryDeactivateSleepClause(GetBattlerSide(gBattlerTarget), gBattlerPartyIndexes[gBattlerTarget]);
+            TryDeactivateSleepClause(gBattlerTarget, gBattlerPartyIndexes[gBattlerTarget]);
             gHitMarker |= HITMARKER_FAINTED(gBattlerTarget);
             gBattleStruct->eventState.faintedAction = 0;
             if (IsOnPlayerSide(gBattlerTarget))
@@ -3038,8 +3038,6 @@ static enum MoveEndResult MoveEndMoveBlock(void)
          && CanBattlerGetOrLoseItem(gBattlerTarget, gBattlerAttacker, gBattleMons[gBattlerTarget].item)
          && !NoAliveMonsForEitherParty())
         {
-            enum BattleSide side = GetBattlerSide(gBattlerTarget);
-
             if (GetBattlerAbility(gBattlerTarget) == ABILITY_STICKY_HOLD)
             {
                 gBattlerAbility = gBattlerTarget;
@@ -3060,7 +3058,7 @@ static enum MoveEndResult MoveEndMoveBlock(void)
                 BtlController_EmitSetMonData(gBattlerTarget, B_COMM_TO_CONTROLLER, REQUEST_HELDITEM_BATTLE, 0, sizeof(gBattleMons[gBattlerTarget].item), &gBattleMons[gBattlerTarget].item);
                 MarkBattlerForControllerExec(gBattlerTarget);
                 // Mark item as stolen so it will be restored after battle
-                gBattleStruct->itemLost[side][gBattlerPartyIndexes[gBattlerTarget]].stolen = TRUE;
+                gBattleStruct->itemLost[gBattlerTarget][gBattlerPartyIndexes[gBattlerTarget]].stolen = TRUE;
             }
             else
             {

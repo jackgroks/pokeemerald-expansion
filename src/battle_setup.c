@@ -1155,6 +1155,17 @@ const u8 *BattleSetup_ConfigureTrainerBattle(const u8 *data)
         gNoOfApproachingTrainers = 2; // set TWO_OPPONENTS gBattleTypeFlags
         gApproachingTrainerId = 1; // prevent trainer approach
         return EventScript_DoNoIntroTrainerBattle;
+    case TRAINER_BATTLE_DOUBLE_FULL_OPPONENTS:
+        gNoOfApproachingTrainers = 2; // set TWO_OPPONENTS gBattleTypeFlags
+        gApproachingTrainerId = 1; // prevent trainer approach
+        return EventScript_DoNoIntroTrainerBattle;
+    case TRAINER_BATTLE_DOUBLE_FULL_PLAYERS:
+        SetMapVarsToTrainerA();
+        return EventScript_TryDoDoubleTrainerBattle;
+    case TRAINER_BATTLE_DOUBLE_FULL_BOTH:
+        gNoOfApproachingTrainers = 2; // set TWO_OPPONENTS gBattleTypeFlags
+        gApproachingTrainerId = 1; // prevent trainer approach
+        return EventScript_DoNoIntroTrainerBattle;
     default:
         if (gApproachingTrainerId == 0)
         {
@@ -1326,8 +1337,25 @@ void BattleSetup_StartTrainerBattle(void)
     if (GetTrainerBattleMode() == TRAINER_BATTLE_EARLY_RIVAL && GetRivalBattleFlags() & RIVAL_BATTLE_TUTORIAL)
         gBattleTypeFlags |= BATTLE_TYPE_FIRST_BATTLE;
 
-    if (GetTrainerBattleMode() == TRAINER_BATTLE_TWO_TRAINERS_FULL_PARTY)
+    switch (GetTrainerBattleMode())
+    {
+    case TRAINER_BATTLE_DOUBLE_FULL_OPPONENTS:
+    case TRAINER_BATTLE_TWO_TRAINERS_FULL_PARTY: // legacy alias, removed in a later commit
         gBattleTypeFlags |= BATTLE_TYPE_TWO_OPPONENTS_FULL;
+        break;
+    case TRAINER_BATTLE_DOUBLE_FULL_PLAYERS:
+        // Player-side full party + scripted partner (e.g. PARTNER_PLAYER_CONTROLLED).
+        // The vanilla flag-init above doesn't set MULTI/INGAME_PARTNER unless a follower NPC
+        // is the battle partner; for these script-driven partners the script sets
+        // gPartnerTrainerId before calling trainerbattle, and we layer the multi flags here.
+        gBattleTypeFlags |= BATTLE_TYPE_TWO_PLAYERS_FULL | BATTLE_TYPE_DOUBLE | BATTLE_TYPE_MULTI | BATTLE_TYPE_INGAME_PARTNER;
+        break;
+    case TRAINER_BATTLE_DOUBLE_FULL_BOTH:
+        // 12v12. gNoOfApproachingTrainers==2 already gave us DOUBLE | TWO_OPPONENTS | TRAINER;
+        // layer FULL flags on both sides and the multi/partner flags for the player-side partner.
+        gBattleTypeFlags |= BATTLE_TYPE_TWO_OPPONENTS_FULL | BATTLE_TYPE_TWO_PLAYERS_FULL | BATTLE_TYPE_MULTI | BATTLE_TYPE_INGAME_PARTNER;
+        break;
+    }
 
     if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
     {
@@ -2137,4 +2165,12 @@ void SetMultiTrainerBattle(struct ScriptContext *ctx)
     TRAINER_BATTLE_PARAM.defeatTextB = (u8*)ScriptReadWord(ctx);
     gPartnerTrainerId = TRAINER_PARTNER(ScriptReadHalfword(ctx));
 };
+
+// Sets gPartnerTrainerId from gSpecialVar_0x8004 (interpreted as a PARTNER_* constant).
+// Companion to the trainerbattle_double_full_players / _both macros: scripts can set
+// the partner id without going through the multi-battle/frontier setup pipeline.
+void SetPartnerTrainerIdFromVar(void)
+{
+    gPartnerTrainerId = TRAINER_PARTNER(gSpecialVar_0x8004);
+}
 

@@ -98,6 +98,7 @@ EWRAM_DATA u8 gEnemyPartyCount = 0;
 EWRAM_DATA struct Pokemon gPlayerParty[PARTY_SIZE] = {0};
 EWRAM_DATA struct Pokemon gEnemyParty[PARTY_SIZE] = {0};
 EWRAM_DATA struct Pokemon gPartnerEnemyParty[PARTY_SIZE] = {0};
+EWRAM_DATA struct Pokemon gPartnerPlayerParty[PARTY_SIZE] = {0};
 EWRAM_DATA struct SpriteTemplate gMultiuseSpriteTemplate = {0};
 EWRAM_DATA static struct MonSpritesGfxManager *sMonSpritesGfxManagers[MON_SPR_GFX_MANAGERS_COUNT] = {NULL};
 EWRAM_DATA static u8 sTriedEvolving = 0;
@@ -4386,14 +4387,13 @@ bool8 HealStatusConditions(struct Pokemon *mon, u32 healMask, enum BattlerId bat
             if ((healMask & STATUS1_SLEEP))
             {
                 u32 i = 0;
-                u32 battlerSide = GetBattlerSide(battler);
                 struct Pokemon *party = GetBattlerParty(battler);
 
                 for (i = 0; i < PARTY_SIZE; i++)
                 {
                     if (&party[i] == mon)
                     {
-                        TryDeactivateSleepClause(battlerSide, i);
+                        TryDeactivateSleepClause(battler, i);
                         break;
                     }
                 }
@@ -6994,13 +6994,15 @@ static struct PartyState *GetBattlerPartyStateByPokemon(struct Pokemon *partyMon
     if (gBattleStruct == NULL)
         return NULL;
 
-    for (int i = 0; i < NUM_BATTLE_SIDES; i++)
+    for (enum BattlerId b = 0; b < MAX_BATTLERS_COUNT; b++)
     {
+        struct Pokemon *party = GetBattlerParty(b);
+        if (party == NULL)
+            continue;
         for (int j = 0; j < PARTY_SIZE; j++)
         {
-            struct Pokemon *mon = &GetSideParty(i)[j];
-            if (partyMon == mon)
-                return &gBattleStruct->partyState[i][j];
+            if (partyMon == &party[j])
+                return &gBattleStruct->partyState[b][j];
         }
     }
     return NULL;

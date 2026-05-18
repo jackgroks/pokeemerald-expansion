@@ -1119,13 +1119,19 @@ void HandleBattleLowHpMusicChange(void)
     {
         enum BattlerId playerBattler1 = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
         enum BattlerId playerBattler2 = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
-        u8 battler1PartyId = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[playerBattler1]);
-        u8 battler2PartyId = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[playerBattler2]);
+        // gBattlerPartyIndexes[battler] is already a field-order party-id into
+        // GetBattlerParty(battler)[] (see battle_controllers.c:343-345). The vanilla
+        // GetPartyIdFromBattlePartyId translation routed through the global
+        // gBattlePartyCurrentOrder, which under TWO_PLAYERS_FULL holds whichever
+        // battler's order was last written and is wrong for the other player battler
+        // per-frame. Index directly.
+        u8 battler1PartyId = gBattlerPartyIndexes[playerBattler1];
+        u8 battler2PartyId = gBattlerPartyIndexes[playerBattler2];
 
-        if (GetMonData(&gPlayerParty[battler1PartyId], MON_DATA_HP) != 0)
-            HandleLowHpMusicChange(&gPlayerParty[battler1PartyId], playerBattler1);
-        if (IsDoubleBattle() && GetMonData(&gPlayerParty[battler2PartyId], MON_DATA_HP) != 0)
-            HandleLowHpMusicChange(&gPlayerParty[battler2PartyId], playerBattler2);
+        if (GetMonData(&GetBattlerParty(playerBattler1)[battler1PartyId], MON_DATA_HP) != 0)
+            HandleLowHpMusicChange(&GetBattlerParty(playerBattler1)[battler1PartyId], playerBattler1);
+        if (IsDoubleBattle() && GetMonData(&GetBattlerParty(playerBattler2)[battler2PartyId], MON_DATA_HP) != 0)
+            HandleLowHpMusicChange(&GetBattlerParty(playerBattler2)[battler2PartyId], playerBattler2);
     }
 }
 

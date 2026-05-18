@@ -516,10 +516,10 @@ u32 BattleAI_ChooseMoveIndex(enum BattlerId battler)
     return chosenMoveIndex;
 }
 
-static void CopyBattlerDataToAIParty(u32 bPosition, enum BattleSide side)
+static void CopyBattlerDataToAIParty(u32 bPosition)
 {
     enum BattlerId battler = GetBattlerAtPosition(bPosition);
-    struct AiPartyMon *aiMon = &gAiPartyData->mons[side][gBattlerPartyIndexes[battler]];
+    struct AiPartyMon *aiMon = &gAiPartyData->mons[battler][gBattlerPartyIndexes[battler]];
     struct BattlePokemon *bMon = &gBattleMons[battler];
 
     aiMon->species = bMon->species;
@@ -531,55 +531,93 @@ static void CopyBattlerDataToAIParty(u32 bPosition, enum BattleSide side)
     aiMon->switchInCount++;
 }
 
-void Ai_InitPartyStruct(void)
+static void InitAiPartyMonsForBattler(enum BattlerId battler, struct Pokemon *party, bool32 isOmniscient, bool32 hasPartyKnowledge)
 {
-    bool32 isOmniscient = (gAiThinkingStruct->aiFlags[B_POSITION_OPPONENT_LEFT] & AI_FLAG_OMNISCIENT) || (gAiThinkingStruct->aiFlags[B_POSITION_OPPONENT_RIGHT] & AI_FLAG_OMNISCIENT);
-    bool32 hasPartyKnowledge = (gAiThinkingStruct->aiFlags[B_POSITION_OPPONENT_LEFT] & AI_FLAG_KNOW_OPPONENT_PARTY) || (gAiThinkingStruct->aiFlags[B_POSITION_OPPONENT_RIGHT] & AI_FLAG_KNOW_OPPONENT_PARTY);
-    struct Pokemon *mon;
-
-    gAiPartyData->count[B_SIDE_PLAYER] = CalculatePlayerPartyCount();
-    gAiPartyData->count[B_SIDE_OPPONENT] = CalculateEnemyPartyCount();
-
-    // Save first 2 or 4(in doubles) mons
-    CopyBattlerDataToAIParty(B_POSITION_PLAYER_LEFT, B_SIDE_PLAYER);
-    if (IsDoubleBattle())
-        CopyBattlerDataToAIParty(B_POSITION_PLAYER_RIGHT, B_SIDE_PLAYER);
-
-    // If player's partner is AI, save opponent mons
-    if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER)
-    {
-        CopyBattlerDataToAIParty(B_POSITION_OPPONENT_LEFT, B_SIDE_OPPONENT);
-        CopyBattlerDataToAIParty(B_POSITION_OPPONENT_RIGHT, B_SIDE_OPPONENT);
-    }
-
-    // Find fainted mons
     for (u32 monIndex = 0; monIndex < PARTY_SIZE; monIndex++)
     {
-        if (GetMonData(&gPlayerParty[monIndex], MON_DATA_SPECIES) == SPECIES_NONE)
+        struct Pokemon *mon = &party[monIndex];
+        if (GetMonData(mon, MON_DATA_SPECIES) == SPECIES_NONE)
             continue;
 
-        mon = &gPlayerParty[monIndex];
-        if (GetMonData(&gPlayerParty[monIndex], MON_DATA_HP) == 0)
-            gAiPartyData->mons[B_SIDE_PLAYER][monIndex].isFainted = TRUE;
+        if (GetMonData(mon, MON_DATA_HP) == 0)
+            gAiPartyData->mons[battler][monIndex].isFainted = TRUE;
 
         if (isOmniscient || hasPartyKnowledge)
-            gAiPartyData->mons[B_SIDE_PLAYER][monIndex].species = GetMonData(mon, MON_DATA_SPECIES);
+            gAiPartyData->mons[battler][monIndex].species = GetMonData(mon, MON_DATA_SPECIES);
 
         if (isOmniscient)
         {
-            gAiPartyData->mons[B_SIDE_PLAYER][monIndex].item = GetMonData(mon, MON_DATA_HELD_ITEM);
-            gAiPartyData->mons[B_SIDE_PLAYER][monIndex].heldEffect = GetItemHoldEffect(gAiPartyData->mons[B_SIDE_PLAYER][monIndex].item);
-            gAiPartyData->mons[B_SIDE_PLAYER][monIndex].ability = GetMonAbility(mon);
+            gAiPartyData->mons[battler][monIndex].item = GetMonData(mon, MON_DATA_HELD_ITEM);
+            gAiPartyData->mons[battler][monIndex].heldEffect = GetItemHoldEffect(gAiPartyData->mons[battler][monIndex].item);
+            gAiPartyData->mons[battler][monIndex].ability = GetMonAbility(mon);
             for (u32 moveIndex = 0; moveIndex < MAX_MON_MOVES; moveIndex++)
-                gAiPartyData->mons[B_SIDE_PLAYER][monIndex].moves[moveIndex] = GetMonData(mon, MON_DATA_MOVE1 + moveIndex);
+                gAiPartyData->mons[battler][monIndex].moves[moveIndex] = GetMonData(mon, MON_DATA_MOVE1 + moveIndex);
         }
     }
 }
 
+void Ai_InitPartyStruct(void)
+{
+    bool32 isOmniscient = (gAiThinkingStruct->aiFlags[B_POSITION_OPPONENT_LEFT] & AI_FLAG_OMNISCIENT) || (gAiThinkingStruct->aiFlags[B_POSITION_OPPONENT_RIGHT] & AI_FLAG_OMNISCIENT);
+    bool32 hasPartyKnowledge = (gAiThinkingStruct->aiFlags[B_POSITION_OPPONENT_LEFT] & AI_FLAG_KNOW_OPPONENT_PARTY) || (gAiThinkingStruct->aiFlags[B_POSITION_OPPONENT_RIGHT] & AI_FLAG_KNOW_OPPONENT_PARTY);
+
+    // Populate count for all 4 battler slots.
+    gAiPartyData->count[B_BATTLER_0] = CalculatePlayerPartyCount();
+    gAiPartyData->count[B_BATTLER_1] = CalculateEnemyPartyCount();
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+    {
+        u8 partnerPlayerCount = 0;
+        for (u32 i = 0; i < PARTY_SIZE; i++)
+            if (GetMonData(&gPartnerPlayerParty[i], MON_DATA_SPECIES) != SPECIES_NONE)
+                partnerPlayerCount++;
+        gAiPartyData->count[B_BATTLER_2] = partnerPlayerCount;
+    }
+    else if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER)
+    {
+        // Vanilla 3v3 partner shares gPlayerParty with battler 0.
+        gAiPartyData->count[B_BATTLER_2] = CalculatePlayerPartyCount();
+    }
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL)
+    {
+        u8 partnerEnemyCount = 0;
+        for (u32 i = 0; i < PARTY_SIZE; i++)
+            if (GetMonData(&gPartnerEnemyParty[i], MON_DATA_SPECIES) != SPECIES_NONE)
+                partnerEnemyCount++;
+        gAiPartyData->count[B_BATTLER_3] = partnerEnemyCount;
+    }
+    else
+    {
+        // No partner opponent — mirror battler 1's count.
+        gAiPartyData->count[B_BATTLER_3] = CalculateEnemyPartyCount();
+    }
+
+    // Save first 2 or 4(in doubles) mons
+    CopyBattlerDataToAIParty(B_POSITION_PLAYER_LEFT);
+    if (IsDoubleBattle())
+        CopyBattlerDataToAIParty(B_POSITION_PLAYER_RIGHT);
+
+    // If player's partner is AI, save opponent mons
+    if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER)
+    {
+        CopyBattlerDataToAIParty(B_POSITION_OPPONENT_LEFT);
+        CopyBattlerDataToAIParty(B_POSITION_OPPONENT_RIGHT);
+    }
+
+    // Find fainted mons and apply omniscience/party-knowledge for battler 0 (lead player).
+    InitAiPartyMonsForBattler(B_BATTLER_0, gPlayerParty, isOmniscient, hasPartyKnowledge);
+
+    // Under TWO_PLAYERS_FULL, also populate partner player's party.
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+        InitAiPartyMonsForBattler(B_BATTLER_2, gPartnerPlayerParty, isOmniscient, hasPartyKnowledge);
+
+    // Under TWO_OPPONENTS_FULL, populate partner opponent's party.
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS_FULL)
+        InitAiPartyMonsForBattler(B_BATTLER_3, gPartnerEnemyParty, isOmniscient, hasPartyKnowledge);
+}
+
 void Ai_UpdateSwitchInData(enum BattlerId battler)
 {
-    enum BattleSide side = GetBattlerSide(battler);
-    struct AiPartyMon *aiMon = &gAiPartyData->mons[side][gBattlerPartyIndexes[battler]];
+    struct AiPartyMon *aiMon = &gAiPartyData->mons[battler][gBattlerPartyIndexes[battler]];
 
     // See if the switched-in mon has been already in battle
     if (aiMon->wasSentInBattle)
@@ -601,13 +639,13 @@ void Ai_UpdateSwitchInData(enum BattlerId battler)
         ClearBattlerMoveHistory(battler);
         ClearBattlerAbilityHistory(battler);
         ClearBattlerItemEffectHistory(battler);
-        CopyBattlerDataToAIParty(GetBattlerPosition(battler), side);
+        CopyBattlerDataToAIParty(GetBattlerPosition(battler));
     }
 }
 
 void Ai_UpdateFaintData(enum BattlerId battler)
 {
-    struct AiPartyMon *aiMon = &gAiPartyData->mons[GetBattlerSide(battler)][gBattlerPartyIndexes[battler]];
+    struct AiPartyMon *aiMon = &gAiPartyData->mons[battler][gBattlerPartyIndexes[battler]];
     ClearBattlerMoveHistory(battler);
     ClearBattlerAbilityHistory(battler);
     ClearBattlerItemEffectHistory(battler);
@@ -807,6 +845,24 @@ static u32 PpStallReduction(enum Move move, enum BattlerId battlerAtk)
         if (AI_CanMoveBeBlockedByTarget(&ctx)
          || CalcTypeEffectivenessMultiplier(&ctx) == UQ_4_12(0.0))
             totalStallValue += currentStallValue;
+    }
+    // Under TWO_PLAYERS_FULL the partner player's mons live in gPartnerPlayerParty;
+    // evaluate them as additional stall candidates.
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_PLAYERS_FULL)
+    {
+        for (u32 partyIndex = 0; partyIndex < PARTY_SIZE; partyIndex++)
+        {
+            u32 currentStallValue = gAiBattleData->playerStallMons[partyIndex];
+            if (currentStallValue == 0 || GetMonData(&gPartnerPlayerParty[partyIndex], MON_DATA_HP) == 0)
+                continue;
+            PokemonToBattleMon(&gPartnerPlayerParty[partyIndex], &gBattleMons[tempBattleMonIndex]);
+            ctx.battlerDef = tempBattleMonIndex;
+            ctx.abilityDef = GetBattlerAbility(ctx.battlerDef);
+            ctx.holdEffectDef = GetBattlerHoldEffect(ctx.battlerDef);
+            if (AI_CanMoveBeBlockedByTarget(&ctx)
+             || CalcTypeEffectivenessMultiplier(&ctx) == UQ_4_12(0.0))
+                totalStallValue += currentStallValue;
+        }
     }
 
     for (u32 i = 0; returnValue == 0 && i < totalStallValue; i++)

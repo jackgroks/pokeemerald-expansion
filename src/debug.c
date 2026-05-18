@@ -296,6 +296,7 @@ static void DebugAction_Trainers_ChooseFromMap(u8 taskId);
 static void DebugAction_Trainers_ChooseTrainer(u8 taskId, u32 selection);
 static void DebugAction_Trainers_SwitchDoublesFlag(u8 taskId);
 static void DebugAction_Trainers_SwitchFullPartyFlag(u8 taskId);
+static void DebugAction_Trainers_SwitchFullPlayersFlag(u8 taskId);
 static void DebugAction_Trainers_SetRematch(u8 taskId);
 static void DebugAction_Trainers_SetRematchReadiness(u8 taskId);
 static void DebugAction_Trainers_TryBattle(u8 taskId);
@@ -670,7 +671,8 @@ static const struct DebugMenuOption sDebugMenu_Actions_Trainers[] =
     { COMPOUND_STRING("Double Battle: {STR_VAR_1}"), DebugAction_ToggleFlag, DebugAction_Trainers_SwitchDoublesFlag },
     { COMPOUND_STRING("Matches {STR_VAR_1}/{STR_VAR_2}"), DebugAction_ToggleFlag, DebugAction_Trainers_SetRematch },
     { COMPOUND_STRING("Rematch Ready {STR_VAR_1}"), DebugAction_ToggleFlag, DebugAction_Trainers_SetRematchReadiness },
-    { COMPOUND_STRING("Full Party: {STR_VAR_1}"), DebugAction_ToggleFlag, DebugAction_Trainers_SwitchFullPartyFlag },
+    { COMPOUND_STRING("Full Opponents: {STR_VAR_1}"), DebugAction_ToggleFlag, DebugAction_Trainers_SwitchFullPartyFlag },
+    { COMPOUND_STRING("Full Players: {STR_VAR_1}"), DebugAction_ToggleFlag, DebugAction_Trainers_SwitchFullPlayersFlag },
     { COMPOUND_STRING("Try Battle"), DebugAction_Trainers_TryBattle },
     { COMPOUND_STRING("Recharge VS Seeker"), DebugAction_Trainers_RechargeVsSeeker },
     { NULL }
@@ -1107,7 +1109,18 @@ static u8 Debug_GenerateListTrainerMenu(void)
             else
                 StringCopy(gStringVar1, COMPOUND_STRING("{COLOR RED} FALSE"));
             break;
-        case 9:
+        case 8:
+            if (partnerId == PARTNER_NONE)
+            {
+                noDraw = TRUE;
+                break;
+            }
+            if (sDebugMenuListData->data[7])
+                StringCopy(gStringVar1, COMPOUND_STRING("{COLOR GREEN} TRUE"));
+            else
+                StringCopy(gStringVar1, COMPOUND_STRING("{COLOR RED} FALSE"));
+            break;
+        case 10:
             if (FREE_MATCH_CALL || I_VS_SEEKER_CHARGING == 0)
                 noDraw = TRUE;
             break;
@@ -1859,6 +1872,7 @@ static void Debug_Trainers_ResetTrainersData(void)
     sDebugMenuListData->data[4] = PARTNER_NONE;
     sDebugMenuListData->data[5] = FALSE;
     sDebugMenuListData->data[6] = FALSE;
+    sDebugMenuListData->data[7] = FALSE;
 }
 
 void SetMultiTrainerBattle(struct ScriptContext *ctx);
@@ -2142,6 +2156,16 @@ static void DebugAction_Trainers_SwitchFullPartyFlag(u8 taskId)
         sDebugMenuListData->data[6] = TRUE;
 }
 
+static void DebugAction_Trainers_SwitchFullPlayersFlag(u8 taskId)
+{
+    if (sDebugMenuListData->data[4] == PARTNER_NONE)
+        return;
+    if (sDebugMenuListData->data[7])
+        sDebugMenuListData->data[7] = FALSE;
+    else
+        sDebugMenuListData->data[7] = TRUE;
+}
+
 static void DebugAction_Trainers_SetRematch(u8 taskId)
 {
     s32 rematchId = sDebugMenuListData->data[1];
@@ -2213,6 +2237,8 @@ static void DebugAction_Trainers_TryBattle(u8 taskId)
         SavePlayerParty();
         gPartnerTrainerId = TRAINER_PARTNER(partnerId);
         gBattleTypeFlags |= BATTLE_TYPE_MULTI | BATTLE_TYPE_INGAME_PARTNER;
+        if (sDebugMenuListData->data[7])
+            gBattleTypeFlags |= BATTLE_TYPE_TWO_PLAYERS_FULL;
         for (u32 i = 0; i < MAX_FRONTIER_PARTY_SIZE; i++)
         {
             gSelectedOrderFromParty[i] = i + 1;
