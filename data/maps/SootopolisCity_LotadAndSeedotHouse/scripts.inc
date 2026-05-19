@@ -11,7 +11,9 @@ SootopolisCity_LotadAndSeedotHouse_EventScript_SeedotBrother::
 	copyvar VAR_RESULT, VAR_0x8004
 	goto_if_eq VAR_RESULT, PARTY_NOTHING_CHOSEN, SootopolisCity_LotadAndSeedotHouse_EventScript_CancelShowSeedot
 	special CompareSeedotSize
+.if 0 @ TODO: cut if ROM space needed (Phase 2 facility cleanup) — SootopolisCity Seedot/Lotad size comparison is Hoenn-exclusive, unreachable in HnS. HnS-only "bufferunitsystemtext" script command.
 	bufferunitsystemtext UNIT_TEXT_LENGTH_SMALL_PLURAL, 1
+.endif
 	goto_if_eq VAR_RESULT, 1, SootopolisCity_LotadAndSeedotHouse_EventScript_NotSeedot
 	goto_if_eq VAR_RESULT, 2, SootopolisCity_LotadAndSeedotHouse_EventScript_SmallSeedot
 	goto_if_eq VAR_RESULT, 3, SootopolisCity_LotadAndSeedotHouse_EventScript_BigSeedot
@@ -56,7 +58,9 @@ SootopolisCity_LotadAndSeedotHouse_EventScript_LotadBrother::
 	copyvar VAR_RESULT, VAR_0x8004
 	goto_if_eq VAR_RESULT, PARTY_NOTHING_CHOSEN, SootopolisCity_LotadAndSeedotHouse_EventScript_CancelShowLotad
 	special CompareLotadSize
+.if 0 @ TODO: cut if ROM space needed (Phase 2 facility cleanup) — SootopolisCity Seedot/Lotad size comparison is Hoenn-exclusive, unreachable in HnS. HnS-only "bufferunitsystemtext" script command.
 	bufferunitsystemtext UNIT_TEXT_LENGTH_SMALL_PLURAL, 1
+.endif
 	goto_if_eq VAR_RESULT, 1, SootopolisCity_LotadAndSeedotHouse_EventScript_NotLotad
 	goto_if_eq VAR_RESULT, 2, SootopolisCity_LotadAndSeedotHouse_EventScript_SmallLotad
 	goto_if_eq VAR_RESULT, 3, SootopolisCity_LotadAndSeedotHouse_EventScript_BigLotad
@@ -94,7 +98,9 @@ SootopolisCity_LotadAndSeedotHouse_EventScript_NoRoomForElixir2::
 SootopolisCity_LotadAndSeedotHouse_EventScript_SeedotSizeRecord::
 	special GetSeedotSizeRecordInfo
 	lockall
+.if 0 @ TODO: cut if ROM space needed (Phase 2 facility cleanup) — SootopolisCity Seedot/Lotad size comparison is Hoenn-exclusive, unreachable in HnS. HnS-only "bufferunitsystemtext" script command.
 	bufferunitsystemtext UNIT_TEXT_LENGTH_SMALL_SINGLE, 1
+.endif
 	msgbox SootopolisCity_LotadAndSeedotHouse_Text_BiggestSeedotInHistory, MSGBOX_DEFAULT
 	releaseall
 	end
@@ -102,7 +108,9 @@ SootopolisCity_LotadAndSeedotHouse_EventScript_SeedotSizeRecord::
 SootopolisCity_LotadAndSeedotHouse_EventScript_LotadSizeRecord::
 	special GetLotadSizeRecordInfo
 	lockall
+.if 0 @ TODO: cut if ROM space needed (Phase 2 facility cleanup) — SootopolisCity Seedot/Lotad size comparison is Hoenn-exclusive, unreachable in HnS. HnS-only "bufferunitsystemtext" script command.
 	bufferunitsystemtext UNIT_TEXT_LENGTH_SMALL_SINGLE, 1
+.endif
 	msgbox SootopolisCity_LotadAndSeedotHouse_Text_BiggestLotadInHistory, MSGBOX_DEFAULT
 	releaseall
 	end
