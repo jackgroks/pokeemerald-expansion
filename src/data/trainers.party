@@ -2700,7 +2700,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - IRON_TAIL
 - HIDDEN_POWER
 
-# === HNS-ONLY TRAINERS BELOW ===
+# --- HNS-ONLY TRAINERS BELOW ---
 # These trainer constants are not in pe-expansion's include/constants/opponents.h.
 # They are emitted here so the migration is lossless; expect pe-expansion to fail compile until
 # the corresponding TRAINER_* constants are added to opponents.h.
@@ -10933,7 +10933,7 @@ SNUBBULL
 Level: 15
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-# === PRESERVED-FROM-PE TRAINERS BELOW ===
+# --- PRESERVED-FROM-PE TRAINERS BELOW ---
 # These trainer entries were copied verbatim from pokeemerald-expansion's existing trainers.party
 # via the T3 --preserve-from-pe flag. They are not in HnS but are required by RC's engine work
 # (debug trainers from feat/two-opponents-full-party / chore/integrate-pocs).
