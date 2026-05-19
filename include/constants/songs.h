@@ -409,6 +409,11 @@
 #define MUS_VS_TRAINER              476 // MUS_BATTLE20
 #define MUS_VS_GYM_LEADER           477 // MUS_BATTLE32
 #define MUS_VS_CHAMPION             478 // MUS_BATTLE33
+// HnS-port alias: HnS-Johto uses HGSS's MUS_HG_VS_CHAMPION; pe doesn't ship
+// HGSS music. Alias to pe's MUS_VS_CHAMPION (Emerald champion theme) until
+// HG_* music data is ported. TODO: port HGSS champion-battle music in
+// post-Phase-5 audio pass. Phase 5-prep R3.
+#define MUS_HG_VS_CHAMPION          MUS_VS_CHAMPION
 #define MUS_VS_REGI                 479 // MUS_BATTLE36
 #define MUS_VS_KYOGRE_GROUDON       480 // MUS_BATTLE34
 #define MUS_VS_RIVAL                481 // MUS_BATTLE35
