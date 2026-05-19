@@ -1112,7 +1112,7 @@ BattleFrontier_Lounge9_Nurse::
 	case MULTI_B_PRESSED, BattleFrontier_Lounge9_Chansey1End
 
 BattleFrontier_Lounge9_NurseBattle::
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_JOEY, 0, BattleFrontier_Lounge9_NurseIntro, BattleFrontier_Lounge9_NurseDefeat, BattleFrontier_Lounge9_ChanseyBattleAgain
+	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, 0, TRAINER_JOEY, BattleFrontier_Lounge9_NurseIntro, BattleFrontier_Lounge9_NurseDefeat, BattleFrontier_Lounge9_ChanseyBattleAgain, LOCALID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
 	end
 
 BattleFrontier_Lounge9_Chansey1End::
