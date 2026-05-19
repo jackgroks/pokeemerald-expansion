@@ -575,6 +575,13 @@ enum TrainerClassID
     TRAINER_CLASS_COUNT,
 };
 
+// HnS-ported trainers reference Gen-1 class names without the _FRLG suffix
+// that pe-expansion uses. The semantics are identical (both reference the same
+// Gen-1 trainer class artwork/data slots), so alias additively.
+#define TRAINER_CLASS_SUPER_NERD TRAINER_CLASS_SUPER_NERD_FRLG
+#define TRAINER_CLASS_BIKER      TRAINER_CLASS_BIKER_FRLG
+#define TRAINER_CLASS_BURGLAR    TRAINER_CLASS_BURGLAR_FRLG
+
 #define TRAINER_ENCOUNTER_MUSIC_MALE         0 // Used for Youngsters, Bug Catchers, male School Kids, Sailors, male running and cycling Triathletes, male Pokémon Breeders, and Campers
 #define TRAINER_ENCOUNTER_MUSIC_FEMALE       1 // Used for Lasses, Ladies, Beauties, Aroma Ladies, female running and cycling Triathletes, female Pokémon Breeders, and Parasol Ladies
 #define TRAINER_ENCOUNTER_MUSIC_GIRL         2 // Used for Tubers, Picnickers, female School Kids, and Young Couples
