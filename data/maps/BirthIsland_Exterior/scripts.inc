@@ -73,8 +73,10 @@ BirthIsland_Exterior_EventScript_Complete::
 BirthIsland_Exterior_EventScript_Deoxys::
 	waitse
 	setfieldeffectargument 0, LOCALID_BIRTH_ISLAND_EXTERIOR_ROCK
+.if 0 @ TODO: cut if ROM space needed (Phase 2 facility cleanup) — Birth Island Deoxys event is Hoenn-exclusive, unreachable in HnS. Note: undefined symbol "BIRTH_ISLAND_EXTERIOR" should be MAP_BIRTH_ISLAND_EXTERIOR (HnS-port typo).
 	setfieldeffectargument 1, MAP_NUM(BIRTH_ISLAND_EXTERIOR)
 	setfieldeffectargument 2, MAP_GROUP(BIRTH_ISLAND_EXTERIOR)
+.endif
 	dofieldeffect FLDEFF_DESTROY_DEOXYS_ROCK
 	playbgm MUS_RG_ENCOUNTER_DEOXYS, FALSE
 	waitfieldeffect FLDEFF_DESTROY_DEOXYS_ROCK
