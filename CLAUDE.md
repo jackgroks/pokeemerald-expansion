@@ -47,6 +47,34 @@ Future upstream merges preserve the RC bump unless RHH bumps higher. If
 RHH bumps `MAX_TRAINERS_COUNT_EMERALD`, take the larger of the two values
 and re-verify `SYSTEM_FLAGS` arithmetic resolves correctly.
 
+## Non-additive bumps (one-time, documented)
+
+These are deliberate departures from the "additive by default" schema rule
+above. Each is documented here so future upstream merges and downstream
+audits can reconcile them.
+
+- **2026-05-19 (HMS Decoy, Phase 5-prep R6a) — items.h enum renumber.**
+  Extended `FOREACH_HM` in `include/constants/tms_hms.h` with
+  `F(WHIRLPOOL)` to give HnS its HM09 (Whirl Islands plot gate). This
+  forced inserting `ITEM_HM09 = 690` between `ITEM_HM08 = 689` and the
+  existing `ITEM_OVAL_CHARM = 690`, cascading a +1 renumber of all 184
+  explicit numeric entries from `ITEM_OVAL_CHARM` through
+  `ITEM_GLIMMORANITE` (range 690..873 -> 691..874).
+  - **Why accepted:** RC is pre-release, so save-state invalidation from
+    renumbered item IDs is moot. The cascade is mechanical and one-time;
+    no consumer reads these enum values as numeric literals.
+  - **Auto-derived:** `NUM_HIDDEN_MACHINES` resolves to 9 via
+    `(0 FOREACH_HM(PLUS_ONE))` in `include/item.h:21`. `gTMHMItemMoveIds`
+    in `src/item.c` picks up the new entry via `UNPACK_HM_ITEM_ID`.
+  - **Companion files:** `[ITEM_HM_WHIRLPOOL]` data entry added in
+    `src/data/items.h` mirroring `[ITEM_HM_DIVE]`. Banner documenting the
+    HnS TM/HM disposition lives at `include/constants/items_hns.h`.
+  - **Upstream-merge rule:** If RHH ever adds their own HM09 or extends
+    `FOREACH_HM`, take theirs and remove RC's `F(WHIRLPOOL)` only if their
+    list already contains it; otherwise prepend RC's entry to theirs and
+    re-run the renumber pass against any newly-added items that landed
+    in the 690+ range.
+
 ## Schema discipline
 
 Per `@~/.claude/rules/schema-discipline.md`, schema changes are additive by
