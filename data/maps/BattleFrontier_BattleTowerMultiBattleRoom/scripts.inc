@@ -2,7 +2,8 @@
 .set LOCALID_ATTENDANT_1, 2
 .set LOCALID_ATTENDANT_2, 3
 .set LOCALID_OPPONENT_2, 4
-.set LOCALID_PLAYER, 5
+@ TODO: revisit later — no pe equivalent identified. HnS `.set LOCALID_PLAYER, 5` collides with pe's global #define LOCALID_PLAYER 255 (event_objects.h). Battle Frontier unreachable in HnS; runtime uses pe's player object instead of the map-local 5.
+@ .set LOCALID_PLAYER, 5
 .set LOCALID_PARTNER, 6
 
 BattleFrontier_BattleTowerMultiBattleRoom_MapScripts::

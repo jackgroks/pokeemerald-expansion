@@ -1,5 +1,6 @@
 .set LOCALID_OPPONENT, 2
-.set LOCALID_PLAYER, 3
+@ TODO: revisit later — no pe equivalent identified. HnS `.set LOCALID_PLAYER, 3` collides with pe's global #define LOCALID_PLAYER 255 (event_objects.h). Battle Tent unreachable in HnS; runtime uses pe's player object instead of the map-local 3.
+@ .set LOCALID_PLAYER, 3
 
 SlateportCity_BattleTentBattleRoom_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, SlateportCity_BattleTentBattleRoom_OnTransition
