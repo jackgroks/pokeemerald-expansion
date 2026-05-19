@@ -276,6 +276,11 @@
 #define VAR_UNUSED_0x40FE                                0x40FE // Unused Var
 #define VAR_UNUSED_0x40FF                                0x40FF // Unused Var
 
+// HnS-port alias: HnS uses VAR_GARBAGEVAR as a no-op write target for setvar
+// when the script-side machinery wants a sink. Reuse pe's VAR_UNUSED_0x40FF
+// (same numeric value as HnS's original 0x40FF). Phase 5-prep R3.
+#define VAR_GARBAGEVAR                                   VAR_UNUSED_0x40FF
+
 #define VARS_END                                         0x40FF
 #define VARS_COUNT                                       (VARS_END - VARS_START + 1)
 

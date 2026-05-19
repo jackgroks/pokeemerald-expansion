@@ -53,6 +53,11 @@
 
 #define FLAG_FINITE_TMS      0x20 // RC: HnS finite-TM economy; set => TMs are consumed on teach (move tutors use the *Finite branches).
 #define FLAG_UNUSED_0x021    0x21 // Unused Flag
+
+// HnS-port alias: HnS uses FLAG_GARBAGEFLAG as a no-op flag target. Alias to
+// pe's FLAG_UNUSED_0x021 (HnS's original 0x53 collides with pe's
+// FLAG_LEGENDARIES_IN_SOOTOPOLIS). Phase 5-prep R3.
+#define FLAG_GARBAGEFLAG     FLAG_UNUSED_0x021
 #define FLAG_UNUSED_0x022    0x22 // Unused Flag
 #define FLAG_UNUSED_0x023    0x23 // Unused Flag
 #define FLAG_UNUSED_0x024    0x24 // Unused Flag
