@@ -2378,6 +2378,25 @@
 	callnative CalculateMonStatsScript, requests_effects=1
 	.endm
 
+	@ RC migrate-phase-5-prep: re-introduces HnS's checkpcspace command as a
+	@ callnative wrapper. Checks whether the player's PC has room for `quantity`
+	@ more of `itemId`. Sets VAR_RESULT to TRUE if there is room, FALSE otherwise.
+	@ Signature matches HnS's macro (itemId can be a literal or VAR_*).
+	.macro checkpcspace itemId:req, quantity=1
+	callnative CheckPCSpaceScript, requests_effects=1
+	.2byte \itemId
+	.2byte \quantity
+	.endm
+
+	@ RC migrate-phase-5-prep: re-introduces HnS's checkpartymonlevel command as
+	@ a callnative wrapper. Reads a u16 level argument; sets VAR_RESULT to TRUE
+	@ if the party mon at VAR_0x8004's slot index has exactly that level, FALSE
+	@ otherwise. Used by HnS-landed Battle Frontier IV-setter flows.
+	.macro checkpartymonlevel level:req
+	callnative CheckPartyMonLevelScript, requests_effects=1
+	.2byte \level
+	.endm
+
 	@ Buffers the nickname of the first alive party member.
 	.macro bufferlivemonnickname stringVarId:req
 	callnative BufferFirstLiveMonNickname, requests_effects=1
