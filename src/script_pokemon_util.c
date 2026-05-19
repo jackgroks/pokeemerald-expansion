@@ -681,3 +681,48 @@ void Script_SetKO(struct ScriptContext *ctx)
         SetMonData(&gPlayerParty[slot], MON_DATA_HP, &hp);
     }
 }
+
+// RC migrate-phase-4: callnative wrapper for the script-command checkpartymove.
+// Walks the player party for a non-egg mon that knows the given move; sets
+// VAR_RESULT to the (zero-indexed) party slot of the first match, or PARTY_SIZE
+// if no party member knows the move. VAR_0x8004 is set to that mon's species.
+// This is the minimal pe-native equivalent of HnS's ScrCmd_checkpartymove
+// (HnS's version additionally consults tutor/HM/HM-replacement fallbacks; those
+// behaviors are HnS-specific content concerns deferred to later Phase 4 / content
+// work).
+void CheckPartyMoveScript(struct ScriptContext *ctx)
+{
+    u32 i;
+    enum Move move = ScriptReadHalfword(ctx);
+
+    Script_RequestEffects(SCREFF_V1);
+
+    gSpecialVar_Result = PARTY_SIZE;
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL);
+        if (species == SPECIES_NONE)
+            break;
+        if (GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG, NULL))
+            continue;
+        if (MonKnowsMove(&gPlayerParty[i], move))
+        {
+            gSpecialVar_Result = i;
+            gSpecialVar_0x8004 = species;
+            break;
+        }
+    }
+}
+
+// RC migrate-phase-4: callnative wrapper for the script-command calculatemonstats.
+// Re-runs CalculateMonStats over every party slot. Used after events that mutate
+// EVs / IVs / level outside the normal level-up path.
+void CalculateMonStatsScript(struct ScriptContext *ctx)
+{
+    u32 i;
+
+    Script_RequestEffects(SCREFF_V1);
+
+    for (i = 0; i < PARTY_SIZE; i++)
+        CalculateMonStats(&gPlayerParty[i]);
+}
