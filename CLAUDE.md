@@ -75,6 +75,46 @@ audits can reconcile them.
     re-run the renumber pass against any newly-added items that landed
     in the 690+ range.
 
+- **2026-05-19 (HMS Warspite, Phase 5-prep R6d) — SYSTEM_FLAGS region
+  extended by 658 slots; DAILY_FLAGS_START rebased.**
+  Added `include/constants/flags_hns.h` with 658 HnS-only progression
+  flag `#define`s, each `(SYSTEM_FLAGS + 0xC0 + N)` for N in 0..657 (slot
+  range `(SYSTEM_FLAGS + 0xC0)..(SYSTEM_FLAGS + 0x351)`). `flags.h` now
+  `#include`s `flags_hns.h` after the vanilla SYSTEM_FLAGS block and
+  before the `DAILY_FLAGS_START` declaration. `DAILY_FLAGS_START` was
+  rebased from `(FLAG_UNUSED_0x91F + (8 - FLAG_UNUSED_0x91F % 8))`
+  (= `SYSTEM_FLAGS + 0xC0`) to
+  `(FLAG_HNS_LAST_SLOT + (8 - FLAG_HNS_LAST_SLOT % 8))`
+  (= `SYSTEM_FLAGS + 0x358`).
+  - **Auto-derived bumps:** `DAILY_FLAGS_END`, `NUM_DAILY_FLAGS`,
+    `FLAGS_COUNT`, and `NUM_FLAG_BYTES` all recompute via their existing
+    arithmetic chains. `NUM_FLAG_BYTES` grows from 300 to 415 (+115
+    bytes); `SaveBlock1.flags[]` array auto-resizes; `SaveBlock1` grows
+    by 115 bytes total. Compile-time asserts at `src/save.c:80-83`
+    confirm `sizeof(struct SaveBlock1)` stays within
+    `SECTOR_DATA_SIZE * 4 = 15872` bytes (verified passing post-R6d).
+  - **Why this is non-additive:** the `DAILY_FLAGS_START` definition
+    itself changed (from `FLAG_UNUSED_0x91F`-based to
+    `FLAG_HNS_LAST_SLOT`-based). All existing `FLAG_DAILY_*` and
+    `FLAG_UNUSED_0x9XX` macros that resolve through `DAILY_FLAGS_START`
+    shift their absolute byte offset by +83 bytes. No code reads flag
+    offsets as numeric literals (verified via grep — all access goes
+    through the `flags[id/8]` arithmetic at `src/event_data.c:232`), so
+    the shift is safe.
+  - **Slot semantics:** HnS's own flag values (e.g., `0x3A3`, `0x4F4`,
+    `(SYSTEM_FLAGS + 0x85)`) collide with pe's TRAINER_FLAGS range
+    (`0x500..0x85F`) and cannot be copied verbatim. All 658 are re-slotted
+    onto fresh `(SYSTEM_FLAGS + 0xC0 + N)` slots in alphabetical order
+    matching the audit list at
+    `../.context/chore/migrate-to-pe-expansion/r6-audit/flag_confirmed_hns.txt`.
+    Zero name collisions with pe's existing 1878 `FLAG_*` defines
+    (verified by intersection grep before authoring).
+  - **Upstream-merge rule:** If RHH later defines any of these 658 names
+    (unlikely — they're HnS Johto/Kanto-specific), prefer RHH's slot and
+    drop RC's `flags_hns.h` entry for that name. If RHH bumps
+    `DAILY_FLAGS_START`'s base computation, re-anchor `FLAG_HNS_LAST_SLOT`
+    on the new chain rather than the literal `+ 0x351` offset.
+
 ## Schema discipline
 
 Per `@~/.claude/rules/schema-discipline.md`, schema changes are additive by
