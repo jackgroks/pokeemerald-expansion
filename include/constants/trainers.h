@@ -590,6 +590,19 @@ enum TrainerClassID
 #define TRAINER_ENCOUNTER_MUSIC_INTERVIEWER 12
 #define TRAINER_ENCOUNTER_MUSIC_RICH        13 // Used for Rich Boys and Gentlemen
 
+// HnS HG-style encounter music slots (ported from pokemonHnS for HnS-content trainers).
+// Values picked to extend pe's existing 0–13 range additively without colliding.
+// Runtime behavior follows pe's existing music dispatch; new slots fall through to
+// default music until Phase 4 ports the HG-specific music assignments.
+#define TRAINER_ENCOUNTER_MUSIC_HG_CHAMPION    14 // Lance and Red
+#define TRAINER_ENCOUNTER_MUSIC_HG_BOY_1       15
+#define TRAINER_ENCOUNTER_MUSIC_HG_BOY_2       16
+#define TRAINER_ENCOUNTER_MUSIC_HG_GIRL_1      17
+#define TRAINER_ENCOUNTER_MUSIC_HG_GIRL_2      18
+#define TRAINER_ENCOUNTER_MUSIC_HG_SUSPICIOUS_1 19
+#define TRAINER_ENCOUNTER_MUSIC_HG_SUSPICIOUS_2 20
+#define TRAINER_ENCOUNTER_MUSIC_HG_SAGE        21
+
 #define TRAINER_GENDER_MALE   0
 #define TRAINER_GENDER_FEMALE 1
 
