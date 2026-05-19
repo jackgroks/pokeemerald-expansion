@@ -239,7 +239,7 @@ SlateportCity_Harbor_EventScript_BoardFerry::
 	call_if_eq VAR_FACING, DIR_NORTH, SlateportCity_Harbor_EventScript_BoardFerryNorth
 	call_if_eq VAR_FACING, DIR_EAST, SlateportCity_Harbor_EventScript_BoardFerryEast
 	delay 30
-	hideobjectat OBJ_EVENT_ID_PLAYER, 0
+	hideplayer @ pe-migration: HnS used hideobjectat OBJ_EVENT_ID_PLAYER, 0 which trips `.ifdef \map_id` in pe's map macro; reverted to pe's equivalent.
 	setvar VAR_0x8004, LOCALID_SS_TIDAL
 	call Common_EventScript_FerryDepart
 	return
