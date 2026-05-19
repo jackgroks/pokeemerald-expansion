@@ -193,7 +193,7 @@ LittlerootTown_EventScript_GoInsideWithMom::
 	setflag FLAG_GARBAGEFLAG
 	// TODO(pe-migration): missing in pe-expansion -- VAR_GARBAGEVAR (vars) -- port engine surface
 	setvar VAR_GARBAGEVAR, 3
-	hideobjectat OBJ_EVENT_ID_PLAYER, 0
+	hideplayer @ pe-migration: HnS used hideobjectat OBJ_EVENT_ID_PLAYER, 0 which trips `.ifdef \map_id` in pe's map macro; reverted to pe's equivalent.
 	closedoor VAR_0x8004, VAR_0x8005
 	waitdooranim
 	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_MOMS_FRIEND (flags) -- port engine surface

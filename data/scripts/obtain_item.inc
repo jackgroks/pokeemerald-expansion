@@ -132,7 +132,7 @@ Std_FindItem::
 EventScript_CheckPCSpace::
 	checkitemtype VAR_0x8004 @ Don't add if it's a key item
 	goto_if_eq VAR_RESULT, POCKET_KEY_ITEMS, EventScript_CheckPCSpaceContinue
-	pyramid_inchallenge
+	setvar VAR_RESULT, 0 @ TODO: revisit later — no pe equivalent identified. HnS-only "pyramid_inchallenge" script command; pe has InBattlePyramid_() C function but no script-side macro. HnS Johto can never be in Battle Pyramid, so FALSE is semantically correct.
 	copyvar VAR_0x8004, ITEMID  @ pyramid_inchallenge modifies VAR_0x8004
 	goto_if_eq VAR_RESULT, TRUE, EventScript_CheckPCSpaceContinue
 	checkpcspace VAR_0x8004, VAR_0x8005
@@ -156,7 +156,7 @@ EventScript_PickUpItemContinueAdd:
 	waitfanfare
 	waitmessage
 	bufferitemnameplural STR_VAR_2, VAR_0x8004, VAR_0x8005
-	pyramid_inchallenge
+	setvar VAR_RESULT, 0 @ TODO: revisit later — no pe equivalent identified. HnS-only "pyramid_inchallenge"; never in Battle Pyramid under HnS Johto.
 	goto_if_eq VAR_RESULT, TRUE, EventScript_PutBattlePyramidItemInBag
 	call EventScript_PutItemMsg
 	return

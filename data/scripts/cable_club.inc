@@ -357,7 +357,7 @@ CableClub_EventScript_EnterColosseum::
 	waitdooranim
 	applymovement OBJ_EVENT_ID_PLAYER, Movement_PlayerEnterLinkRoom
 	waitmovement 0
-	hideobjectat OBJ_EVENT_ID_PLAYER, 0
+	hideplayer @ pe-migration: HnS used hideobjectat OBJ_EVENT_ID_PLAYER, 0 which trips `.ifdef \map_id` in pe's map macro; reverted to pe's equivalent.
 	closedoor 9, 1
 	waitdooranim
 	release
@@ -451,7 +451,7 @@ CableClub_EventScript_EnterTradeCenter::
 	waitdooranim
 	applymovement OBJ_EVENT_ID_PLAYER, Movement_PlayerEnterLinkRoom
 	waitmovement 0
-	hideobjectat OBJ_EVENT_ID_PLAYER, 0
+	hideplayer @ pe-migration: HnS used hideobjectat OBJ_EVENT_ID_PLAYER, 0 which trips `.ifdef \map_id` in pe's map macro; reverted to pe's equivalent.
 	closedoor 9, 1
 	waitdooranim
 	release
@@ -516,7 +516,7 @@ CableClub_EventScript_EnterRecordCorner::
 	waitdooranim
 	applymovement OBJ_EVENT_ID_PLAYER, Movement_PlayerEnterLinkRoom
 	waitmovement 0
-	hideobjectat OBJ_EVENT_ID_PLAYER, 0
+	hideplayer @ pe-migration: HnS used hideobjectat OBJ_EVENT_ID_PLAYER, 0 which trips `.ifdef \map_id` in pe's map macro; reverted to pe's equivalent.
 	closedoor 9, 1
 	waitdooranim
 	release
@@ -903,7 +903,7 @@ CableClub_EventScript_EnterUnionRoom::
 	waitdooranim
 	applymovement OBJ_EVENT_ID_PLAYER, Movement_PlayerEnterLinkRoom
 	waitmovement 0
-	hideobjectat OBJ_EVENT_ID_PLAYER, 0
+	hideplayer @ pe-migration: HnS used hideobjectat OBJ_EVENT_ID_PLAYER, 0 which trips `.ifdef \map_id` in pe's map macro; reverted to pe's equivalent.
 	closedoor 5, 1
 	waitdooranim
 	special Script_ResetUnionRoomTrade
@@ -1205,7 +1205,7 @@ CableClub_EventScript_EnterWirelessLinkRoom::
 	waitdooranim
 	applymovement OBJ_EVENT_ID_PLAYER, Movement_PlayerEnterLinkRoom
 	waitmovement 0
-	hideobjectat OBJ_EVENT_ID_PLAYER, 0
+	hideplayer @ pe-migration: HnS used hideobjectat OBJ_EVENT_ID_PLAYER, 0 which trips `.ifdef \map_id` in pe's map macro; reverted to pe's equivalent.
 	closedoor 9, 1
 	waitdooranim
 	release
@@ -1383,7 +1383,7 @@ MossdeepCity_GameCorner_1F_EventScript_EnterMinigameRoom::
 	closemessage
 	applymovement OBJ_EVENT_ID_PLAYER, Movement_PlayerEnterMinigameRoom
 	waitmovement 0
-	hideobjectat OBJ_EVENT_ID_PLAYER, 0
+	hideplayer @ pe-migration: HnS used hideobjectat OBJ_EVENT_ID_PLAYER, 0 which trips `.ifdef \map_id` in pe's map macro; reverted to pe's equivalent.
 	release
 	waitstate
 	end

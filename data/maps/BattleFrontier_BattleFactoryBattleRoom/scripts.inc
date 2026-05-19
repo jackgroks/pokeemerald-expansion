@@ -5,7 +5,8 @@
 .set LOCALID_SCIENTIST_4, 5
 .set LOCALID_SCIENTIST_5, 6
 .set LOCALID_SCIENTIST_6, 7
-.set LOCALID_PLAYER, 8
+@ TODO: revisit later — no pe equivalent identified. HnS `.set LOCALID_PLAYER, 8` collides with pe's global #define LOCALID_PLAYER 255 (event_objects.h). Battle Frontier unreachable in HnS; runtime uses pe's player object instead of the map-local 8.
+@ .set LOCALID_PLAYER, 8
 
 BattleFrontier_BattleFactoryBattleRoom_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, BattleFrontier_BattleFactoryBattleRoom_OnTransition

@@ -88,7 +88,9 @@ AquaHideout_UnusedRubyMap2_EventScript_CloseBrailleMsg::
 	releaseall
 	msgbox AquaHideout_UnusedRubyMap2_EventScript_CloseBrailleMsgText, MSGBOX_DEFAULT
 	waitbuttonpress
+.if 0 @ TODO: cut if ROM space needed (Phase 2 facility cleanup) — AquaHideout_UnusedRubyMap2 is a Hoenn-exclusive unused Ruby map, unreachable in HnS. HnS-only "chooseitem" script command (pe has no key-items chooser script macro).
 	chooseitem KEYITEMS_POCKET
+.endif
 	goto_if_eq VAR_ITEM_ID, ITEM_SAPPHIRE, AquaHideout_UnusedRubyMap2_EventScript_OpenRegiEntrance
 	msgbox AquaHideout_UnusedRubyMap2_EventScript_CloseBrailleMsgText3, MSGBOX_AUTOCLOSE
 	end

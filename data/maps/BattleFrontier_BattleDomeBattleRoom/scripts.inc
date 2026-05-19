@@ -2,7 +2,8 @@
 .set LOCALID_AUDIENCE_TWIN, 2
 .set LOCALID_AUDIENCE_WALKING, 6
 .set LOCALID_REFEREE, 9
-.set LOCALID_PLAYER, 13
+@ TODO: revisit later — no pe equivalent identified. HnS `.set LOCALID_PLAYER, 13` collides with pe's global #define LOCALID_PLAYER 255 (event_objects.h). Battle Frontier unreachable in HnS; runtime uses pe's player object instead of the map-local 13.
+@ .set LOCALID_PLAYER, 13
 .set LOCALID_OPPONENT, 15
 
 .set NO_DRAW,       0
