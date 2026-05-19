@@ -21,6 +21,20 @@ enum InGameTradeID
     INGAME_TRADE_ELECTRODE,
     INGAME_TRADE_TANGELA,
     INGAME_TRADE_SEEL,
+    // HnS-port additive entries (Phase 5-prep R3). HnS-Johto's trade.h data
+    // (already landed via T-tooling) references these 9 IDs. Enum entries
+    // are additive only; the trade data table src/data/trade.h carries the
+    // actual content. The FRLG entries above remain unused but unmodified
+    // (schema-additive discipline).
+    INGAME_TRADE_ONIX,
+    INGAME_TRADE_VOLTORB,
+    INGAME_TRADE_MAGNETON,
+    INGAME_TRADE_HAUNTER,
+    INGAME_TRADE_MACHOP,
+    INGAME_TRADE_PIKACHU,
+    INGAME_TRADE_BELDUM,
+    INGAME_TRADE_BONSLY,
+    INGAME_TRADE_STEELIX,
 };
 
 // Return values for CanTradeSelectedMon and CanSpinTradeMon
