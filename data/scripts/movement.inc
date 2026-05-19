@@ -43,19 +43,19 @@ Common_Movement_WalkInPlaceFasterDown:
 	walk_in_place_faster_down
 	step_end
 
-Common_Movement_FaceRight::
+Common_Movement_FaceRight:
 	face_right
 	step_end
 
-Common_Movement_FaceLeft::
+Common_Movement_FaceLeft:
 	face_left
 	step_end
 
-Common_Movement_FaceDown::
+Common_Movement_FaceDown:
 	face_down
 	step_end
 
-Common_Movement_FaceUp::
+Common_Movement_FaceUp:
 	face_up
 	step_end
 
@@ -73,14 +73,6 @@ Common_Movement_WalkInPlaceRight:
 
 @ End of follower-safe movements
 Common_Movement_FollowerSafeEnd::
-	step_end
-	
-Common_Movement_WalkUp5::
-	walk_up
-	walk_up
-	walk_up
-	walk_up
-	walk_up
 	step_end
 
 Common_Movement_WalkUp6:
@@ -104,7 +96,7 @@ Common_Movement_Delay32:
 	delay_16
 	step_end
 
-Common_Movement_WalkUp::
+Common_Movement_WalkUp:
 	walk_up
 	step_end
 
@@ -114,63 +106,36 @@ Common_Movement_WalkUp2::
 	walk_up
 	step_end
 
-@ Follower NPC
-Common_Movement_WalkUpSlow::
-	walk_slow_up
+Common_Movement_Enter_Pokeball::
+	enter_pokeball
 	step_end
 
-Common_Movement_WalkDownSlow::
-	walk_slow_down
+Common_Movement_Exit_Pokeball::
+	exit_pokeball
 	step_end
 
-Common_Movement_WalkRightSlow::
-	walk_slow_right
-	step_end
 
-Common_Movement_WalkLeftSlow::
-	walk_slow_left
+Common_Movement_WalkUp1:
+	walk_up
 	step_end
-
-Common_Movement_WalkDown::
+Common_Movement_WalkDown1:
 	walk_down
 	step_end
-
-Common_Movement_WalkRight::
+Common_Movement_WalkRight1:
 	walk_right
 	step_end
-
-Common_Movement_WalkLeft::
+Common_Movement_WalkLeft1:
 	walk_left
 	step_end
-
-Common_Movement_WalkUpFast::
-	walk_fast_up
+Common_Movement_JumpUp1:
+	jump_up
 	step_end
-
-Common_Movement_WalkDownFast::
-	walk_fast_down
+Common_Movement_JumpDown1:
+	jump_down
 	step_end
-
-Common_Movement_WalkRightFast::
-	walk_fast_right
+Common_Movement_JumpRight1:
+	jump_right
 	step_end
-
-Common_Movement_WalkLeftFast::
-	walk_fast_left
-	step_end
-
-Common_Movement_WalkUpFaster::
-	walk_faster_up
-	step_end
-
-Common_Movement_WalkDownFaster::
-	walk_faster_down
-	step_end
-
-Common_Movement_WalkRightFaster::
-	walk_faster_right
-	step_end
-
-Common_Movement_WalkLeftFaster::
-	walk_faster_left
+Common_Movement_JumpLeft1:
+	jump_left
 	step_end

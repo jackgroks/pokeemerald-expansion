@@ -1,3 +1,5 @@
+.set LOCALID_WINGULL, 3
+
 MossdeepCity_House2_MapScripts::
 	.byte 0
 
@@ -18,20 +20,21 @@ MossdeepCity_House2_EventScript_Wingull::
 	waitmoncry
 	closemessage
 	setflag FLAG_WINGULL_DELIVERED_MAIL
-	clearflag FLAG_HIDE_FORTREE_CITY_HOUSE_4_WINGULL
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
 	call_if_eq VAR_FACING, DIR_NORTH, MossdeepCity_House2_EventScript_WingullExitNorth
 	call_if_eq VAR_FACING, DIR_WEST, MossdeepCity_House2_EventScript_WingullExitWest
-	removeobject LOCALID_MOSSDEEP_HOUSE_WINGULL
+	removeobject LOCALID_WINGULL
 	release
 	end
 
 MossdeepCity_House2_EventScript_WingullExitNorth::
-	applymovement LOCALID_MOSSDEEP_HOUSE_WINGULL, MossdeepCity_House2_Movement_WingullExitNorth
+	applymovement LOCALID_WINGULL, MossdeepCity_House2_Movement_WingullExitNorth
 	waitmovement 0
 	return
 
 MossdeepCity_House2_EventScript_WingullExitWest::
-	applymovement LOCALID_MOSSDEEP_HOUSE_WINGULL, MossdeepCity_House2_Movement_WingullExitEast
+	applymovement LOCALID_WINGULL, MossdeepCity_House2_Movement_WingullExitEast
 	waitmovement 0
 	return
 

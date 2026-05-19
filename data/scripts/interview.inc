@@ -227,7 +227,8 @@ LilycoveCity_ContestLobby_EventScript_TryShowContestReporter::
 	end
 
 LilycoveCity_ContestLobby_EventScript_ShowContestReporter::
-	clearflag FLAG_HIDE_LILYCOVE_CONTEST_HALL_REPORTER
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
 	return
 
 LilycoveCity_ContestLobby_EventScript_DontShowContestReporter::

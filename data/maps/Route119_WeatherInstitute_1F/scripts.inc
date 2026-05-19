@@ -1,3 +1,5 @@
+.set LOCALID_LITTLE_BOY, 5
+
 Route119_WeatherInstitute_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route119_WeatherInstitute_1F_OnTransition
 	.byte 0
@@ -7,8 +9,8 @@ Route119_WeatherInstitute_1F_OnTransition:
 	end
 
 Route119_WeatherInstitute_1F_EventScript_SetLittleBoyPos::
-	setobjectxyperm LOCALID_WEATHER_INSTITUTE_LITTLE_BOY, 0, 5
-	setobjectmovementtype LOCALID_WEATHER_INSTITUTE_LITTLE_BOY, MOVEMENT_TYPE_FACE_RIGHT
+	setobjectxyperm LOCALID_LITTLE_BOY, 0, 5
+	setobjectmovementtype LOCALID_LITTLE_BOY, MOVEMENT_TYPE_FACE_RIGHT
 	return
 
 Route119_WeatherInstitute_1F_EventScript_LittleBoy::
@@ -51,6 +53,8 @@ Route119_WeatherInstitute_1F_EventScript_InstituteWorker2::
 	end
 
 Route119_WeatherInstitute_1F_EventScript_Bed::
+	specialvar VAR_RESULT, IsPokecenterChallengeActivated
+	goto_if_eq VAR_RESULT, TRUE, Route119_WeatherInstitute_1F_EventScript_Bed_PokecenterChallenge
 	lockall
 	msgbox Route119_WeatherInstitute_1F_Text_TakeRestInBed, MSGBOX_DEFAULT
 	closemessage
@@ -58,13 +62,20 @@ Route119_WeatherInstitute_1F_EventScript_Bed::
 	releaseall
 	end
 
+Route119_WeatherInstitute_1F_EventScript_Bed_PokecenterChallenge::
+	msgbox Route119_WeatherInstitute_1F_Text_TakeRestInBed_PokecenterChallenge, MSGBOX_DEFAULT
+	closemessage
+	end
+
 Route119_WeatherInstitute_1F_EventScript_Grunt1::
-	trainerbattle_single TRAINER_GRUNT_WEATHER_INST_1, Route119_WeatherInstitute_1F_Text_Grunt1Intro, Route119_WeatherInstitute_1F_Text_Grunt1Defeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_ZEKE (trainers) -- port engine surface
+	trainerbattle_single TRAINER_ZEKE, Route119_WeatherInstitute_1F_Text_Grunt1Intro, Route119_WeatherInstitute_1F_Text_Grunt1Defeat
 	msgbox Route119_WeatherInstitute_1F_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route119_WeatherInstitute_1F_EventScript_Grunt4::
-	trainerbattle_single TRAINER_GRUNT_WEATHER_INST_4, Route119_WeatherInstitute_1F_Text_Grunt4Intro, Route119_WeatherInstitute_1F_Text_Grunt4Defeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_FALKNER_2 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_FALKNER_2, Route119_WeatherInstitute_1F_Text_Grunt4Intro, Route119_WeatherInstitute_1F_Text_Grunt4Defeat
 	msgbox Route119_WeatherInstitute_1F_Text_Grunt4PostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -131,3 +142,6 @@ Route119_WeatherInstitute_1F_Text_TakeRestInBed:
 	.string "There's a bed…\n"
 	.string "Let's take a rest.$"
 
+Route119_WeatherInstitute_1F_Text_TakeRestInBed_PokecenterChallenge:
+	.string "Sorry, you are playing with\n"
+	.string "the POKéCENTER challenge!$"

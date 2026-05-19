@@ -1,19 +1,26 @@
+.set LOCALID_BIRCH, 2
+.set LOCALID_ZIGZAGOON, 4
+
 Route101_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route101_OnTransition
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route101_OnFrame
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
 Route101_OnTransition:
 	call ProfBirch_EventScript_UpdateLocation
+	callnative SetTimeBasedEncounters
 	end
 
 Route101_OnFrame:
-	map_script_2 VAR_ROUTE101_STATE, 0, Route101_EventScript_HideMapNamePopup
+	// TODO(pe-migration): missing in pe-expansion -- VAR_GARBAGEVAR (vars) -- port engine surface
+	map_script_2 VAR_GARBAGEVAR, 0, Route101_EventScript_HideMapNamePopup
 	.2byte 0
 
 Route101_EventScript_HideMapNamePopup::
 	setflag FLAG_HIDE_MAP_NAME_POPUP
-	setvar VAR_ROUTE101_STATE, 1
+	// TODO(pe-migration): missing in pe-expansion -- VAR_GARBAGEVAR (vars) -- port engine surface
+	setvar VAR_GARBAGEVAR, 1
 	end
 
 Route101_EventScript_StartBirchRescue::
@@ -21,23 +28,24 @@ Route101_EventScript_StartBirchRescue::
 	playbgm MUS_HELP, TRUE
 	msgbox Route101_Text_HelpMe, MSGBOX_DEFAULT
 	closemessage
-	setobjectxy LOCALID_ROUTE101_BIRCH, 0, 15
-	setobjectxy LOCALID_ROUTE101_ZIGZAGOON, 0, 16
-	applymovement LOCALID_PLAYER, Route101_Movement_EnterScene
-	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchRunAway1
-	applymovement LOCALID_ROUTE101_ZIGZAGOON, Route101_Movement_ZigzagoonChase1
+	setobjectxy LOCALID_BIRCH, 0, 15
+	setobjectxy LOCALID_ZIGZAGOON, 0, 16
+	applymovement OBJ_EVENT_ID_PLAYER, Route101_Movement_EnterScene
+	applymovement LOCALID_BIRCH, Route101_Movement_BirchRunAway1
+	applymovement LOCALID_ZIGZAGOON, Route101_Movement_ZigzagoonChase1
 	waitmovement 0
-	applymovement LOCALID_ROUTE101_ZIGZAGOON, Route101_Movement_ZigzagoonChaseInCircles
-	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchRunInCircles
+	applymovement LOCALID_ZIGZAGOON, Route101_Movement_ZigzagoonChaseInCircles
+	applymovement LOCALID_BIRCH, Route101_Movement_BirchRunInCircles
 	waitmovement 0
-	applymovement LOCALID_ROUTE101_BIRCH, Common_Movement_WalkInPlaceFasterRight
+	applymovement LOCALID_BIRCH, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
-	applymovement LOCALID_ROUTE101_ZIGZAGOON, Route101_Movement_ZigzagoonFaceBirch
-	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchFaceZigzagoon
+	applymovement LOCALID_ZIGZAGOON, Route101_Movement_ZigzagoonFaceBirch
+	applymovement LOCALID_BIRCH, Route101_Movement_BirchFaceZigzagoon
 	waitmovement 0
 	msgbox Route101_Text_PleaseHelp, MSGBOX_DEFAULT
 	closemessage
-	setvar VAR_ROUTE101_STATE, 2
+	// TODO(pe-migration): missing in pe-expansion -- VAR_GARBAGEVAR (vars) -- port engine surface
+	setvar VAR_GARBAGEVAR, 2
 	releaseall
 	end
 
@@ -45,7 +53,7 @@ Route101_EventScript_PreventExitSouth::
 	lockall
 	msgbox Route101_Text_DontLeaveMe, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_PLAYER, Route101_Movement_PreventExitSouth
+	applymovement OBJ_EVENT_ID_PLAYER, Route101_Movement_PreventExitSouth
 	waitmovement 0
 	releaseall
 	end
@@ -54,7 +62,7 @@ Route101_EventScript_PreventExitWest::
 	lockall
 	msgbox Route101_Text_DontLeaveMe, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_PLAYER, Route101_Movement_PreventExitWest
+	applymovement OBJ_EVENT_ID_PLAYER, Route101_Movement_PreventExitWest
 	waitmovement 0
 	releaseall
 	end
@@ -63,7 +71,7 @@ Route101_EventScript_PreventExitNorth::
 	lockall
 	msgbox Route101_Text_DontLeaveMe, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_PLAYER, Route101_Movement_PreventExitNorth
+	applymovement OBJ_EVENT_ID_PLAYER, Route101_Movement_PreventExitNorth
 	waitmovement 0
 	releaseall
 	end
@@ -211,42 +219,6 @@ Route101_EventScript_Boy::
 	msgbox Route101_Text_WildPokemonInTallGrass, MSGBOX_NPC
 	end
 
-@ Test event for the 6+6 (TWO_OPPONENTS_FULL) configuration.
-@ Player interacts with the Hiker → 6+6 doubles battle launches via the
-@ trainerbattle_double_full_opponents script command (mode 9). The legacy
-@ mode-15 macro this used to call (trainerbattle_two_trainers_full_party)
-@ has identical semantics and is removed in a follow-up commit.
-Route101_EventScript_FullDuo::
-	trainerbattle_double_full_opponents TRAINER_DEBUG_FULL_OPP_GEN3, Route101_Text_FullDuoDefeat, TRAINER_DEBUG_FULL_OPP_GEN4, Route101_Text_FullDuoDefeat
-	msgbox Route101_Text_FullDuoAfter, MSGBOX_AUTOCLOSE
-	end
-
-Route101_Text_FullDuoDefeat:
-	.string "We lost!$"
-
-Route101_Text_FullDuoAfter:
-	.string "Great battle!$"
-
-@ Test event for the 12v12 (TWO_OPPONENTS_FULL | TWO_PLAYERS_FULL) configuration.
-@ Player interacts with the Hiker → 12v12 doubles battle launches via the
-@ trainerbattle_double_full_both script command (mode 11). The script sets
-@ gPartnerTrainerId to PARTNER_PLAYER_CONTROLLED so the human pilots the
-@ player-side partner; SetPartnerTrainerIdFromVar reads VAR_0x8004 and
-@ writes gPartnerTrainerId before the trainerbattle dispatch fires.
-Route101_EventScript_FullDoubles::
-	special SavePlayerParty
-	setvar VAR_0x8004, PARTNER_PLAYER_CONTROLLED
-	special SetPartnerTrainerIdFromVar
-	trainerbattle_double_full_both TRAINER_DEBUG_FULL_OPP_GEN3, Route101_Text_FullDoublesDefeat, TRAINER_DEBUG_FULL_OPP_GEN4, Route101_Text_FullDoublesDefeat
-	msgbox Route101_Text_FullDoublesAfter, MSGBOX_AUTOCLOSE
-	end
-
-Route101_Text_FullDoublesDefeat:
-	.string "We lost!$"
-
-Route101_Text_FullDoublesAfter:
-	.string "Quite a battle!$"
-
 Route101_EventScript_RouteSign::
 	msgbox Route101_Text_RouteSign, MSGBOX_SIGN
 	end
@@ -254,24 +226,29 @@ Route101_EventScript_RouteSign::
 Route101_EventScript_BirchsBag::
 	lock
 	faceplayer
-	setflag FLAG_SYS_POKEMON_GET
 	setflag FLAG_RESCUED_BIRCH
 	fadescreen FADE_TO_BLACK
-	removeobject LOCALID_ROUTE101_ZIGZAGOON
-	setobjectxy LOCALID_PLAYER, 6, 13
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	removeobject LOCALID_ZIGZAGOON
+	setobjectxy OBJ_EVENT_ID_PLAYER, 6, 13
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	special ChooseStarter
 	waitstate
-	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchApproachPlayer
+	setflag FLAG_SYS_POKEMON_GET
+	applymovement LOCALID_BIRCH, Route101_Movement_BirchApproachPlayer
 	waitmovement 0
 	msgbox Route101_Text_YouSavedMe, MSGBOX_DEFAULT
 	special HealPlayerParty
-	setflag FLAG_HIDE_ROUTE_101_BIRCH_ZIGZAGOON_BATTLE
-	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH
-	setflag FLAG_HIDE_ROUTE_101_BIRCH_STARTERS_BAG
-	setvar VAR_BIRCH_LAB_STATE, 2
-	setvar VAR_ROUTE101_STATE, 3
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAGS_LAB_BIRCH (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAGS_LAB_BIRCH
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
+	// TODO(pe-migration): missing in pe-expansion -- VAR_GARBAGEVAR (vars) -- port engine surface
+	setvar VAR_GARBAGEVAR, 2
+	// TODO(pe-migration): missing in pe-expansion -- VAR_GARBAGEVAR (vars) -- port engine surface
+	setvar VAR_GARBAGEVAR, 3
 	clearflag FLAG_HIDE_MAP_NAME_POPUP
 	checkplayergender
 	call_if_eq VAR_RESULT, MALE, Route101_EventScript_HideMayInBedroom
@@ -286,7 +263,8 @@ Route101_EventScript_HideMayInBedroom::
 	return
 
 Route101_EventScript_HideBrendanInBedroom::
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
 	return
 
 Route101_Movement_BirchApproachPlayer:

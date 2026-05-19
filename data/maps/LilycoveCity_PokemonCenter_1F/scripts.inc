@@ -1,3 +1,5 @@
+.set LOCALID_NURSE, 1
+
 LilycoveCity_PokemonCenter_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, LilycoveCity_PokemonCenter_1F_OnTransition
 	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
@@ -16,15 +18,17 @@ LilycoveCity_PokemonCenter_1F_EventScript_SetLilycoveLadyGfx::
 	end
 
 LilycoveCity_PokemonCenter_1F_EventScript_HideContestLadyMon::
-	setflag FLAG_HIDE_LILYCOVE_POKEMON_CENTER_CONTEST_LADY_MON
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
 	end
 
 LilycoveCity_PokemonCenter_1F_EventScript_ShowContestLadyMon::
-	clearflag FLAG_HIDE_LILYCOVE_POKEMON_CENTER_CONTEST_LADY_MON
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
 	end
 
 LilycoveCity_PokemonCenter_1F_EventScript_Nurse::
-	setvar VAR_0x800B, LOCALID_LILYCOVE_NURSE
+	setvar VAR_0x800B, LOCALID_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress

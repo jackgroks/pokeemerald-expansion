@@ -1,8 +1,10 @@
 Route124_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route124_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
 Route124_OnTransition:
+	callnative SetTimeBasedEncounters
 	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetAbnormalWeather
 	end
 
@@ -21,7 +23,8 @@ Route124_EventScript_Roland::
 	end
 
 Route124_EventScript_Jenny::
-	trainerbattle_single TRAINER_JENNY_1, Route124_Text_JennyIntro, Route124_Text_JennyDefeat, Route124_EventScript_RegisterJenny
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_PROTON_1 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_PROTON_1, Route124_Text_JennyIntro, Route124_Text_JennyDefeat, Route124_EventScript_RegisterJenny
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route124_EventScript_RematchJenny
 	msgbox Route124_Text_JennyPostBattle, MSGBOX_DEFAULT
@@ -32,12 +35,14 @@ Route124_EventScript_RegisterJenny::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route124_Text_JennyRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_JENNY_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_PROTON_1 (trainers) -- port engine surface
+	register_matchcall TRAINER_PROTON_1
 	release
 	end
 
 Route124_EventScript_RematchJenny::
-	trainerbattle_rematch TRAINER_JENNY_1, Route124_Text_JennyRematchIntro, Route124_Text_JennyRematchDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_PROTON_1 (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_PROTON_1, Route124_Text_JennyRematchIntro, Route124_Text_JennyRematchDefeat
 	msgbox Route124_Text_JennyPostRematch, MSGBOX_AUTOCLOSE
 	end
 
@@ -90,12 +95,14 @@ Route124_EventScript_RematchRoy::
 	end
 
 Route124_EventScript_Declan::
-	trainerbattle_single TRAINER_DECLAN, Route124_Text_DeclanIntro, Route124_Text_DeclanDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JOYCE (trainers) -- port engine surface
+	trainerbattle_single TRAINER_JOYCE, Route124_Text_DeclanIntro, Route124_Text_DeclanDefeat
 	msgbox Route124_Text_DeclanPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route124_EventScript_Isabella::
-	trainerbattle_single TRAINER_ISABELLA, Route124_Text_IsabellaIntro, Route124_Text_IsabellaDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_BLUE (trainers) -- port engine surface
+	trainerbattle_single TRAINER_BLUE, Route124_Text_IsabellaIntro, Route124_Text_IsabellaDefeat
 	msgbox Route124_Text_IsabellaPostBattle, MSGBOX_AUTOCLOSE
 	end
 

@@ -9,11 +9,13 @@ LilycoveCity_DepartmentStoreRooftop_OnTransition:
 	end
 
 LilycoveCity_DepartmentStoreRooftop_EventScript_ShowSaleWoman::
-	clearflag FLAG_HIDE_LILYCOVE_DEPARTMENT_STORE_ROOFTOP_SALE_WOMAN
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
 	return
 
 LilycoveCity_DepartmentStoreRooftop_EventScript_HideSaleWoman::
-	setflag FLAG_HIDE_LILYCOVE_DEPARTMENT_STORE_ROOFTOP_SALE_WOMAN
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
 	return
 
 LilycoveCity_DepartmentStoreRooftop_EventScript_SaleWoman::
@@ -33,7 +35,6 @@ LilycoveCity_DepartmentStoreRooftop_PokemartDecor_ClearOutSale:
 	.2byte DECOR_FENCE_WIDTH
 	.2byte DECOR_TIRE
 	.2byte DECOR_BREAKABLE_DOOR
-	.2byte DECOR_SOLID_BOARD
 	.2byte DECOR_SAND_ORNAMENT
 	.2byte DECOR_STAND
 	.2byte DECOR_SLIDE
@@ -42,6 +43,8 @@ LilycoveCity_DepartmentStoreRooftop_PokemartDecor_ClearOutSale:
 	.2byte DECOR_CUTE_TV
 	.2byte DECOR_WAILMER_DOLL
 	.2byte DECOR_RHYDON_DOLL
+	.2byte DECOR_RED_TENT
+	.2byte DECOR_BLUE_TENT
 	.2byte 0
 	release
 	end
@@ -69,11 +72,20 @@ LilycoveCity_DepartmentStoreRooftop_EventScript_VendingMachine::
 	message LilycoveCity_DepartmentStoreRooftop_Text_WhichDrinkWouldYouLike
 	waitmessage
 	showmoneybox 0, 0
+	setvar VAR_TEMP_3, 0
 	goto LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseDrink
 	end
 
 LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseDrink::
-	multichoice 16, 0, MULTI_VENDING_MACHINE, FALSE
+	switch VAR_TEMP_3
+	case 0, LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseDrink_FreshWater
+	case 1, LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseDrink_SodaPop
+	case 2, LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseDrink_Lemonade
+	goto LilycoveCity_DepartmentStoreRooftop_EventScript_ExitVendingMachine
+	end
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseDrink_FreshWater::
+	multichoicedefault 16, 0, MULTI_VENDING_MACHINE, 0, FALSE
 	copyvar VAR_TEMP_1, VAR_RESULT
 	switch VAR_TEMP_1
 	case 0, LilycoveCity_DepartmentStoreRooftop_EventScript_FreshWater
@@ -83,18 +95,41 @@ LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseDrink::
 	goto LilycoveCity_DepartmentStoreRooftop_EventScript_ExitVendingMachine
 	end
 
+LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseDrink_SodaPop::
+	multichoicedefault 16, 0, MULTI_VENDING_MACHINE, 1, FALSE
+	copyvar VAR_TEMP_1, VAR_RESULT
+	switch VAR_TEMP_1
+	case 0, LilycoveCity_DepartmentStoreRooftop_EventScript_FreshWater
+	case 1, LilycoveCity_DepartmentStoreRooftop_EventScript_SodaPop
+	case 2, LilycoveCity_DepartmentStoreRooftop_EventScript_Lemonade
+	goto LilycoveCity_DepartmentStoreRooftop_EventScript_ExitVendingMachine
+	end
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseDrink_Lemonade::
+	multichoicedefault 16, 0, MULTI_VENDING_MACHINE, 2, FALSE
+	copyvar VAR_TEMP_1, VAR_RESULT
+	switch VAR_TEMP_1
+	case 0, LilycoveCity_DepartmentStoreRooftop_EventScript_FreshWater
+	case 1, LilycoveCity_DepartmentStoreRooftop_EventScript_SodaPop
+	case 2, LilycoveCity_DepartmentStoreRooftop_EventScript_Lemonade
+	goto LilycoveCity_DepartmentStoreRooftop_EventScript_ExitVendingMachine
+	end
+
 LilycoveCity_DepartmentStoreRooftop_EventScript_FreshWater::
-	setvar VAR_TEMP_0, ITEM_FRESH_WATER
+	setvar VAR_TEMP_2, ITEM_FRESH_WATER
+	setvar VAR_TEMP_3, 0
 	goto LilycoveCity_DepartmentStoreRooftop_EventScript_TryBuyDrink
 	end
 
 LilycoveCity_DepartmentStoreRooftop_EventScript_SodaPop::
-	setvar VAR_TEMP_0, ITEM_SODA_POP
+	setvar VAR_TEMP_2, ITEM_SODA_POP
+	setvar VAR_TEMP_3, 1
 	goto LilycoveCity_DepartmentStoreRooftop_EventScript_TryBuyDrink
 	end
 
 LilycoveCity_DepartmentStoreRooftop_EventScript_Lemonade::
-	setvar VAR_TEMP_0, ITEM_LEMONADE
+	setvar VAR_TEMP_2, ITEM_LEMONADE
+	setvar VAR_TEMP_3, 2
 	goto LilycoveCity_DepartmentStoreRooftop_EventScript_TryBuyDrink
 	end
 
@@ -127,37 +162,37 @@ LilycoveCity_DepartmentStoreRooftop_EventScript_TryBuyDrink::
 	call_if_eq VAR_TEMP_1, 1, LilycoveCity_DepartmentStoreRooftop_EventScript_CheckMoneySodaPop
 	call_if_eq VAR_TEMP_1, 2, LilycoveCity_DepartmentStoreRooftop_EventScript_CheckMoneyLemonade
 	goto_if_eq VAR_RESULT, FALSE, LilycoveCity_DepartmentStoreRooftop_EventScript_NotEnoughMoneyForDrink
-	checkitemspace VAR_TEMP_0
+	checkitemspace VAR_TEMP_2
 	goto_if_eq VAR_RESULT, FALSE, LilycoveCity_DepartmentStoreRooftop_EventScript_NoRoomForDrink
 	call_if_eq VAR_TEMP_1, 0, LilycoveCity_DepartmentStoreRooftop_EventScript_RemoveMoneyFreshWater
 	call_if_eq VAR_TEMP_1, 1, LilycoveCity_DepartmentStoreRooftop_EventScript_RemoveMoneySodaPop
 	call_if_eq VAR_TEMP_1, 2, LilycoveCity_DepartmentStoreRooftop_EventScript_RemoveMoneyLemonade
 	updatemoneybox
-	bufferitemname STR_VAR_1, VAR_TEMP_0
+	bufferitemname STR_VAR_1, VAR_TEMP_2
 	playse SE_VEND
 	msgbox LilycoveCity_DepartmentStoreRooftop_Text_CanOfDrinkDroppedDown, MSGBOX_DEFAULT
-	additem VAR_TEMP_0
-	bufferitemname STR_VAR_2, VAR_TEMP_0
+	additem VAR_TEMP_2
+	bufferitemname STR_VAR_2, VAR_TEMP_2
 	bufferstdstring STR_VAR_3, STDSTRING_ITEMS
 	msgbox gText_PutItemInPocket, MSGBOX_DEFAULT
-	random 64  @ 1/64 chance of an additional drink dropping
+	random 16  @ 1/16 chance of an additional drink dropping
 	goto_if_ne VAR_RESULT, 0, LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseNewDrink
-	checkitemspace VAR_TEMP_0
+	checkitemspace VAR_TEMP_2
 	goto_if_eq VAR_RESULT, FALSE, LilycoveCity_DepartmentStoreRooftop_EventScript_NoRoomForDrink
 	playse SE_VEND
 	msgbox LilycoveCity_DepartmentStoreRooftop_Text_ExtraCanOfDrinkDroppedDown, MSGBOX_DEFAULT
-	additem VAR_TEMP_0
-	bufferitemname STR_VAR_2, VAR_TEMP_0
+	additem VAR_TEMP_2
+	bufferitemname STR_VAR_2, VAR_TEMP_2
 	bufferstdstring STR_VAR_3, STDSTRING_ITEMS
 	msgbox gText_PutItemInPocket, MSGBOX_DEFAULT
-	random 64  @ 1/64 * the prev 1/64 chance of a third additional drink dropping, ~ 0.02% chance
+	random 32  @ 1/32 * the prev 1/16 chance of a third additional drink dropping,
 	goto_if_ne VAR_RESULT, 0, LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseNewDrink
-	checkitemspace VAR_TEMP_0
+	checkitemspace VAR_TEMP_2
 	goto_if_eq VAR_RESULT, 0, LilycoveCity_DepartmentStoreRooftop_EventScript_NoRoomForDrink
 	playse SE_VEND
 	msgbox LilycoveCity_DepartmentStoreRooftop_Text_ExtraCanOfDrinkDroppedDown, MSGBOX_DEFAULT
-	additem VAR_TEMP_0
-	bufferitemname STR_VAR_2, VAR_TEMP_0
+	additem VAR_TEMP_2
+	bufferitemname STR_VAR_2, VAR_TEMP_2
 	bufferstdstring STR_VAR_3, STDSTRING_ITEMS
 	msgbox gText_PutItemInPocket, MSGBOX_DEFAULT
 	goto LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseNewDrink

@@ -295,7 +295,8 @@ Route110_TrickHousePuzzle7_EventScript_Patricia::
 	end
 
 Route110_TrickHousePuzzle7_EventScript_Alexis::
-	trainerbattle_single TRAINER_ALEXIS, Route110_TrickHousePuzzle7_Text_AlexisIntro, Route110_TrickHousePuzzle7_Text_AlexisDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_BENJAMIN (trainers) -- port engine surface
+	trainerbattle_single TRAINER_BENJAMIN, Route110_TrickHousePuzzle7_Text_AlexisIntro, Route110_TrickHousePuzzle7_Text_AlexisDefeat
 	msgbox Route110_TrickHousePuzzle7_Text_AlexisPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -305,12 +306,14 @@ Route110_TrickHousePuzzle7_EventScript_Mariela::
 	end
 
 Route110_TrickHousePuzzle7_EventScript_Alvaro::
-	trainerbattle_single TRAINER_ALVARO, Route110_TrickHousePuzzle7_Text_AlvaroIntro, Route110_TrickHousePuzzle7_Text_AlvaroDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_BORIS (trainers) -- port engine surface
+	trainerbattle_single TRAINER_BORIS, Route110_TrickHousePuzzle7_Text_AlvaroIntro, Route110_TrickHousePuzzle7_Text_AlvaroDefeat
 	msgbox Route110_TrickHousePuzzle7_Text_AlvaroPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route110_TrickHousePuzzle7_EventScript_Everett::
-	trainerbattle_single TRAINER_EVERETT, Route110_TrickHousePuzzle7_Text_EverettIntro, Route110_TrickHousePuzzle7_Text_EverettDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_NICOLE (trainers) -- port engine surface
+	trainerbattle_single TRAINER_NICOLE, Route110_TrickHousePuzzle7_Text_EverettIntro, Route110_TrickHousePuzzle7_Text_EverettDefeat
 	msgbox Route110_TrickHousePuzzle7_Text_EverettPostBattle, MSGBOX_AUTOCLOSE
 	end
 

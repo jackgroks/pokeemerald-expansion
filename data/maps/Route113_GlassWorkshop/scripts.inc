@@ -28,7 +28,6 @@ Route113_GlassWorkshop_EventScript_GlassWorker::
 	goto_if_eq VAR_GLASS_WORKSHOP_STATE, 1, Route113_GlassWorkshop_EventScript_ExplainSootSack
 	msgbox Route113_GlassWorkshop_Text_GoCollectAshWithThis, MSGBOX_DEFAULT
 	giveitem ITEM_SOOT_SACK
-	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setvar VAR_GLASS_WORKSHOP_STATE, 1
 	msgbox Route113_GlassWorkshop_Text_ExplainSootSack, MSGBOX_DEFAULT
 	release
@@ -305,7 +304,9 @@ Route113_GlassWorkshop_Text_ExplainSootSack:
 	.string "through piles of ash, huff-puff.\p"
 	.string "And it will fill up with the volcanic ash,\n"
 	.string "huff-puff.\p"
-	.string "Once you think you've collected a good\n"
+	.string "You can check how much ash it\n"
+	.string "has from your BAG.\p"
+	.string "Once you you've collected a good\n"
 	.string "amount, come see me, huff-puff.$"
 
 Route113_GlassWorkshop_Text_LetsSeeCollectedAshes:

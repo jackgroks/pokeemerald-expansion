@@ -1,3 +1,5 @@
+.set LOCALID_DAYCARE_LADY, 1
+
 Route117_EventScript_DaycareMan::
 	lock
 	faceplayer
@@ -22,8 +24,9 @@ Route117_EventScript_DaycareEggWaiting::
 	end
 
 Route117_EventScript_DaycareAcceptEgg::
+	specialvar VAR_0x8004, GetMaxPartySize @ tx_randomizer_and_challenges
 	specialvar VAR_RESULT, CalculatePlayerPartyCount
-	goto_if_ne VAR_RESULT, PARTY_SIZE, Route117_EventScript_DaycareReceiveEgg
+	goto_if_ne VAR_RESULT, VAR_0x8004, Route117_EventScript_DaycareReceiveEgg
 	msgbox Route117_Text_YouHaveNoRoomForIt, MSGBOX_DEFAULT
 	release
 	end
@@ -89,7 +92,8 @@ Route117_PokemonDayCare_EventScript_GiveMonToRaise::
 	specialvar VAR_RESULT, CountPartyAliveNonEggMons
 	goto_if_eq VAR_RESULT, 2, Route117_PokemonDayCare_EventScript_OnlyTwoAliveMons
 	msgbox Route117_PokemonDayCare_Text_WhichMonShouldWeRaise, MSGBOX_DEFAULT
-	chooseboxmon SELECT_PC_MON_DAYCARE
+	fadescreen FADE_TO_BLACK
+	special ChooseSendDaycareMon
 	waitstate
 	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, Route117_PokemonDayCare_EventScript_ComeAgain
 	specialvar VAR_RESULT, CountPartyAliveNonEggMons_IgnoreVar0x8004Slot
@@ -159,8 +163,9 @@ Route117_PokemonDayCare_EventScript_OneMonInDaycare::
 	end
 
 Route117_PokemonDayCare_EventScript_TryRetrieveMon::
+	specialvar VAR_0x8004, GetMaxPartySize @ tx_randomizer_and_challenges
 	specialvar VAR_RESULT, CalculatePlayerPartyCount
-	goto_if_eq VAR_RESULT, PARTY_SIZE, Route117_PokemonDayCare_EventScript_NoRoom
+	goto_if_eq VAR_RESULT, VAR_0x8004, Route117_PokemonDayCare_EventScript_NoRoom
 	specialvar VAR_RESULT, GetDaycareState
 	setvar VAR_0x8004, 0
 	goto_if_eq VAR_RESULT, DAYCARE_ONE_MON, Route117_PokemonDayCare_EventScript_CostPrompt

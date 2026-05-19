@@ -1,9 +1,24 @@
+@ Sailing to and from Dewford uses local IDs from different maps
+@ e.g. Route 104's sail to Dewford script references local IDs from Dewford's map
+@ All of these local IDs are labeled here
+.equ LOCALID_BRINEY_DEWFORD, 2
+.equ LOCALID_BOAT_DEWFORD, 4
+
+.equ LOCALID_BOAT_R109, 1
+.equ LOCALID_BRINEY_R109, 2
+
+.equ LOCALID_BOAT_R104, 7
+.equ LOCALID_BRINEY_R104, 8
+
 DewfordTown_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, DewfordTown_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
 DewfordTown_OnTransition:
-	setflag FLAG_VISITED_DEWFORD_TOWN
+	callnative SetTimeBasedEncounters
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_VISITED_AZALEA_TOWN (flags) -- port engine surface
+	setflag FLAG_VISITED_AZALEA_TOWN
 	end
 
 DewfordTown_EventScript_Briney::
@@ -81,7 +96,6 @@ DewfordTown_EventScript_OldRodFisherman::
 DewfordTown_EventScript_GiveOldRod::
 	msgbox DewfordTown_Text_GiveYouOneOfMyRods, MSGBOX_DEFAULT
 	giveitem ITEM_OLD_ROD
-	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_OLD_ROD
 	msgbox DewfordTown_Text_ThrowInFishingAdvice, MSGBOX_DEFAULT
 	release
@@ -112,71 +126,81 @@ DewfordTown_EventScript_FishingNotSoGood::
 
 DewfordTown_EventScript_SailToPetalburg::
 	call EventScript_BackupMrBrineyLocation
-	setobjectsubpriority LOCALID_DEWFORD_BRINEY, MAP_DEWFORD_TOWN, 0
-	setobjectsubpriority LOCALID_PLAYER, MAP_DEWFORD_TOWN, 0
-	applymovement LOCALID_DEWFORD_BRINEY, DewfordTown_Movement_BrineyBoardBoat
+	setobjectsubpriority LOCALID_BRINEY_DEWFORD, MAP_DEWFORD_TOWN, 0
+	setobjectsubpriority OBJ_EVENT_ID_PLAYER, MAP_DEWFORD_TOWN, 0
+	applymovement LOCALID_BRINEY_DEWFORD, DewfordTown_Movement_BrineyBoardBoat
 	waitmovement 0
-	removeobject LOCALID_DEWFORD_BRINEY
-	applymovement LOCALID_PLAYER, DewfordTown_Movement_PlayerBoardBoat
+	removeobject LOCALID_BRINEY_DEWFORD
+	applymovement OBJ_EVENT_ID_PLAYER, DewfordTown_Movement_PlayerBoardBoat
 	waitmovement 0
-	hideobjectat LOCALID_PLAYER, MAP_DEWFORD_TOWN
+	hideobjectat OBJ_EVENT_ID_PLAYER, MAP_DEWFORD_TOWN
 	call Common_EventScript_PlayBrineysBoatMusic
-	applymovement LOCALID_DEWFORD_BOAT, DewfordTown_Movement_SailToPetalburg
-	applymovement LOCALID_PLAYER, DewfordTown_Movement_SailToPetalburg
+	applymovement LOCALID_BOAT_DEWFORD, DewfordTown_Movement_SailToPetalburg
+	applymovement OBJ_EVENT_ID_PLAYER, DewfordTown_Movement_SailToPetalburg
 	waitmovement 0
-	showobjectat LOCALID_PLAYER, MAP_ROUTE104
+	showobjectat OBJ_EVENT_ID_PLAYER, MAP_ROUTE104
 	call Common_EventScript_StopBrineysBoatMusic
-	applymovement LOCALID_PLAYER, DewfordTown_Movement_ExitBoatPetalburg
+	applymovement OBJ_EVENT_ID_PLAYER, DewfordTown_Movement_ExitBoatPetalburg
 	waitmovement 0
-	showobjectat LOCALID_PLAYER, MAP_ROUTE104
-	clearflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
-	clearflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
-	clearflag FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
-	hideobjectat LOCALID_DEWFORD_BOAT, MAP_DEWFORD_TOWN
-	setvar VAR_BOARD_BRINEY_BOAT_STATE, 2
-	resetobjectsubpriority LOCALID_PLAYER, MAP_DEWFORD_TOWN
+	showobjectat OBJ_EVENT_ID_PLAYER, MAP_ROUTE104
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
+	hideobjectat LOCALID_BOAT_DEWFORD, MAP_DEWFORD_TOWN
+	// TODO(pe-migration): missing in pe-expansion -- VAR_GARBAGEVAR (vars) -- port engine surface
+	setvar VAR_GARBAGEVAR, 2
+	resetobjectsubpriority OBJ_EVENT_ID_PLAYER, MAP_DEWFORD_TOWN
 	warp MAP_ROUTE104_MR_BRINEYS_HOUSE, 5, 4
-	copyvar VAR_BRINEY_LOCATION, VAR_0x8008
+	// TODO(pe-migration): missing in pe-expansion -- VAR_GARBAGEVAR (vars) -- port engine surface
+	copyvar VAR_GARBAGEVAR, VAR_0x8008
 	waitstate
 	release
 	end
 
 DewfordTown_EventScript_SailToSlateport::
 	call EventScript_BackupMrBrineyLocation
-	setobjectsubpriority LOCALID_DEWFORD_BRINEY, MAP_DEWFORD_TOWN, 0
-	setobjectsubpriority LOCALID_PLAYER, MAP_DEWFORD_TOWN, 1
-	applymovement LOCALID_DEWFORD_BRINEY, DewfordTown_Movement_BrineyBoardBoat
+	setobjectsubpriority LOCALID_BRINEY_DEWFORD, MAP_DEWFORD_TOWN, 0
+	setobjectsubpriority OBJ_EVENT_ID_PLAYER, MAP_DEWFORD_TOWN, 1
+	applymovement LOCALID_BRINEY_DEWFORD, DewfordTown_Movement_BrineyBoardBoat
 	waitmovement 0
-	removeobject LOCALID_DEWFORD_BRINEY
-	applymovement LOCALID_PLAYER, DewfordTown_Movement_PlayerBoardBoat
+	removeobject LOCALID_BRINEY_DEWFORD
+	applymovement OBJ_EVENT_ID_PLAYER, DewfordTown_Movement_PlayerBoardBoat
 	waitmovement 0
-	hideobjectat LOCALID_PLAYER, MAP_DEWFORD_TOWN
+	hideobjectat OBJ_EVENT_ID_PLAYER, MAP_DEWFORD_TOWN
 	call Common_EventScript_PlayBrineysBoatMusic
-	applymovement LOCALID_DEWFORD_BOAT, DewfordTown_Movement_SailToSlateport
-	applymovement LOCALID_PLAYER, DewfordTown_Movement_SailToSlateport
+	applymovement LOCALID_BOAT_DEWFORD, DewfordTown_Movement_SailToSlateport
+	applymovement OBJ_EVENT_ID_PLAYER, DewfordTown_Movement_SailToSlateport
 	waitmovement 0
 	call Common_EventScript_StopBrineysBoatMusic
-	showobjectat LOCALID_PLAYER, MAP_ROUTE109
-	applymovement LOCALID_PLAYER, DewfordTown_Movement_ExitBoatSlateport
+	showobjectat OBJ_EVENT_ID_PLAYER, MAP_ROUTE109
+	applymovement OBJ_EVENT_ID_PLAYER, DewfordTown_Movement_ExitBoatSlateport
 	waitmovement 0
-	setobjectxyperm LOCALID_ROUTE109_BRINEY, 21, 26
-	addobject LOCALID_ROUTE109_BRINEY
-	setobjectsubpriority LOCALID_ROUTE109_BRINEY, MAP_ROUTE109, 0
-	applymovement LOCALID_ROUTE109_BRINEY, DewfordTown_Movement_BrineyExitBoat
+	setobjectxyperm LOCALID_BRINEY_R109, 21, 26
+	addobject LOCALID_BRINEY_R109
+	setobjectsubpriority LOCALID_BRINEY_R109, MAP_ROUTE109, 0
+	applymovement LOCALID_BRINEY_R109, DewfordTown_Movement_BrineyExitBoat
 	waitmovement 0
-	clearflag FLAG_HIDE_ROUTE_109_MR_BRINEY
-	addobject LOCALID_ROUTE109_BOAT
-	clearflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
-	hideobjectat LOCALID_DEWFORD_BOAT, MAP_DEWFORD_TOWN
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
+	addobject LOCALID_BOAT_R109
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
+	hideobjectat LOCALID_BOAT_DEWFORD, MAP_DEWFORD_TOWN
 	call_if_unset FLAG_DELIVERED_DEVON_GOODS, DewfordTown_EventScript_LandedSlateportDeliverGoods
 	call_if_set FLAG_DELIVERED_DEVON_GOODS, DewfordTown_EventScript_LandedSlateport
 	closemessage
-	copyvar VAR_BRINEY_LOCATION, VAR_0x8008
-	resetobjectsubpriority LOCALID_PLAYER, MAP_DEWFORD_TOWN
-	resetobjectsubpriority LOCALID_ROUTE109_BRINEY, MAP_ROUTE109
-	copyobjectxytoperm LOCALID_ROUTE109_BRINEY
+	// TODO(pe-migration): missing in pe-expansion -- VAR_GARBAGEVAR (vars) -- port engine surface
+	copyvar VAR_GARBAGEVAR, VAR_0x8008
+	resetobjectsubpriority OBJ_EVENT_ID_PLAYER, MAP_DEWFORD_TOWN
+	resetobjectsubpriority LOCALID_BRINEY_R109, MAP_ROUTE109
+	copyobjectxytoperm LOCALID_BRINEY_R109
 	release
 	end
 
@@ -710,7 +734,15 @@ DewfordTown_Text_ThrowInFishingAdvice:
 	.string "Sometimes you can snag something\n"
 	.string "immediately, but with bigger catches,\l"
 	.string "you need to time the pulls on your ROD\l"
-	.string "to haul them in.$"
+	.string "to haul them in.\p"
+	.string "Also, if you chain your fishing strikes\n"
+	.string "you may encounter different colored\l"
+	.string "POKéMON.\p"
+	.string "Fishing strikes means defeating the\n"
+	.string "wild POKéMON and starting a new\l"
+	.string "fishing encounter.\p"
+	.string "If you run away or whiteout, you\n"
+	.string "will lose your fishing strike!$"
 
 DewfordTown_Text_ThatsTooBadThen:
 	.string "Oh, is that so?\n"
@@ -734,7 +766,15 @@ DewfordTown_Text_FishingAdvice:
 	.string "Sometimes you can snag something\n"
 	.string "immediately, but with bigger catches,\l"
 	.string "you need to time the pulls on your ROD\l"
-	.string "to haul them in.$"
+	.string "to haul them in.\p"
+	.string "Also, if you chain your fishing strikes\n"
+	.string "you may encounter different colored\l"
+	.string "POKéMON.\p"
+	.string "Fishing strikes means defeating the\n"
+	.string "wild POKéMON and starting a new\l"
+	.string "fishing encounter.\p"
+	.string "If you run away or whiteout, you\n"
+	.string "will lose your fishing strike!$"
 
 DewfordTown_Text_XIsTheBiggestHappeningThingRight:
 	.string "I like what's hip, happening, and trendy.\n"

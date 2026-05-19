@@ -13,7 +13,8 @@ Route110_TrickHousePuzzle4_EventScript_FoundScroll::
 	end
 
 Route110_TrickHousePuzzle4_EventScript_Cora::
-	trainerbattle_single TRAINER_CORA, Route110_TrickHousePuzzle4_Text_CoraIntro, Route110_TrickHousePuzzle4_Text_CoraDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GRUNT_28 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_GRUNT_28, Route110_TrickHousePuzzle4_Text_CoraIntro, Route110_TrickHousePuzzle4_Text_CoraDefeat
 	msgbox Route110_TrickHousePuzzle4_Text_CoraPostBattle, MSGBOX_AUTOCLOSE
 	end
 

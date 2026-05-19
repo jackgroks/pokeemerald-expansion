@@ -24,6 +24,10 @@ Route123_BerryMastersHouse_EventScript_BerryMaster::
 	addvar VAR_RESULT, FIRST_BERRY_INDEX
 	giveitem VAR_RESULT
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	msgbox Route123_BerryMastersHouse_Text_YoureDeservingOfMulch, MSGBOX_DEFAULT
+	// TODO(pe-migration): missing in pe-expansion -- ITEM_FERTILIZER (items) -- port engine surface
+	giveitem ITEM_FERTILIZER
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	msgbox Route123_BerryMastersHouse_Text_VisitPrettyPetalFlowerShop, MSGBOX_DEFAULT
 	release
 	end

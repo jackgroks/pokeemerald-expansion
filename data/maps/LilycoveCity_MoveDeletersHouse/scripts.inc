@@ -1,3 +1,5 @@
+.set LOCALID_MOVE_DELETER, 1
+
 LilycoveCity_MoveDeletersHouse_MapScripts::
 	.byte 0
 
@@ -14,7 +16,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_MoveDeleter::
 
 LilycoveCity_MoveDeletersHouse_EventScript_ChooseMonAndMoveToForget::
 	msgbox LilycoveCity_MoveDeletersHouse_Text_WhichMonShouldForget, MSGBOX_DEFAULT
-	chooseboxmon SELECT_PC_MON_MOVE_DELETER
+	special ChoosePartyMon
 	waitstate
 	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, LilycoveCity_MoveDeletersHouse_EventScript_ComeAgain
 	special IsSelectedMonEgg

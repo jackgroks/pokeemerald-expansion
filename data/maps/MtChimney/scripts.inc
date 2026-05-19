@@ -1,3 +1,10 @@
+.set LOCALID_ARCHIE, 1
+.set LOCALID_MAXIE, 2
+.set LOCALID_TABITHA, 3
+.set LOCALID_MAGMA_GRUNT_2, 22
+.set LOCALID_MAGMA_GRUNT_1, 29
+
+
 MtChimney_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, MtChimney_OnResume
 	map_script MAP_SCRIPT_ON_TRANSITION, MtChimney_OnTransition
@@ -17,7 +24,7 @@ MtChimney_EventScript_Archie::
 	call_if_unset FLAG_EVIL_LEADER_PLEASE_STOP, MtChimney_EventScript_ArchieGoStopTeamMagma
 	call_if_set FLAG_EVIL_LEADER_PLEASE_STOP, MtChimney_EventScript_ArchieBusyFighting
 	closemessage
-	applymovement LOCALID_MT_CHIMNEY_ARCHIE, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_ARCHIE, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	setflag FLAG_EVIL_LEADER_PLEASE_STOP
 	release
@@ -35,12 +42,12 @@ MtChimney_EventScript_Maxie::
 	lockall
 	playbgm MUS_ENCOUNTER_MAGMA, FALSE
 	msgbox MtChimney_Text_MeteoriteWillActivateVolcano, MSGBOX_DEFAULT
-	applymovement LOCALID_MT_CHIMNEY_MAXIE, Common_Movement_FacePlayer
+	applymovement LOCALID_MAXIE, Common_Movement_FacePlayer
 	waitmovement 0
 	playse SE_PIN
-	applymovement LOCALID_MT_CHIMNEY_MAXIE, Common_Movement_ExclamationMark
+	applymovement LOCALID_MAXIE, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement LOCALID_MT_CHIMNEY_MAXIE, Common_Movement_Delay48
+	applymovement LOCALID_MAXIE, Common_Movement_Delay48
 	waitmovement 0
 	msgbox MtChimney_Text_MaxieIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_MAXIE_MT_CHIMNEY, MtChimney_Text_MaxieDefeat
@@ -48,48 +55,53 @@ MtChimney_EventScript_Maxie::
 	closemessage
 	delay 30
 	fadescreenswapbuffers FADE_TO_BLACK
-	removeobject LOCALID_MT_CHIMNEY_MAXIE
-	removeobject LOCALID_MT_CHIMNEY_MAGMA_GRUNT_1
-	removeobject LOCALID_MT_CHIMNEY_TABITHA
-	removeobject LOCALID_MT_CHIMNEY_MAGMA_GRUNT_2
-	setflag FLAG_HIDE_MT_CHIMNEY_TEAM_MAGMA
+	removeobject LOCALID_MAXIE
+	removeobject LOCALID_MAGMA_GRUNT_1
+	removeobject LOCALID_TABITHA
+	removeobject LOCALID_MAGMA_GRUNT_2
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
 	fadescreenswapbuffers FADE_FROM_BLACK
-	setobjectxyperm LOCALID_MT_CHIMNEY_ARCHIE, 10, 12
-	addobject LOCALID_MT_CHIMNEY_ARCHIE
+	setobjectxyperm LOCALID_ARCHIE, 10, 12
+	addobject LOCALID_ARCHIE
 	call_if_eq VAR_FACING, DIR_EAST, MtChimney_EventScript_ArchieApproachPlayerEast
 	call_if_eq VAR_FACING, DIR_NORTH, MtChimney_EventScript_ArchieApproachPlayerNorth
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	msgbox MtChimney_Text_ArchieThankYou, MSGBOX_DEFAULT
 	closemessage
 	call_if_eq VAR_FACING, DIR_EAST, MtChimney_EventScript_ArchieExitEast
 	call_if_eq VAR_FACING, DIR_NORTH, MtChimney_EventScript_ArchieExitNorth
-	removeobject LOCALID_MT_CHIMNEY_ARCHIE
-	setflag FLAG_HIDE_MT_CHIMNEY_TEAM_AQUA
+	removeobject LOCALID_ARCHIE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
 	setflag FLAG_DEFEATED_EVIL_TEAM_MT_CHIMNEY
-	clearflag FLAG_HIDE_FALLARBOR_HOUSE_PROF_COZMO
-	setflag FLAG_HIDE_METEOR_FALLS_1F_1R_COZMO
-	clearflag FLAG_HIDE_MT_CHIMNEY_LAVA_COOKIE_LADY
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
 	releaseall
 	end
 
 MtChimney_EventScript_ArchieApproachPlayerEast::
-	applymovement LOCALID_MT_CHIMNEY_ARCHIE, MtChimney_Movement_ArchieApproachPlayerEast
+	applymovement LOCALID_ARCHIE, MtChimney_Movement_ArchieApproachPlayerEast
 	waitmovement 0
 	return
 
 MtChimney_EventScript_ArchieApproachPlayerNorth::
-	applymovement LOCALID_MT_CHIMNEY_ARCHIE, MtChimney_Movement_ArchieApproachPlayerNorth
+	applymovement LOCALID_ARCHIE, MtChimney_Movement_ArchieApproachPlayerNorth
 	waitmovement 0
 	return
 
 MtChimney_EventScript_ArchieExitEast::
-	applymovement LOCALID_MT_CHIMNEY_ARCHIE, MtChimney_Movement_ArchieExitEast
+	applymovement LOCALID_ARCHIE, MtChimney_Movement_ArchieExitEast
 	waitmovement 0
 	return
 
 MtChimney_EventScript_ArchieExitNorth::
-	applymovement LOCALID_MT_CHIMNEY_ARCHIE, MtChimney_Movement_ArchieExitNorth
+	applymovement LOCALID_ARCHIE, MtChimney_Movement_ArchieExitNorth
 	waitmovement 0
 	return
 
@@ -104,7 +116,6 @@ MtChimney_EventScript_LavaCookieLady::
 	msgbox MtChimney_Text_ThankYouDear, MSGBOX_DEFAULT
 	checkitemspace ITEM_LAVA_COOKIE
 	call_if_eq VAR_RESULT, TRUE, MtChimney_EventScript_RemoveMoney
-.if OW_SHOW_ITEM_DESCRIPTIONS == OW_ITEM_DESCRIPTIONS_OFF
 	giveitem ITEM_LAVA_COOKIE
 	goto_if_eq VAR_RESULT, FALSE, MtChimney_EventScript_BagIsFull
 	hidemoneybox
@@ -116,19 +127,6 @@ MtChimney_EventScript_BagIsFull::
 	hidemoneybox
 	release
 	end
-.else
-	hidemoneybox
-	giveitem ITEM_LAVA_COOKIE
-	goto_if_eq VAR_RESULT, FALSE, MtChimney_EventScript_BagIsFull
-	release
-	end
-
-MtChimney_EventScript_BagIsFull::
-	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
-	release
-	end
-.endif @ OW_SHOW_ITEM_DESCRIPTIONS
-
 
 MtChimney_EventScript_RemoveMoney::
 	removemoney 200
@@ -411,7 +409,8 @@ MtChimney_EventScript_Tabitha::
 	end
 
 MtChimney_EventScript_Grunt2::
-	trainerbattle_single TRAINER_GRUNT_MT_CHIMNEY_2, MtChimney_Text_Grunt2Intro, MtChimney_Text_Grunt2Defeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_THEO (trainers) -- port engine surface
+	trainerbattle_single TRAINER_THEO, MtChimney_Text_Grunt2Intro, MtChimney_Text_Grunt2Defeat
 	msgbox MtChimney_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -455,7 +454,6 @@ MtChimney_EventScript_MeteoriteMachine::
 	goto_if_eq VAR_RESULT, NO, MtChimney_EventScript_LeaveMeteoriteAlone
 	msgbox MtChimney_Text_PlayerRemovedMeteorite, MSGBOX_DEFAULT
 	giveitem ITEM_METEORITE
-	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_METEORITE
 	releaseall
 	end
@@ -516,7 +514,8 @@ MtChimney_EventScript_Shirley::
 	end
 
 MtChimney_EventScript_Grunt1::
-	trainerbattle_single TRAINER_GRUNT_MT_CHIMNEY_1, MtChimney_Text_Grunt1Intro, MtChimney_Text_Grunt1Defeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_TERU (trainers) -- port engine surface
+	trainerbattle_single TRAINER_TERU, MtChimney_Text_Grunt1Intro, MtChimney_Text_Grunt1Defeat
 	msgbox MtChimney_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -851,3 +850,4 @@ MtChimney_Text_SawyerRematchDefeat:
 MtChimney_Text_SawyerPostRematch:
 	.string "Actually, it really is hot here.\n"
 	.string "I'm overdressed for these parts.$"
+

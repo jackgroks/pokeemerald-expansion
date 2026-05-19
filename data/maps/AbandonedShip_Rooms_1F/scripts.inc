@@ -1,4 +1,6 @@
 AbandonedShip_Rooms_1F_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SetTimeEncounters
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
 AbandonedShip_Rooms_1F_EventScript_Gentleman::
@@ -6,7 +8,8 @@ AbandonedShip_Rooms_1F_EventScript_Gentleman::
 	end
 
 AbandonedShip_Rooms_1F_EventScript_Demetrius::
-	trainerbattle_single TRAINER_DEMETRIUS, AbandonedShip_Rooms_1F_Text_DemetriusIntro, AbandonedShip_Rooms_1F_Text_DemetriusDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JULIA (trainers) -- port engine surface
+	trainerbattle_single TRAINER_JULIA, AbandonedShip_Rooms_1F_Text_DemetriusIntro, AbandonedShip_Rooms_1F_Text_DemetriusDefeat
 	msgbox AbandonedShip_Rooms_1F_Text_DemetriusPostBattle, MSGBOX_AUTOCLOSE
 	end
 

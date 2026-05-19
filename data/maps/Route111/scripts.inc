@@ -1,8 +1,17 @@
+.set LOCALID_VICTOR, 1
+.set LOCALID_VICTORIA, 2
+.set LOCALID_VIVI, 3
+.set LOCALID_VICKY, 4
+.set LOCALID_ROCK_SMASH_MAN, 46
+
+@ Note: LOCALID_ROUTE111_PLAYER_FALLING is a local id for this map used elsewhere. It's defined in event_objects.h
+
 Route111_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, Route111_OnLoad
 	map_script MAP_SCRIPT_ON_TRANSITION, Route111_OnTransition
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, Route111_OnWarp
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route111_OnFrame
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
 Route111_OnLoad:
@@ -38,6 +47,7 @@ Route111_EventScript_ShowTemporaryMirageTower::
 	return
 
 Route111_OnTransition:
+	callnative SetTimeBasedEncounters
 	setvar VAR_TRAINER_HILL_IS_ACTIVE, 0
 	special SetMirageTowerVisibility
 	call_if_unset FLAG_MIRAGE_TOWER_VISIBLE, Route111_EventScript_SetLayoutNoMirageTower
@@ -75,10 +85,14 @@ Route111_EventScript_EndCheckSetSandstorm::
 	return
 
 Route111_EventScript_SetWinstratesNotDefeated::
-	clearflag FLAG_HIDE_ROUTE_111_VICTOR_WINSTRATE
-	setflag FLAG_HIDE_ROUTE_111_VICTORIA_WINSTRATE
-	setflag FLAG_HIDE_ROUTE_111_VIVI_WINSTRATE
-	setflag FLAG_HIDE_ROUTE_111_VICKY_WINSTRATE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
 	cleartrainerflag TRAINER_VICTOR
 	cleartrainerflag TRAINER_VICTORIA
 	cleartrainerflag TRAINER_VIVI
@@ -97,7 +111,7 @@ Route111_OnWarp:
 	.2byte 0
 
 Route111_EventScript_HidePlayerForMirageTower::
-	hideobjectat LOCALID_PLAYER, MAP_LITTLEROOT_TOWN
+	hideobjectat OBJ_EVENT_ID_PLAYER, MAP_LITTLEROOT_TOWN
 	end
 
 Route111_OnFrame:
@@ -113,17 +127,18 @@ Route111_EventScript_MirageTowerDisappear::
 	addobject LOCALID_ROUTE111_PLAYER_FALLING
 	special StartPlayerDescendMirageTower
 	waitstate
-	showobjectat LOCALID_PLAYER, MAP_LITTLEROOT_TOWN
+	showobjectat OBJ_EVENT_ID_PLAYER, MAP_LITTLEROOT_TOWN
 	removeobject LOCALID_ROUTE111_PLAYER_FALLING
 	delay 16
-	turnobject LOCALID_PLAYER, DIR_NORTH
+	turnobject OBJ_EVENT_ID_PLAYER, DIR_NORTH
 	delay 16
 	special StartMirageTowerDisintegration
 	waitstate
 	special StartMirageTowerFossilFallAndSink
 	waitstate
 	setvar VAR_MIRAGE_TOWER_STATE, 2
-	clearflag FLAG_HIDE_DESERT_UNDERPASS_FOSSIL
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
 	goto_if_set FLAG_CHOSE_CLAW_FOSSIL, Route111_EventScript_RootFossilDisappeared
 	msgbox Route111_Text_ClawFossilDisappeared, MSGBOX_DEFAULT
 	releaseall
@@ -208,22 +223,22 @@ Route111_EventScript_PreventRouteAccess::
 	end
 
 Route111_EventScript_PushUpFromRoute::
-	applymovement LOCALID_PLAYER, Route111_Movement_PushUpFromRoute
+	applymovement OBJ_EVENT_ID_PLAYER, Route111_Movement_PushUpFromRoute
 	waitmovement 0
 	return
 
 Route111_EventScript_PushDownFromRoute::
-	applymovement LOCALID_PLAYER, Route111_Movement_PushDownFromRoute
+	applymovement OBJ_EVENT_ID_PLAYER, Route111_Movement_PushDownFromRoute
 	waitmovement 0
 	return
 
 Route111_EventScript_PushLeftFromRoute::
-	applymovement LOCALID_PLAYER, Route111_Movement_PushLeftFromRoute
+	applymovement OBJ_EVENT_ID_PLAYER, Route111_Movement_PushLeftFromRoute
 	waitmovement 0
 	return
 
 Route111_EventScript_PushRightFromRoute::
-	applymovement LOCALID_PLAYER, Route111_Movement_PushRightFromRoute
+	applymovement OBJ_EVENT_ID_PLAYER, Route111_Movement_PushRightFromRoute
 	waitmovement 0
 	return
 
@@ -269,68 +284,68 @@ Route111_EventScript_Victor::
 Route111_EventScript_BattleWinstrates::
 	msgbox Route111_Text_VictorIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_VICTOR, Route111_Text_VictorDefeat
-	applymovement LOCALID_ROUTE111_VICTOR, Common_Movement_WalkInPlaceFasterUp
+	applymovement LOCALID_VICTOR, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	call Route111_EventScript_OpenWinstrateDoor
 	msgbox Route111_Text_VictorPostBattle, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE111_VICTOR, Route111_Movement_WinstrateEnterHouse
+	applymovement LOCALID_VICTOR, Route111_Movement_WinstrateEnterHouse
 	waitmovement 0
-	removeobject LOCALID_ROUTE111_VICTOR
+	removeobject LOCALID_VICTOR
 	call Route111_EventScript_CloseWinstrateDoor
-	applymovement LOCALID_PLAYER, Route111_Movement_WaitForNextWinstrate
+	applymovement OBJ_EVENT_ID_PLAYER, Route111_Movement_WaitForNextWinstrate
 	waitmovement 0
 	call Route111_EventScript_OpenWinstrateDoor
-	addobject LOCALID_ROUTE111_VICTORIA
-	applymovement LOCALID_ROUTE111_VICTORIA, Route111_Movement_WinstrateExitHouse
+	addobject LOCALID_VICTORIA
+	applymovement LOCALID_VICTORIA, Route111_Movement_WinstrateExitHouse
 	waitmovement 0
 	call Route111_EventScript_CloseWinstrateDoor
 	msgbox Route111_Text_VictoriaIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_VICTORIA, Route111_Text_VictoriaDefeat
-	applymovement LOCALID_ROUTE111_VICTORIA, Common_Movement_WalkInPlaceFasterUp
+	applymovement LOCALID_VICTORIA, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	call Route111_EventScript_OpenWinstrateDoor
 	msgbox Route111_Text_VictoriaPostBattle, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE111_VICTORIA, Route111_Movement_WinstrateEnterHouse
+	applymovement LOCALID_VICTORIA, Route111_Movement_WinstrateEnterHouse
 	waitmovement 0
-	removeobject LOCALID_ROUTE111_VICTORIA
+	removeobject LOCALID_VICTORIA
 	call Route111_EventScript_CloseWinstrateDoor
-	applymovement LOCALID_PLAYER, Route111_Movement_WaitForNextWinstrate
+	applymovement OBJ_EVENT_ID_PLAYER, Route111_Movement_WaitForNextWinstrate
 	waitmovement 0
 	call Route111_EventScript_OpenWinstrateDoor
-	addobject LOCALID_ROUTE111_VIVI
-	applymovement LOCALID_ROUTE111_VIVI, Route111_Movement_WinstrateExitHouse
+	addobject LOCALID_VIVI
+	applymovement LOCALID_VIVI, Route111_Movement_WinstrateExitHouse
 	waitmovement 0
 	call Route111_EventScript_CloseWinstrateDoor
 	msgbox Route111_Text_ViviIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_VIVI, Route111_Text_ViviDefeat
-	applymovement LOCALID_ROUTE111_VIVI, Common_Movement_WalkInPlaceFasterUp
+	applymovement LOCALID_VIVI, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	call Route111_EventScript_OpenWinstrateDoor
 	msgbox Route111_Text_ViviPostBattle, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE111_VIVI, Route111_Movement_WinstrateEnterHouse
+	applymovement LOCALID_VIVI, Route111_Movement_WinstrateEnterHouse
 	waitmovement 0
-	removeobject LOCALID_ROUTE111_VIVI
+	removeobject LOCALID_VIVI
 	call Route111_EventScript_CloseWinstrateDoor
-	applymovement LOCALID_PLAYER, Route111_Movement_WaitForNextWinstrate
+	applymovement OBJ_EVENT_ID_PLAYER, Route111_Movement_WaitForNextWinstrate
 	waitmovement 0
 	call Route111_EventScript_OpenWinstrateDoor
-	addobject LOCALID_ROUTE111_VICKY
-	applymovement LOCALID_ROUTE111_VICKY, Route111_Movement_WinstrateExitHouse
+	addobject LOCALID_VICKY
+	applymovement LOCALID_VICKY, Route111_Movement_WinstrateExitHouse
 	waitmovement 0
 	call Route111_EventScript_CloseWinstrateDoor
 	msgbox Route111_Text_VickyIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_VICKY, Route111_Text_VickyDefeat
 	msgbox Route111_Text_VickyPostBattle, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE111_VICKY, Common_Movement_WalkInPlaceFasterUp
+	applymovement LOCALID_VICKY, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	call Route111_EventScript_OpenWinstrateDoor
-	applymovement LOCALID_ROUTE111_VICKY, Route111_Movement_WinstrateEnterHouse
+	applymovement LOCALID_VICKY, Route111_Movement_WinstrateEnterHouse
 	waitmovement 0
-	removeobject LOCALID_ROUTE111_VICKY
+	removeobject LOCALID_VICKY
 	call Route111_EventScript_CloseWinstrateDoor
 	release
 	end
@@ -419,17 +434,18 @@ Route111_EventScript_HikerMirageTowerVisible::
 
 Route111_EventScript_RockSmashTipFatMan::
 	lockall
-	applymovement LOCALID_ROUTE111_ROCK_SMASH_MAN, Common_Movement_FacePlayer
+	applymovement LOCALID_ROCK_SMASH_MAN, Common_Movement_FacePlayer
 	waitmovement 0
 	msgbox Route111_Text_MauvilleUncleToldMeToTakeRockSmash, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE111_ROCK_SMASH_MAN, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_ROCK_SMASH_MAN, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
 Route111_EventScript_Drew::
-	trainerbattle_single TRAINER_DREW, Route111_Text_DrewIntro, Route111_Text_DrewDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_KOJI (trainers) -- port engine surface
+	trainerbattle_single TRAINER_KOJI, Route111_Text_DrewIntro, Route111_Text_DrewDefeat
 	msgbox Route111_Text_DrewPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -439,17 +455,20 @@ Route111_EventScript_Heidi::
 	end
 
 Route111_EventScript_Beau::
-	trainerbattle_single TRAINER_BEAU, Route111_Text_BeauIntro, Route111_Text_BeauDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_DANIEL (trainers) -- port engine surface
+	trainerbattle_single TRAINER_DANIEL, Route111_Text_BeauIntro, Route111_Text_BeauDefeat
 	msgbox Route111_Text_BeauPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route111_EventScript_Becky::
-	trainerbattle_single TRAINER_BECKY, Route111_Text_BeckyIntro, Route111_Text_BeckyDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_DARIN (trainers) -- port engine surface
+	trainerbattle_single TRAINER_DARIN, Route111_Text_BeckyIntro, Route111_Text_BeckyDefeat
 	msgbox Route111_Text_BeckyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route111_EventScript_Dusty::
-	trainerbattle_single TRAINER_DUSTY_1, Route111_Text_DustyIntro, Route111_Text_DustyDefeat, Route111_EventScript_RegisterDusty
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_KRISE (trainers) -- port engine surface
+	trainerbattle_single TRAINER_KRISE, Route111_Text_DustyIntro, Route111_Text_DustyDefeat, Route111_EventScript_RegisterDusty
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route111_EventScript_RematchDusty
 	msgbox Route111_Text_DustyPostBattle, MSGBOX_DEFAULT
@@ -460,12 +479,14 @@ Route111_EventScript_RegisterDusty::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route111_Text_DustyRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_DUSTY_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_KRISE (trainers) -- port engine surface
+	register_matchcall TRAINER_KRISE
 	release
 	end
 
 Route111_EventScript_RematchDusty::
-	trainerbattle_rematch TRAINER_DUSTY_1, Route111_Text_DustyRematchIntro, Route111_Text_DustyRematchDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_KRISE (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_KRISE, Route111_Text_DustyRematchIntro, Route111_Text_DustyRematchDefeat
 	msgbox Route111_Text_DustyPostRematch, MSGBOX_AUTOCLOSE
 	end
 
@@ -480,7 +501,8 @@ Route111_EventScript_Irene::
 	end
 
 Route111_EventScript_Daisuke::
-	trainerbattle_single TRAINER_DAISUKE, Route111_Text_DaisukeIntro, Route111_Text_DaisukeDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JED (trainers) -- port engine surface
+	trainerbattle_single TRAINER_JED, Route111_Text_DaisukeIntro, Route111_Text_DaisukeDefeat
 	msgbox Route111_Text_DaisukePostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -506,7 +528,8 @@ Route111_EventScript_RematchWilton::
 	end
 
 Route111_EventScript_Brooke::
-	trainerbattle_single TRAINER_BROOKE_1, Route111_Text_BrookeIntro, Route111_Text_BrookeDefeat, Route111_EventScript_RegisterBrooke
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_EMMA (trainers) -- port engine surface
+	trainerbattle_single TRAINER_EMMA, Route111_Text_BrookeIntro, Route111_Text_BrookeDefeat, Route111_EventScript_RegisterBrooke
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route111_EventScript_RematchBrooke
 	msgbox Route111_Text_BrookePostBattle, MSGBOX_DEFAULT
@@ -517,17 +540,20 @@ Route111_EventScript_RegisterBrooke::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route111_Text_BrookeRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_BROOKE_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_EMMA (trainers) -- port engine surface
+	register_matchcall TRAINER_EMMA
 	release
 	end
 
 Route111_EventScript_RematchBrooke::
-	trainerbattle_rematch TRAINER_BROOKE_1, Route111_Text_BrookeRematchIntro, Route111_Text_BrookeRematchDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_EMMA (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_EMMA, Route111_Text_BrookeRematchIntro, Route111_Text_BrookeRematchDefeat
 	msgbox Route111_Text_BrookePostRematch, MSGBOX_AUTOCLOSE
 	end
 
 Route111_EventScript_Hayden::
-	trainerbattle_single TRAINER_HAYDEN, Route111_Text_HaydenIntro, Route111_Text_HaydenDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_PRYCE_1_3 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_PRYCE_1_3, Route111_Text_HaydenIntro, Route111_Text_HaydenDefeat
 	msgbox Route111_Text_HaydenPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -542,12 +568,14 @@ Route111_EventScript_Tyron::
 	end
 
 Route111_EventScript_Celina::
-	trainerbattle_single TRAINER_CELINA, Route111_Text_CelinaIntro, Route111_Text_CelinaDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GRUNT_10 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_GRUNT_10, Route111_Text_CelinaIntro, Route111_Text_CelinaDefeat
 	msgbox Route111_Text_CelinaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route111_EventScript_Celia::
-	trainerbattle_single TRAINER_CELIA, Route111_Text_CeliaIntro, Route111_Text_CeliaDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GRUNT_9 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_GRUNT_9, Route111_Text_CeliaIntro, Route111_Text_CeliaDefeat
 	msgbox Route111_Text_CeliaPostBattle, MSGBOX_AUTOCLOSE
 	end
 

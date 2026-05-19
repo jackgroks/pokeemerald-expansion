@@ -1,5 +1,23 @@
 MagmaHideout_3F_1R_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, MagmaHideout_3F_1R_OnTransition
 	.byte 0
+
+MagmaHideout_3F_1R_OnTransition:
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_UNLOCK_DOGS (flags) -- port engine surface
+	goto_if_set FLAG_UNLOCK_DOGS, MagmaHideout_3F_1R_SwitchToModern
+	end
+
+MagmaHideout_3F_1R_SwitchToModern::
+	setmaplayoutindex LAYOUT_MAGMA_HIDEOUT_3F_1R_MODERN
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_DEFEATED_ENTEI (flags) -- port engine surface
+	goto_if_set FLAG_DEFEATED_ENTEI, MagmaHideout_End
+	goto MagmaHideout_Entei_CryStrong
+	end
+
+MagmaHideout_Entei_CryStrong::
+	playmoncry SPECIES_ENTEI, CRY_MODE_ENCOUNTER
+	release
+	end
 
 MagmaHideout_3F_1R_EventScript_Grunt9::
 	trainerbattle_single TRAINER_GRUNT_MAGMA_HIDEOUT_9, MagmaHideout_3F_1R_Text_Grunt9Intro, MagmaHideout_3F_1R_Text_Grunt9Defeat

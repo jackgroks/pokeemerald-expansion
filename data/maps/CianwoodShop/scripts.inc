@@ -1,0 +1,50 @@
+CianwoodShop_MapScripts::
+	.byte 0
+
+CianwoodShop_EventScriptMan::	
+	// TODO(pe-migration): missing in pe-expansion -- VAR_OLIVINE_CITY_STATE (vars) -- port engine surface
+	setvar VAR_OLIVINE_CITY_STATE, 4
+	// TODO(pe-migration): missing in pe-expansion -- ITEM_SECRET_POTION (items) -- port engine surface
+	giveitem ITEM_SECRET_POTION
+	end
+
+CianwoodCity_EventScript_Pharmacist::
+	lock
+	faceplayer
+	// TODO(pe-migration): missing in pe-expansion -- ITEM_SECRET_POTION (items) -- port engine surface
+	checkitem ITEM_SECRET_POTION
+	goto_if_eq VAR_RESULT, TRUE, CianwoodCity_EventScript_PharmacistAfter
+	// TODO(pe-migration): missing in pe-expansion -- VAR_OLIVINE_CITY_STATE (vars) -- port engine surface
+	goto_if_ge VAR_OLIVINE_CITY_STATE, 5, CianwoodCity_EventScript_PharmacistAfter
+	msgbox CianwoodCity_Text_PharmacistGivePotion, MSGBOX_DEFAULT
+	// TODO(pe-migration): missing in pe-expansion -- ITEM_SECRET_POTION (items) -- port engine surface
+	giveitem ITEM_SECRET_POTION
+	closemessage
+	// TODO(pe-migration): missing in pe-expansion -- VAR_OLIVINE_CITY_STATE (vars) -- port engine surface
+	setvar VAR_OLIVINE_CITY_STATE, 4
+	release
+	end
+
+CianwoodCity_EventScript_PharmacistAfter::
+	msgbox CianwoodCity_Text_PharmacistDescribePotion, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+
+CianwoodCity_Text_PharmacistGivePotion:
+	.string "Your POKéMON appear to be fine.\p"
+	.string "Is something worrying you?\p"
+	.string "…\p"
+	.string "The LIGHTHOUSE POKéMON is in\n"
+	.string "trouble?\p"
+	.string "I got it!\p"
+	.string "This ought to do the trick.$"
+
+CianwoodCity_Text_ReceivedSecretpotion:
+	.string "{PLAYER} received SECRET POTION.$"
+
+CianwoodCity_Text_PharmacistDescribePotion:
+	.string "My SECRET POTION is a tad too\n"
+	.string "strong, so I only offer it in an\l"
+	.string "emergency.$"

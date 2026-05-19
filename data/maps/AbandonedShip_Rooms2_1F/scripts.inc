@@ -1,4 +1,6 @@
 AbandonedShip_Rooms2_1F_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SetTimeEncounters
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
 AbandonedShip_Rooms2_1F_EventScript_Dan::
@@ -45,7 +47,8 @@ AbandonedShip_Rooms2_1F_EventScript_Jani::
 	end
 
 AbandonedShip_Rooms2_1F_EventScript_Garrison::
-	trainerbattle_single TRAINER_GARRISON, AbandonedShip_Rooms2_1F_Text_GarrisonIntro, AbandonedShip_Rooms2_1F_Text_GarrisonDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_RUSS (trainers) -- port engine surface
+	trainerbattle_single TRAINER_RUSS, AbandonedShip_Rooms2_1F_Text_GarrisonIntro, AbandonedShip_Rooms2_1F_Text_GarrisonDefeat
 	msgbox AbandonedShip_Rooms2_1F_Text_GarrisonPostBattle, MSGBOX_AUTOCLOSE
 	end
 

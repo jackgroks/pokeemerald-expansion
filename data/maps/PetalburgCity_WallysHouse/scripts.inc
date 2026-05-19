@@ -1,19 +1,23 @@
+.set LOCALID_WALLYS_DAD, 1
+
 PetalburgCity_WallysHouse_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, PetalburgCity_WallysHouse_OnFrame
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, PetalburgCity_WallysHouse_OnWarp
 	.byte 0
 
 PetalburgCity_WallysHouse_OnWarp:
-	map_script_2 VAR_PETALBURG_CITY_STATE, 4, PetalburgCity_WallysHouse_EventScript_PlayerWallysDadFaceEachOther
+	// TODO(pe-migration): missing in pe-expansion -- VAR_GARBAGEVAR (vars) -- port engine surface
+	map_script_2 VAR_GARBAGEVAR, 4, PetalburgCity_WallysHouse_EventScript_PlayerWallysDadFaceEachOther
 	.2byte 0
 
 PetalburgCity_WallysHouse_EventScript_PlayerWallysDadFaceEachOther::
-	turnobject LOCALID_PLAYER, DIR_EAST
-	turnobject LOCALID_WALLYS_HOUSE_WALLYS_DAD, DIR_WEST
+	turnobject OBJ_EVENT_ID_PLAYER, DIR_EAST
+	turnobject LOCALID_WALLYS_DAD, DIR_WEST
 	end
 
 PetalburgCity_WallysHouse_OnFrame:
-	map_script_2 VAR_PETALBURG_CITY_STATE, 4, PetalburgCity_WallysHouse_EventScript_GiveHMSurf
+	// TODO(pe-migration): missing in pe-expansion -- VAR_GARBAGEVAR (vars) -- port engine surface
+	map_script_2 VAR_GARBAGEVAR, 4, PetalburgCity_WallysHouse_EventScript_GiveHMSurf
 	.2byte 0
 
 PetalburgCity_WallysHouse_EventScript_GiveHMSurf::
@@ -22,7 +26,8 @@ PetalburgCity_WallysHouse_EventScript_GiveHMSurf::
 	giveitem ITEM_HM_SURF
 	setflag FLAG_RECEIVED_HM_SURF
 	msgbox PetalburgCity_WallysHouse_Text_SurfGoAllSortsOfPlaces, MSGBOX_DEFAULT
-	setvar VAR_PETALBURG_CITY_STATE, 5
+	// TODO(pe-migration): missing in pe-expansion -- VAR_GARBAGEVAR (vars) -- port engine surface
+	setvar VAR_GARBAGEVAR, 5
 	releaseall
 	end
 

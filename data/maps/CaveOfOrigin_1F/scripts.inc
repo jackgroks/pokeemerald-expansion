@@ -3,5 +3,6 @@ CaveOfOrigin_1F_MapScripts::
 	.byte 0
 
 CaveOfOrigin_1F_OnTransition:
-	call_if_set FLAG_UNUSED_RS_LEGENDARY_BATTLE_DONE, CaveOfOrigin_EventScript_DisableTriggers
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_FINITE_TMS (flags) -- port engine surface
+	call_if_set FLAG_FINITE_TMS, CaveOfOrigin_EventScript_DisableTriggers
 	end

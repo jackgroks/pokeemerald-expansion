@@ -1,8 +1,10 @@
 Route123_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route123_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
 Route123_OnTransition:
+	callnative SetTimeBasedEncounters
 	special SetRoute123Weather
 	end
 
@@ -48,7 +50,8 @@ Route123_EventScript_Wendy::
 	end
 
 Route123_EventScript_Braxton::
-	trainerbattle_single TRAINER_BRAXTON, Route123_Text_BraxtonIntro, Route123_Text_BraxtonDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_ELAINE (trainers) -- port engine surface
+	trainerbattle_single TRAINER_ELAINE, Route123_Text_BraxtonIntro, Route123_Text_BraxtonDefeat
 	msgbox Route123_Text_BraxtonPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -58,7 +61,8 @@ Route123_EventScript_Violet::
 	end
 
 Route123_EventScript_Cameron::
-	trainerbattle_single TRAINER_CAMERON_1, Route123_Text_CameronIntro, Route123_Text_CameronDefeat, Route123_EventScript_RegisterCameron
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GAVEN (trainers) -- port engine surface
+	trainerbattle_single TRAINER_GAVEN, Route123_Text_CameronIntro, Route123_Text_CameronDefeat, Route123_EventScript_RegisterCameron
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route123_EventScript_RematchCameron
 	msgbox Route123_Text_CameronPostBattle, MSGBOX_DEFAULT
@@ -69,17 +73,20 @@ Route123_EventScript_RegisterCameron::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route123_Text_CameronRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_CAMERON_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GAVEN (trainers) -- port engine surface
+	register_matchcall TRAINER_GAVEN
 	release
 	end
 
 Route123_EventScript_RematchCameron::
-	trainerbattle_rematch TRAINER_CAMERON_1, Route123_Text_CameronRematchIntro, Route123_Text_CameronRematchDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GAVEN (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_GAVEN, Route123_Text_CameronRematchIntro, Route123_Text_CameronRematchDefeat
 	msgbox Route123_Text_CameronPostRematch, MSGBOX_AUTOCLOSE
 	end
 
 Route123_EventScript_Jacki::
-	trainerbattle_single TRAINER_JACKI_1, Route123_Text_JackiIntro, Route123_Text_JackiDefeat, Route123_EventScript_RegisterJacki
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_LANCE_1 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_LANCE_1, Route123_Text_JackiIntro, Route123_Text_JackiDefeat, Route123_EventScript_RegisterJacki
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route123_EventScript_RematchJacki
 	msgbox Route123_Text_JackiPostBattle, MSGBOX_DEFAULT
@@ -90,12 +97,14 @@ Route123_EventScript_RegisterJacki::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route123_Text_JackiRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_JACKI_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_LANCE_1 (trainers) -- port engine surface
+	register_matchcall TRAINER_LANCE_1
 	release
 	end
 
 Route123_EventScript_RematchJacki::
-	trainerbattle_rematch TRAINER_JACKI_1, Route123_Text_JackiRematchIntro, Route123_Text_JackiRematchDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_LANCE_1 (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_LANCE_1, Route123_Text_JackiRematchIntro, Route123_Text_JackiRematchDefeat
 	msgbox Route123_Text_JackiPostRematch, MSGBOX_AUTOCLOSE
 	end
 
@@ -115,12 +124,14 @@ Route123_EventScript_Kindra::
 	end
 
 Route123_EventScript_Frederick::
-	trainerbattle_single TRAINER_FREDRICK, Route123_Text_FrederickIntro, Route123_Text_FrederickDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_REBECCA (trainers) -- port engine surface
+	trainerbattle_single TRAINER_REBECCA, Route123_Text_FrederickIntro, Route123_Text_FrederickDefeat
 	msgbox Route123_Text_FrederickPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route123_EventScript_Alberto::
-	trainerbattle_single TRAINER_ALBERTO, Route123_Text_AlbertoIntro, Route123_Text_AlbertoDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_ARNOLD (trainers) -- port engine surface
+	trainerbattle_single TRAINER_ARNOLD, Route123_Text_AlbertoIntro, Route123_Text_AlbertoDefeat
 	msgbox Route123_Text_AlbertoPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -140,17 +151,20 @@ Route123_EventScript_Jonas::
 	end
 
 Route123_EventScript_Jazmyn::
-	trainerbattle_single TRAINER_JAZMYN, Route123_Text_JazmynIntro, Route123_Text_JazmynDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_RIVAL_TOTODILE_4 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_RIVAL_TOTODILE_4, Route123_Text_JazmynIntro, Route123_Text_JazmynDefeat
 	msgbox Route123_Text_JazmynPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route123_EventScript_Davis::
-	trainerbattle_single TRAINER_DAVIS, Route123_Text_DavisIntro, Route123_Text_DavisDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JOE (trainers) -- port engine surface
+	trainerbattle_single TRAINER_JOE, Route123_Text_DavisIntro, Route123_Text_DavisDefeat
 	msgbox Route123_Text_DavisPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route123_EventScript_Fernando::
-	trainerbattle_single TRAINER_FERNANDO_1, Route123_Text_FernandoIntro, Route123_Text_FernandoDefeat, Route123_EventScript_RegisterFernando
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_NORTON (trainers) -- port engine surface
+	trainerbattle_single TRAINER_NORTON, Route123_Text_FernandoIntro, Route123_Text_FernandoDefeat, Route123_EventScript_RegisterFernando
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route123_EventScript_RematchFernando
 	msgbox Route123_Text_FernandoPostBattle, MSGBOX_DEFAULT
@@ -161,12 +175,14 @@ Route123_EventScript_RegisterFernando::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route123_Text_FernandoRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_FERNANDO_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_NORTON (trainers) -- port engine surface
+	register_matchcall TRAINER_NORTON
 	release
 	end
 
 Route123_EventScript_RematchFernando::
-	trainerbattle_rematch TRAINER_FERNANDO_1, Route123_Text_FernandoRematchIntro, Route123_Text_FernandoRematchDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_NORTON (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_NORTON, Route123_Text_FernandoRematchIntro, Route123_Text_FernandoRematchDefeat
 	msgbox Route123_Text_FernandoPostRematch, MSGBOX_AUTOCLOSE
 	end
 

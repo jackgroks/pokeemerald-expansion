@@ -41,7 +41,8 @@ AquaHideout_1F_EventScript_SlateportHint2::
 	end
 
 AquaHideout_1F_EventScript_Grunt1::
-	trainerbattle_single TRAINER_GRUNT_AQUA_HIDEOUT_1, AquaHideout_1F_Text_Grunt1Intro, AquaHideout_1F_Text_Grunt1Defeat, AquaHideout_1F_EventScript_Grunt1Defeated
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_SAYO (trainers) -- port engine surface
+	trainerbattle_single TRAINER_SAYO, AquaHideout_1F_Text_Grunt1Intro, AquaHideout_1F_Text_Grunt1Defeat, AquaHideout_1F_EventScript_Grunt1Defeated
 	msgbox AquaHideout_1F_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
 	end
 

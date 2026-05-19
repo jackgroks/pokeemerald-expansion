@@ -1,3 +1,5 @@
+.set LOCALID_NURSE, 1
+
 RustboroCity_PokemonCenter_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, RustboroCity_PokemonCenter_1F_OnTransition
 	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
@@ -8,8 +10,27 @@ RustboroCity_PokemonCenter_1F_OnTransition:
 	call Common_EventScript_UpdateBrineyLocation
 	end
 
+RustboroCity_PokemonCenter_1F_ProbopassEvo::
+	msgbox RustboroCity_PokemonCenter_1F_ProbopassEvo_Text, MSGBOX_NPC
+	end
+
+RustboroCity_PokemonCenter_1F_ProbopassEvo_Text:
+	.string "NOSEPASS evolves and changes\n"
+	.string "its typing to ROCK and STEEL.\p"
+	.string "But in order to evolve, it needs\n"
+	.string "to be exposed to a strong\l"
+	.string "magnetic field.\p"
+	.string "It's difficult finding a place\n"
+	.string "like this in HOENN, so scientists\l"
+	.string "discovered that making NOSEPASS\l"
+	.string "hold a THUNDER STONE makes him\l"
+	.string "evolve easier by multiplying\l"
+	.string "its own magnetic field by two!\p"
+	.string "I wonder what THUNDER STONES are\n"
+	.string "made of.$"
+
 RustboroCity_PokemonCenter_1F_EventScript_Nurse::
-	setvar VAR_0x800B, LOCALID_RUSTBORO_NURSE
+	setvar VAR_0x800B, LOCALID_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress

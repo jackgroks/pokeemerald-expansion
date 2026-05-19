@@ -7,7 +7,8 @@ ShoalCave_LowTideLowerRoom_OnLoad:
 	end
 
 ShoalCave_LowTideLowerRoom_EventScript_SetShoalItemMetatiles::
-	goto_if_set FLAG_RECEIVED_SHOAL_SALT_4, ShoalCave_LowTideLowerRoom_EventScript_SetShoalItemMetatilesEnd
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	goto_if_set FLAG_GARBAGEFLAG, ShoalCave_LowTideLowerRoom_EventScript_SetShoalItemMetatilesEnd
 	setmetatile 18, 2, METATILE_Cave_ShoalCave_DirtPile_Large, TRUE
 	return
 
@@ -16,12 +17,14 @@ ShoalCave_LowTideLowerRoom_EventScript_SetShoalItemMetatilesEnd::
 
 ShoalCave_LowTideLowerRoom_EventScript_ShoalSalt4::
 	lockall
-	goto_if_set FLAG_RECEIVED_SHOAL_SALT_4, ShoalCave_LowTideLowerRoom_EventScript_ReceivedShoalSalt
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	goto_if_set FLAG_GARBAGEFLAG, ShoalCave_LowTideLowerRoom_EventScript_ReceivedShoalSalt
 	giveitem ITEM_SHOAL_SALT
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setmetatile 18, 2, METATILE_Cave_ShoalCave_DirtPile_Small, FALSE
 	special DrawWholeMapView
-	setflag FLAG_RECEIVED_SHOAL_SALT_4
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
 	releaseall
 	end
 

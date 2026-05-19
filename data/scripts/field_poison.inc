@@ -8,6 +8,8 @@ EventScript_FieldPoison::
 	end
 
 EventScript_FieldWhiteOut::
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_SYS_BUG_CONTEST_MODE (flags) -- port engine surface
+	goto_if_set FLAG_SYS_BUG_CONTEST_MODE, BugContest_EventScript_WhiteOut
 	message gText_PlayerWhitedOut
 	waitmessage
 	waitbuttonpress
@@ -29,9 +31,9 @@ EventScript_FrontierFieldWhiteOut::
 	waitbuttonpress
 	pike_inchallenge
 	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattlePike_EventScript_Retire
-	pyramid_getlocation
-	goto_if_eq VAR_RESULT, PYRAMID_LOCATION_FLOOR, BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost
-	goto_if_eq VAR_RESULT, PYRAMID_LOCATION_TOP, BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost
+	pyramid_inchallenge
+	goto_if_eq VAR_RESULT, 1, BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost  @ On Pyramid floor
+	goto_if_eq VAR_RESULT, 2, BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost  @ On Pyramid peak
 	trainerhill_inchallenge
 	goto_if_eq VAR_RESULT, TRUE, TrainerHill_1F_EventScript_Lost
 	special Script_FadeOutMapMusic

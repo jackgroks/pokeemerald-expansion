@@ -1,3 +1,5 @@
+.set LOCALID_HO_OH, 1
+
 NavelRock_Top_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, NavelRock_Top_OnTransition
 	map_script MAP_SCRIPT_ON_RESUME, NavelRock_Top_OnResume
@@ -27,7 +29,7 @@ NavelRock_Top_OnResume:
 NavelRock_Top_EventScript_TryRemoveHoOh::
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
-	removeobject LOCALID_NAVEL_ROCK_HO_OH
+	removeobject LOCALID_HO_OH
 	return
 
 NavelRock_Top_EventScript_HoOh::
@@ -37,8 +39,8 @@ NavelRock_Top_EventScript_HoOh::
 	setvar VAR_0x8004, 3  @ num loops
 	setvar VAR_0x8005, 35 @ delay
 	special LoopWingFlapSE
-	applymovement LOCALID_NAVEL_ROCK_HO_OH, NavelRock_Top_Movement_HoOhAppear
-	applymovement LOCALID_CAMERA, NavelRock_Top_Movement_CameraPanUp
+	applymovement LOCALID_HO_OH, NavelRock_Top_Movement_HoOhAppear
+	applymovement OBJ_EVENT_ID_CAMERA, NavelRock_Top_Movement_CameraPanUp
 	waitmovement 0
 	delay 50
 	setweather WEATHER_NONE
@@ -51,8 +53,8 @@ NavelRock_Top_EventScript_HoOh::
 	setvar VAR_0x8004, 3  @ num loops
 	setvar VAR_0x8005, 35 @ delay
 	special LoopWingFlapSE
-	applymovement LOCALID_CAMERA, NavelRock_Top_Movement_CameraPanDown
-	applymovement LOCALID_NAVEL_ROCK_HO_OH, NavelRock_Top_Movement_HoOhApproach
+	applymovement OBJ_EVENT_ID_CAMERA, NavelRock_Top_Movement_CameraPanDown
+	applymovement LOCALID_HO_OH, NavelRock_Top_Movement_HoOhApproach
 	waitmovement 0
 	special RemoveCameraObject
 	seteventmon SPECIES_HO_OH, 70
@@ -60,24 +62,45 @@ NavelRock_Top_EventScript_HoOh::
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
-	setvar VAR_LAST_TALKED, LOCALID_NAVEL_ROCK_HO_OH
+	setvar VAR_LAST_TALKED, LOCALID_HO_OH
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_WON, NavelRock_Top_EventScript_DefeatedHoOh
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, NavelRock_Top_EventScript_RanFromHoOh
 	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, NavelRock_Top_EventScript_RanFromHoOh
 	setflag FLAG_CAUGHT_HO_OH
+	// TODO(pe-migration): missing in pe-expansion -- VAR_COMPLETED_HO_OH (vars) -- port engine surface
+	setvar VAR_COMPLETED_HO_OH, 1
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_EXTRA_LEGENDARIES (flags) -- port engine surface
+	call_if_set FLAG_EXTRA_LEGENDARIES, NavelRock_Top_Enable_Kanto_Legendaries
 	releaseall
 	end
 
+NavelRock_Top_Enable_Kanto_Legendaries::
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_UNLOCK_BIRDS (flags) -- port engine surface
+	setflag FLAG_UNLOCK_BIRDS
+	playmoncry SPECIES_ARTICUNO, CRY_MODE_NORMAL
+	waitmoncry
+	playmoncry SPECIES_ZAPDOS, CRY_MODE_NORMAL
+	waitmoncry
+	playmoncry SPECIES_MOLTRES, CRY_MODE_NORMAL
+	waitmoncry
+	return
+
 NavelRock_Top_EventScript_DefeatedHoOh::
 	setflag FLAG_DEFEATED_HO_OH
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_EXTRA_LEGENDARIES (flags) -- port engine surface
+	call_if_set FLAG_EXTRA_LEGENDARIES, NavelRock_Top_Enable_Kanto_Legendaries
 	setvar VAR_0x8004, SPECIES_HO_OH
+	// TODO(pe-migration): missing in pe-expansion -- VAR_COMPLETED_HO_OH (vars) -- port engine surface
+	setvar VAR_COMPLETED_HO_OH, 1
 	goto Common_EventScript_LegendaryFlewAway
 	end
 
 NavelRock_Top_EventScript_RanFromHoOh::
 	setvar VAR_0x8004, SPECIES_HO_OH
 	goto Common_EventScript_LegendaryFlewAway
+	// TODO(pe-migration): missing in pe-expansion -- VAR_COMPLETED_HO_OH (vars) -- port engine surface
+	setvar VAR_COMPLETED_HO_OH, 1
 	end
 
 NavelRock_Top_Movement_CameraPanUp:

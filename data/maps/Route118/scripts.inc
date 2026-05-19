@@ -1,10 +1,14 @@
+.set LOCALID_STEVEN, 19
+
 Route118_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route118_OnTransition
 	map_script MAP_SCRIPT_ON_LOAD, Route118_OnLoad
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route118_OnFrame
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
 Route118_OnTransition:
+	callnative SetTimeBasedEncounters
 	call GabbyAndTy_EventScript_UpdateLocation
 	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_HideMapNamePopup
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_118_EAST, AbnormalWeather_StartGroudonWeather
@@ -32,7 +36,6 @@ Route118_EventScript_GoodRodFisherman::
 Route118_EventScript_ReceiveGoodRod::
 	msgbox Route118_Text_IdenticalMindsTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_GOOD_ROD
-	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_GOOD_ROD
 	msgbox Route118_Text_TryYourLuckFishing, MSGBOX_DEFAULT
 	release
@@ -63,9 +66,9 @@ Route118_EventScript_RouteSign119::
 Route118_EventScript_StevenTrigger0::
 	lockall
 	setvar VAR_0x8008, 0
-	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceUp
 	waitmovement 0
-	applymovement LOCALID_ROUTE118_STEVEN, Route118_Movement_StevenApproachLedge0
+	applymovement LOCALID_STEVEN, Route118_Movement_StevenApproachLedge0
 	waitmovement 0
 	goto Route118_EventScript_StevenTrigger
 	end
@@ -73,7 +76,7 @@ Route118_EventScript_StevenTrigger0::
 Route118_EventScript_StevenTrigger1::
 	lockall
 	setvar VAR_0x8008, 1
-	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceUp
 	waitmovement 0
 	goto Route118_EventScript_StevenTrigger
 	end
@@ -81,16 +84,16 @@ Route118_EventScript_StevenTrigger1::
 Route118_EventScript_StevenTrigger2::
 	lockall
 	setvar VAR_0x8008, 2
-	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceUp
 	waitmovement 0
-	applymovement LOCALID_ROUTE118_STEVEN, Route118_Movement_StevenApproachLedge2
+	applymovement LOCALID_STEVEN, Route118_Movement_StevenApproachLedge2
 	waitmovement 0
 	goto Route118_EventScript_StevenTrigger
 	end
 
 Route118_EventScript_StevenTrigger::
 	playse SE_LEDGE
-	applymovement LOCALID_ROUTE118_STEVEN, Route118_Movement_StevenJumpLedge
+	applymovement LOCALID_STEVEN, Route118_Movement_StevenJumpLedge
 	waitmovement 0
 	delay 30
 	msgbox Route118_Text_StevenQuestions, MSGBOX_DEFAULT
@@ -98,26 +101,27 @@ Route118_EventScript_StevenTrigger::
 	call_if_eq VAR_0x8008, 0, Route118_EventScript_StevenExit0
 	call_if_eq VAR_0x8008, 1, Route118_EventScript_StevenExit1
 	call_if_eq VAR_0x8008, 2, Route118_EventScript_StevenExit2
-	setvar VAR_ROUTE118_STATE, 1
-	removeobject LOCALID_ROUTE118_STEVEN
+	// TODO(pe-migration): missing in pe-expansion -- VAR_GARBAGEVAR (vars) -- port engine surface
+	setvar VAR_GARBAGEVAR, 1
+	removeobject LOCALID_STEVEN
 	releaseall
 	end
 
 Route118_EventScript_StevenExit0::
-	applymovement LOCALID_PLAYER, Route118_Movement_PlayerWatchStevenExit
-	applymovement LOCALID_ROUTE118_STEVEN, Route118_Movement_StevenExit0
+	applymovement OBJ_EVENT_ID_PLAYER, Route118_Movement_PlayerWatchStevenExit
+	applymovement LOCALID_STEVEN, Route118_Movement_StevenExit0
 	waitmovement 0
 	return
 
 Route118_EventScript_StevenExit1::
-	applymovement LOCALID_PLAYER, Route118_Movement_PlayerWatchStevenExit
-	applymovement LOCALID_ROUTE118_STEVEN, Route118_Movement_StevenExit1
+	applymovement OBJ_EVENT_ID_PLAYER, Route118_Movement_PlayerWatchStevenExit
+	applymovement LOCALID_STEVEN, Route118_Movement_StevenExit1
 	waitmovement 0
 	return
 
 Route118_EventScript_StevenExit2::
-	applymovement LOCALID_PLAYER, Route118_Movement_PlayerWatchStevenExit
-	applymovement LOCALID_ROUTE118_STEVEN, Route118_Movement_StevenExit2
+	applymovement OBJ_EVENT_ID_PLAYER, Route118_Movement_PlayerWatchStevenExit
+	applymovement LOCALID_STEVEN, Route118_Movement_StevenExit2
 	waitmovement 0
 	return
 
@@ -177,7 +181,8 @@ Route118_Movement_StevenExit2:
 	step_end
 
 Route118_EventScript_Rose::
-	trainerbattle_single TRAINER_ROSE_1, Route118_Text_RoseIntro, Route118_Text_RoseDefeat, Route118_EventScript_RegisterRose
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GRUNT_33 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_GRUNT_33, Route118_Text_RoseIntro, Route118_Text_RoseDefeat, Route118_EventScript_RegisterRose
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route118_EventScript_RematchRose
 	msgbox Route118_Text_RosePostBattle, MSGBOX_DEFAULT
@@ -188,17 +193,20 @@ Route118_EventScript_RegisterRose::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route118_Text_RoseRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_ROSE_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GRUNT_33 (trainers) -- port engine surface
+	register_matchcall TRAINER_GRUNT_33
 	release
 	end
 
 Route118_EventScript_RematchRose::
-	trainerbattle_rematch TRAINER_ROSE_1, Route118_Text_RoseRematchIntro, Route118_Text_RoseRematchDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GRUNT_33 (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_GRUNT_33, Route118_Text_RoseRematchIntro, Route118_Text_RoseRematchDefeat
 	msgbox Route118_Text_RosePostRematch, MSGBOX_AUTOCLOSE
 	end
 
 Route118_EventScript_Barny::
-	trainerbattle_single TRAINER_BARNY, Route118_Text_BarnyIntro, Route118_Text_BarnyDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_CYBIL (trainers) -- port engine surface
+	trainerbattle_single TRAINER_CYBIL, Route118_Text_BarnyIntro, Route118_Text_BarnyDefeat
 	msgbox Route118_Text_BarnyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -208,7 +216,8 @@ Route118_EventScript_Wade::
 	end
 
 Route118_EventScript_Dalton::
-	trainerbattle_single TRAINER_DALTON_1, Route118_Text_DaltonIntro, Route118_Text_DaltonDefeat, Route118_EventScript_RegisterDalton
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JENN (trainers) -- port engine surface
+	trainerbattle_single TRAINER_JENN, Route118_Text_DaltonIntro, Route118_Text_DaltonDefeat, Route118_EventScript_RegisterDalton
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route118_EventScript_RematchDalton
 	msgbox Route118_Text_DaltonPostBattle, MSGBOX_DEFAULT
@@ -219,12 +228,14 @@ Route118_EventScript_RegisterDalton::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route118_Text_DaltonRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_DALTON_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JENN (trainers) -- port engine surface
+	register_matchcall TRAINER_JENN
 	release
 	end
 
 Route118_EventScript_RematchDalton::
-	trainerbattle_rematch TRAINER_DALTON_1, Route118_Text_DaltonRematchIntro, Route118_Text_DaltonRematchDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JENN (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_JENN, Route118_Text_DaltonRematchIntro, Route118_Text_DaltonRematchDefeat
 	msgbox Route118_Text_DaltonPostRematch, MSGBOX_AUTOCLOSE
 	end
 
@@ -234,12 +245,14 @@ Route118_EventScript_Perry::
 	end
 
 Route118_EventScript_Chester::
-	trainerbattle_single TRAINER_CHESTER, Route118_Text_ChesterIntro, Route118_Text_ChesterDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GRUNT_15 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_GRUNT_15, Route118_Text_ChesterIntro, Route118_Text_ChesterDefeat
 	msgbox Route118_Text_ChesterPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route118_EventScript_Deandre::
-	trainerbattle_single TRAINER_DEANDRE, Route118_Text_DeandreIntro, Route118_Text_DeandreDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JOHNNY (trainers) -- port engine surface
+	trainerbattle_single TRAINER_JOHNNY, Route118_Text_DeandreIntro, Route118_Text_DeandreDefeat
 	msgbox Route118_Text_DeandrePostBattle, MSGBOX_AUTOCLOSE
 	end
 

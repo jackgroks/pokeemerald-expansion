@@ -2,17 +2,20 @@ SootopolisCity_Gym_B1F_MapScripts::
 	.byte 0
 
 SootopolisCity_Gym_B1F_EventScript_Andrea::
-	trainerbattle_single TRAINER_ANDREA, SootopolisCity_Gym_B1F_Text_AndreaIntro, SootopolisCity_Gym_B1F_Text_AndreaDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_BRIAN (trainers) -- port engine surface
+	trainerbattle_single TRAINER_BRIAN, SootopolisCity_Gym_B1F_Text_AndreaIntro, SootopolisCity_Gym_B1F_Text_AndreaDefeat
 	msgbox SootopolisCity_Gym_B1F_Text_AndreaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 SootopolisCity_Gym_B1F_EventScript_Crissy::
-	trainerbattle_single TRAINER_CRISSY, SootopolisCity_Gym_B1F_Text_CrissyIntro, SootopolisCity_Gym_B1F_Text_CrissyDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_HARRY (trainers) -- port engine surface
+	trainerbattle_single TRAINER_HARRY, SootopolisCity_Gym_B1F_Text_CrissyIntro, SootopolisCity_Gym_B1F_Text_CrissyDefeat
 	msgbox SootopolisCity_Gym_B1F_Text_CrissyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 SootopolisCity_Gym_B1F_EventScript_Brianna::
-	trainerbattle_single TRAINER_BRIANNA, SootopolisCity_Gym_B1F_Text_BriannaIntro, SootopolisCity_Gym_B1F_Text_BriannaDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_ELLEN (trainers) -- port engine surface
+	trainerbattle_single TRAINER_ELLEN, SootopolisCity_Gym_B1F_Text_BriannaIntro, SootopolisCity_Gym_B1F_Text_BriannaDefeat
 	msgbox SootopolisCity_Gym_B1F_Text_BriannaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -42,12 +45,14 @@ SootopolisCity_Gym_B1F_EventScript_Bethany::
 	end
 
 SootopolisCity_Gym_B1F_EventScript_Annika::
-	trainerbattle_single TRAINER_ANNIKA, SootopolisCity_Gym_B1F_Text_AnnikaIntro, SootopolisCity_Gym_B1F_Text_AnnikaDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_CARRIE (trainers) -- port engine surface
+	trainerbattle_single TRAINER_CARRIE, SootopolisCity_Gym_B1F_Text_AnnikaIntro, SootopolisCity_Gym_B1F_Text_AnnikaDefeat
 	msgbox SootopolisCity_Gym_B1F_Text_AnnikaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 SootopolisCity_Gym_B1F_EventScript_Daphne::
-	trainerbattle_single TRAINER_DAPHNE, SootopolisCity_Gym_B1F_Text_DaphneIntro, SootopolisCity_Gym_B1F_Text_DaphneDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JIMMY (trainers) -- port engine surface
+	trainerbattle_single TRAINER_JIMMY, SootopolisCity_Gym_B1F_Text_DaphneIntro, SootopolisCity_Gym_B1F_Text_DaphneDefeat
 	msgbox SootopolisCity_Gym_B1F_Text_DaphnePostBattle, MSGBOX_AUTOCLOSE
 	end
 

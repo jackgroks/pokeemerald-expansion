@@ -1,3 +1,6 @@
+.set LOCALID_NURSE, 1
+.set LOCALID_SCOTT, 4
+
 EverGrandeCity_PokemonCenter_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, EverGrandeCity_PokemonCenter_1F_OnTransition
 	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
@@ -10,11 +13,12 @@ EverGrandeCity_PokemonCenter_1F_OnTransition:
 
 EverGrandeCity_PokemonCenter_1F_EventScript_TryShowScott::
 	goto_if_unset FLAG_BADGE06_GET, Common_EventScript_NopReturn
-	clearflag FLAG_HIDE_EVER_GRANDE_POKEMON_CENTER_1F_SCOTT
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
 	return
 
 EverGrandeCity_PokemonCenter_1F_EventScript_Nurse::
-	setvar VAR_0x800B, LOCALID_EVER_GRANDE_NURSE
+	setvar VAR_0x800B, LOCALID_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress
@@ -41,17 +45,17 @@ EverGrandeCity_PokemonCenter_1F_EventScript_Scott::
 	setflag FLAG_MET_SCOTT_IN_EVERGRANDE
 	playse SE_EXIT
 	waitse
-	removeobject LOCALID_EVER_GRANDE_SCOTT
+	removeobject LOCALID_SCOTT
 	release
 	end
 
 EverGrandeCity_PokemonCenter_1F_EventScript_ScottExitNorth::
-	applymovement LOCALID_EVER_GRANDE_SCOTT, EverGrandeCity_PokemonCenter_1F_Movement_ScottExitNorth
+	applymovement LOCALID_SCOTT, EverGrandeCity_PokemonCenter_1F_Movement_ScottExitNorth
 	waitmovement 0
 	return
 
 EverGrandeCity_PokemonCenter_1F_EventScript_ScottExit::
-	applymovement LOCALID_EVER_GRANDE_SCOTT, EverGrandeCity_PokemonCenter_1F_Movement_ScottExit
+	applymovement LOCALID_SCOTT, EverGrandeCity_PokemonCenter_1F_Movement_ScottExit
 	waitmovement 0
 	return
 
@@ -96,4 +100,3 @@ EverGrandeCity_PokemonCenter_1F_Text_ScottHappyForYou:
 	.string "I'll get in touch with you then.\p"
 	.string "Okay, {PLAYER}{KUN}.\n"
 	.string "Go for greatness!$"
-

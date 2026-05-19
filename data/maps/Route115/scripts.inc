@@ -2,6 +2,7 @@ Route115_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, Route115_OnLoad
 	map_script MAP_SCRIPT_ON_TRANSITION, Route115_OnTransition
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route115_OnFrame
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
 Route115_OnLoad:
@@ -10,6 +11,7 @@ Route115_OnLoad:
 	end
 
 Route115_OnTransition:
+	callnative SetTimeBasedEncounters
 	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_HideMapNamePopup
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_115_WEST, AbnormalWeather_StartGroudonWeather
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_115_EAST, AbnormalWeather_StartGroudonWeather
@@ -79,7 +81,8 @@ Route115_EventScript_RematchNob::
 	end
 
 Route115_EventScript_Cyndy::
-	trainerbattle_single TRAINER_CYNDY_1, Route115_Text_CyndyIntro, Route115_Text_CyndyDefeat, Route115_EventScript_RegisterCyndy
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JAMIE (trainers) -- port engine surface
+	trainerbattle_single TRAINER_JAMIE, Route115_Text_CyndyIntro, Route115_Text_CyndyDefeat, Route115_EventScript_RegisterCyndy
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route115_EventScript_RematchCyndy
 	msgbox Route115_Text_CyndyPostBattle, MSGBOX_DEFAULT
@@ -90,17 +93,20 @@ Route115_EventScript_RegisterCyndy::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route115_Text_CyndyRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_CYNDY_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JAMIE (trainers) -- port engine surface
+	register_matchcall TRAINER_JAMIE
 	release
 	end
 
 Route115_EventScript_RematchCyndy::
-	trainerbattle_rematch TRAINER_CYNDY_1, Route115_Text_CyndyRematchIntro, Route115_Text_CyndyRematchDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JAMIE (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_JAMIE, Route115_Text_CyndyRematchIntro, Route115_Text_CyndyRematchDefeat
 	msgbox Route115_Text_CyndyPostRematch, MSGBOX_AUTOCLOSE
 	end
 
 Route115_EventScript_Hector::
-	trainerbattle_single TRAINER_HECTOR, Route115_Text_HectorIntro, Route115_Text_HectorDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JASMINE_1 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_JASMINE_1, Route115_Text_HectorIntro, Route115_Text_HectorDefeat
 	msgbox Route115_Text_HectorPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -110,12 +116,14 @@ Route115_EventScript_Kyra::
 	end
 
 Route115_EventScript_Jaiden::
-	trainerbattle_single TRAINER_JAIDEN, Route115_Text_JaidenIntro, Route115_Text_JaidenDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_RIVAL_CYNDAQUIL_3 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_RIVAL_CYNDAQUIL_3, Route115_Text_JaidenIntro, Route115_Text_JaidenDefeat
 	msgbox Route115_Text_JaidenPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route115_EventScript_Alix::
-	trainerbattle_single TRAINER_ALIX, Route115_Text_AlixIntro, Route115_Text_AlixDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_BILL (trainers) -- port engine surface
+	trainerbattle_single TRAINER_BILL, Route115_Text_AlixIntro, Route115_Text_AlixDefeat
 	msgbox Route115_Text_AlixPostBattle, MSGBOX_AUTOCLOSE
 	end
 

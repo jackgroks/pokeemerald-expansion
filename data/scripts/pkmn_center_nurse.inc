@@ -2,16 +2,25 @@ Common_EventScript_PkmnCenterNurse::
 	lock
 	faceplayer
 	setvar VAR_0x8004, 0
+	specialvar VAR_RESULT, IsPokecenterChallengeActivated
+    goto_if_eq VAR_RESULT, TRUE, EventScript_PkmnCenterNurse_PkmnCenterChallenge_NoVisits
 	specialvar VAR_RESULT, CountPlayerTrainerStars
 	goto_if_eq VAR_RESULT, 4, EventScript_PkmnCenterNurse_GoldCard
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_EVEN_FASTER_JOY (flags) -- port engine surface
+	goto_if_set FLAG_EVEN_FASTER_JOY, EventScript_PkmnCenterNurse_HealPkmnFast
 	msgbox gText_WouldYouLikeToRestYourPkmn, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, EventScript_PkmnCenterNurse_HealPkmn
 	goto_if_eq VAR_RESULT, NO, EventScript_PkmnCenterNurse_Goodbye
 	end
 
 EventScript_PkmnCenterNurse_Goodbye::
+	waitmessage
+	applymovement VAR_0x800B, Movement_PkmnCenterNurse_Bow
+	waitmovement 0
 	message gText_WeHopeToSeeYouAgain
+	goto EventScript_PkmnCenterNurse_PlayerTurn
 	return
+
 
 @ VAR_0x8004 is 1 when player has Gold Card; jumps are identical
 EventScript_PkmnCenterNurse_HealPkmn::
@@ -21,7 +30,17 @@ EventScript_PkmnCenterNurse_HealPkmn::
 	waitmessage
 	call EventScript_PkmnCenterNurse_TakeAndHealPkmn
 	goto_if_unset FLAG_POKERUS_EXPLAINED, EventScript_PkmnCenterNurse_CheckPokerus
-	goto EventScript_PkmnCenterNurse_CheckTrainerHillAndUnionRoom
+	goto EventScript_PkmnCenterNurse_ReturnPkmn
+	release
+	end
+
+@ VAR_0x8004 is 1 when player has Gold Card; jumps are identical
+EventScript_PkmnCenterNurse_HealPkmnFast::
+	incrementgamestat GAME_STAT_USED_POKECENTER
+	special HealPlayerParty
+	playse SE_M_MORNING_SUN
+	goto EventScript_PkmnCenterNurse_ReturnPkmn
+	release
 	end
 
 EventScript_PkmnCenterNurse_IllTakeYourPkmn::
@@ -34,19 +53,13 @@ EventScript_PkmnCenterNurse_IllTakeYourPkmn2::
 
 EventScript_PkmnCenterNurse_TakeAndHealPkmn::
 	hidefollower 0
-	applymovement VAR_0x800B, Movement_PkmnCenterNurse_Turn
+	applymovement VAR_0x800B, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	dofieldeffect FLDEFF_POKECENTER_HEAL
-.if OW_UNION_DISABLE_CHECK == FALSE && OW_FLAG_MOVE_UNION_ROOM_CHECK != 0
-	setflag OW_FLAG_MOVE_UNION_ROOM_CHECK
-	call CableClub_OnResume
-	clearflag OW_FLAG_MOVE_UNION_ROOM_CHECK
-.endif
 	waitfieldeffect FLDEFF_POKECENTER_HEAL
-	applymovement VAR_0x800B, Common_Movement_WalkInPlaceFasterDown
+	applymovement VAR_0x800B, Common_Movement_FaceDown
 	waitmovement 0
 	special HealPlayerParty
-	callnative UpdateFollowingPokemon
 	return
 
 EventScript_PkmnCenterNurse_CheckTrainerHillAndUnionRoom::
@@ -66,6 +79,7 @@ EventScript_PkmnCenterNurse_ReturnPkmn::
 	applymovement VAR_0x800B, Movement_PkmnCenterNurse_Bow
 	waitmovement 0
 	message gText_WeHopeToSeeYouAgain
+	goto EventScript_PkmnCenterNurse_PlayerTurn
 	return
 
 EventScript_PkmnCenterNurse_ReturnPkmn2::
@@ -73,7 +87,11 @@ EventScript_PkmnCenterNurse_ReturnPkmn2::
 	waitmessage
 	applymovement VAR_0x800B, Movement_PkmnCenterNurse_Bow
 	waitmovement 0
-	message gText_WeHopeToSeeYouAgain2
+	@ message gText_WeHopeToSeeYouAgain
+	@ waitmessage
+	@ closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceDown
+	waitmovement 0
 	return
 
 EventScript_PkmnCenterNurse_PlayerWaitingInUnionRoom::
@@ -85,12 +103,13 @@ EventScript_PkmnCenterNurse_PlayerWaitingInUnionRoom::
 	applymovement VAR_0x800B, Movement_PkmnCenterNurse_Bow
 	waitmovement 0
 	message gText_WeHopeToSeeYouAgain
+	goto EventScript_PkmnCenterNurse_PlayerTurn
 	return
 
 EventScript_PkmnCenterNurse_CheckPokerus::
 	specialvar VAR_RESULT, IsPokerusInParty
 	goto_if_eq VAR_RESULT, TRUE, EventScript_PkmnCenterNurse_ExplainPokerus
-	goto_if_eq VAR_RESULT, FALSE, EventScript_PkmnCenterNurse_CheckTrainerHillAndUnionRoom
+	goto_if_eq VAR_RESULT, FALSE, EventScript_PkmnCenterNurse_ReturnPkmn
 	end
 
 EventScript_PkmnCenterNurse_ExplainPokerus::
@@ -109,13 +128,21 @@ EventScript_PkmnCenterNurse_GoldCard::
 	waitmovement 0
 	msgbox gText_NoticesGoldCard, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, EventScript_PkmnCenterNurse_GoldCardHealPkmn
-	message gText_WeHopeToSeeYouAgain2
+	waitmessage
+	applymovement VAR_0x800B, Movement_PkmnCenterNurse_Bow
+	waitmovement 0
+	message gText_WeHopeToSeeYouAgain
+	goto EventScript_PkmnCenterNurse_PlayerTurn
 	return
 
 EventScript_PkmnCenterNurse_AskForUsual::
 	msgbox gText_YouWantTheUsual, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, EventScript_PkmnCenterNurse_GoldCardHealPkmn
-	message gText_WeHopeToSeeYouAgain2
+	waitmessage
+	applymovement VAR_0x800B, Movement_PkmnCenterNurse_Bow
+	waitmovement 0
+	message gText_WeHopeToSeeYouAgain
+	goto EventScript_PkmnCenterNurse_PlayerTurn
 	return
 
 EventScript_PkmnCenterNurse_GoldCardHealPkmn::
@@ -123,11 +150,23 @@ EventScript_PkmnCenterNurse_GoldCardHealPkmn::
 	goto EventScript_PkmnCenterNurse_HealPkmn
 	end
 
+EventScript_PkmnCenterNurse_PlayerTurn::
+	closemessage
+	callnative UpdateFollowingPokemon
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceDown
+	waitmovement 0
+	release
+	end
+
 Movement_PkmnCenterNurse_Bow:
-	nurse_joy_bow
-	delay_4
+	@ nurse_joy_bow
+	walk_in_place_slow_down
 	step_end
 
-Movement_PkmnCenterNurse_Turn:
-	walk_in_place_faster_left
-	step_end
+EventScript_PkmnCenterNurse_PkmnCenterChallenge_NoVisits:: @ tx_randomizer_and_challenges
+    message gText_PkmnCenterChallenge_NoVisitsLeft
+    waitmessage
+    applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceDown
+    waitmovement 0
+    release
+    end

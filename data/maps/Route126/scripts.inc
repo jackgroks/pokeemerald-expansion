@@ -1,8 +1,10 @@
 Route126_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route126_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
 Route126_OnTransition:
+	callnative SetTimeBasedEncounters
 	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetAbnormalWeather
 	end
 
@@ -32,7 +34,8 @@ Route126_EventScript_Leonardo::
 	end
 
 Route126_EventScript_Isobel::
-	trainerbattle_single TRAINER_ISOBEL, Route126_Text_IsobelIntro, Route126_Text_IsobelDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_KOGA_1 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_KOGA_1, Route126_Text_IsobelIntro, Route126_Text_IsobelDefeat
 	msgbox Route126_Text_IsobelPostBattle, MSGBOX_AUTOCLOSE
 	end
 
