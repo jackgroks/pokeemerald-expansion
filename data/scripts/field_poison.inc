@@ -31,7 +31,7 @@ EventScript_FrontierFieldWhiteOut::
 	waitbuttonpress
 	pike_inchallenge
 	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattlePike_EventScript_Retire
-	pyramid_inchallenge
+	setvar VAR_RESULT, 0 @ TODO: revisit later — no pe equivalent identified. HnS-only "pyramid_inchallenge"; never in Battle Pyramid under HnS Johto, so neither pyramid retire branch fires.
 	goto_if_eq VAR_RESULT, 1, BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost  @ On Pyramid floor
 	goto_if_eq VAR_RESULT, 2, BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost  @ On Pyramid peak
 	trainerhill_inchallenge
