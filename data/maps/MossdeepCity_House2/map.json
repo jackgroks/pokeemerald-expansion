@@ -15,7 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_4",
+      "graphics_id": "OBJ_EVENT_GFX_COOLTRAINER_M",
       "x": 6,
       "y": 6,
       "elevation": 3,
@@ -41,8 +41,7 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_MOSSDEEP_HOUSE_WINGULL",
-      "graphics_id": "OBJ_EVENT_GFX_WINGULL",
+      "graphics_id": "OBJ_EVENT_GFX_MON_BASE+SPECIES_WINGULL",
       "x": 4,
       "y": 5,
       "elevation": 3,
@@ -52,7 +51,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MossdeepCity_House2_EventScript_Wingull",
-      "flag": "FLAG_HIDE_MOSSDEEP_CITY_HOUSE_2_WINGULL"
+      "flag": "FLAG_GARBAGEFLAG"
     }
   ],
   "warp_events": [

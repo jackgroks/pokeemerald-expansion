@@ -1,12 +1,19 @@
+.set LOCALID_WOMAN_1, 19
+.set LOCALID_MAN_1, 20
+
 LilycoveCity_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, LilycoveCity_OnTransition
 	map_script MAP_SCRIPT_ON_LOAD, LilycoveCity_OnLoad
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
 LilycoveCity_OnTransition:
-	setflag FLAG_VISITED_LILYCOVE_CITY
+	callnative SetTimeBasedEncounters
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_VISITED_SAFFRON_CITY (flags) -- port engine surface
+	setflag FLAG_VISITED_SAFFRON_CITY
 	setvar VAR_CONTEST_HALL_STATE, 0
-	setflag FLAG_HIDE_LILYCOVE_CONTEST_HALL_REPORTER
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
 	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetAbnormalWeather
 	call Common_EventScript_SetupRivalGfxId
 	end
@@ -133,18 +140,27 @@ LilycoveCity_EventScript_FatMan::
 LilycoveCity_EventScript_Man1::
 	lockall
 	msgbox LilycoveCity_Text_JustArrivedAndSawRarePokemon, MSGBOX_NPC
-	applymovement LOCALID_LILYCOVE_MAN_1, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_MAN_1, Common_Movement_FaceOriginalDirection
 	end
 
 LilycoveCity_EventScript_Woman1::
 	lockall
 	msgbox LilycoveCity_Text_HoneymoonVowToSeeRarePokemon, MSGBOX_NPC
-	applymovement LOCALID_LILYCOVE_WOMAN_1, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_WOMAN_1, Common_Movement_FaceOriginalDirection
 	end
 
 LilycoveCity_EventScript_CitySign::
 	msgbox LilycoveCity_Text_CitySign, MSGBOX_SIGN
 	end
+
+LilycoveCity_EventScript_GymSign::
+	msgbox LilycoveCity_Text_GymSign, MSGBOX_SIGN
+	end
+
+LilycoveCity_Text_GymSign:
+	.string "HYPER TRAINING GYM.\p"
+	.string "Maximize the potential of your\n"
+	.string "POKéMON easily!$"
 
 LilycoveCity_EventScript_ContestHallSign::
 	msgbox LilycoveCity_Text_ContestHallSign, MSGBOX_SIGN
@@ -327,7 +343,8 @@ LilycoveCity_EventScript_DefeatedMay::
 	call_if_eq VAR_RESULT, FALSE, LilycoveCity_EventScript_MayCollectBadges
 	call_if_eq VAR_RESULT, TRUE, LilycoveCity_EventScript_MayPokemonLeague
 	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM
-	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_PICHU_DOLL
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
 	goto LilycoveCity_EventScript_RivalFlyAway
 	end
 
@@ -358,8 +375,10 @@ LilycoveCity_EventScript_DefeatedBrendan::
 	call_if_set FLAG_BADGE06_GET, LilycoveCity_EventScript_CheckFinalBadge
 	call_if_eq VAR_RESULT, FALSE, LilycoveCity_EventScript_BrendanCollectBadges
 	call_if_eq VAR_RESULT, TRUE, LilycoveCity_EventScript_BrendanPokemonLeague
-	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM
-	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_SWABLU_DOLL
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
 	goto LilycoveCity_EventScript_RivalFlyAway
 	end
 
@@ -755,4 +774,3 @@ LilycoveCity_Text_HoneymoonVowToSeeRarePokemon:
 	.string "So we were delighted to see a rare\n"
 	.string "POKéMON as soon as we arrived.\p"
 	.string "I mean, we are totally happy!$"
-

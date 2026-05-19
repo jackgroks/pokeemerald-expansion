@@ -3,7 +3,7 @@
   "name": "Route110_TrickHousePuzzle5",
   "layout": "LAYOUT_ROUTE110_TRICK_HOUSE_PUZZLE5",
   "music": "MUS_TRICK_HOUSE",
-  "region_map_section": "MAPSEC_ROUTE_110",
+  "region_map_section": "MAPSEC_ROUTE_35",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_INDOOR",
@@ -15,8 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "local_id": "LOCALID_MECHADOLL_1",
-      "graphics_id": "OBJ_EVENT_GFX_MAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_BALDING_MAN",
       "x": 6,
       "y": 17,
       "elevation": 3,
@@ -29,8 +28,7 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_MECHADOLL_2",
-      "graphics_id": "OBJ_EVENT_GFX_MAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_BALDING_MAN",
       "x": 0,
       "y": 7,
       "elevation": 3,
@@ -43,8 +41,7 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_MECHADOLL_3",
-      "graphics_id": "OBJ_EVENT_GFX_MAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_BALDING_MAN",
       "x": 14,
       "y": 10,
       "elevation": 3,
@@ -57,8 +54,7 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_MECHADOLL_4",
-      "graphics_id": "OBJ_EVENT_GFX_MAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_BALDING_MAN",
       "x": 14,
       "y": 19,
       "elevation": 3,
@@ -71,8 +67,7 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_MECHADOLL_5",
-      "graphics_id": "OBJ_EVENT_GFX_MAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_BALDING_MAN",
       "x": 10,
       "y": 4,
       "elevation": 3,

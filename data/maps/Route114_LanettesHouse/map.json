@@ -1,9 +1,9 @@
 {
   "id": "MAP_ROUTE114_LANETTES_HOUSE",
   "name": "Route114_LanettesHouse",
-  "layout": "LAYOUT_ROUTE114_LANETTES_HOUSE",
+  "layout": "LAYOUT_Route114_LanetteS_HOUSE",
   "music": "MUS_FALLARBOR",
-  "region_map_section": "MAPSEC_ROUTE_114",
+  "region_map_section": "MAPSEC_ROUTE_39",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_INDOOR",
@@ -24,8 +24,8 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route114_LanettesHouse_EventScript_Lanette",
-      "flag": "FLAG_HIDE_LANETTES_HOUSE_LANETTE"
+      "script": "Route114_LanettesHouse_EventScript_Bill",
+      "flag": "FLAG_GARBAGEFLAG"
     }
   ],
   "warp_events": [

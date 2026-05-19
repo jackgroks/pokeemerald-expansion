@@ -2,6 +2,7 @@ Route105_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, Route105_OnLoad
 	map_script MAP_SCRIPT_ON_TRANSITION, Route105_OnTransition
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route105_OnFrame
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
 Route105_OnLoad:
@@ -16,6 +17,7 @@ Route105_CloseRegiEntrance::
 	return
 
 Route105_OnTransition:
+	callnative SetTimeBasedEncounters
 	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_HideMapNamePopup
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_105_NORTH, AbnormalWeather_StartKyogreWeather
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_105_SOUTH, AbnormalWeather_StartKyogreWeather
@@ -26,7 +28,8 @@ Route105_OnFrame:
 	.2byte 0
 
 Route105_EventScript_Foster::
-	trainerbattle_single TRAINER_FOSTER, Route105_Text_FosterIntro, Route105_Text_FosterDefeated
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_RAYMOND (trainers) -- port engine surface
+	trainerbattle_single TRAINER_RAYMOND, Route105_Text_FosterIntro, Route105_Text_FosterDefeated
 	msgbox Route105_Text_FosterPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -36,7 +39,8 @@ Route105_EventScript_Luis::
 	end
 
 Route105_EventScript_Dominik::
-	trainerbattle_single TRAINER_DOMINIK, Route105_Text_DominikIntro, Route105_Text_DominikDefeated
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_KENNY (trainers) -- port engine surface
+	trainerbattle_single TRAINER_KENNY, Route105_Text_DominikIntro, Route105_Text_DominikDefeated
 	msgbox Route105_Text_DominikPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -46,7 +50,8 @@ Route105_EventScript_Beverly::
 	end
 
 Route105_EventScript_Imani::
-	trainerbattle_single TRAINER_IMANI, Route105_Text_ImaniIntro, Route105_Text_ImaniDefeated
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_CHUCK_1_2 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_CHUCK_1_2, Route105_Text_ImaniIntro, Route105_Text_ImaniDefeated
 	msgbox Route105_Text_ImaniPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -56,7 +61,8 @@ Route105_EventScript_Josue::
 	end
 
 Route105_EventScript_Andres::
-	trainerbattle_single TRAINER_ANDRES_1, Route105_Text_AndresIntro, Route105_Text_AndresDefeated, Route105_EventScript_AndresRegisterMatchCallAfterBattle
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_BRIANA (trainers) -- port engine surface
+	trainerbattle_single TRAINER_BRIANA, Route105_Text_AndresIntro, Route105_Text_AndresDefeated, Route105_EventScript_AndresRegisterMatchCallAfterBattle
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route105_EventScript_AndresRematch
 	msgbox Route105_Text_AndresPostBattle, MSGBOX_DEFAULT
@@ -67,12 +73,14 @@ Route105_EventScript_AndresRegisterMatchCallAfterBattle::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route105_Text_AndresRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_ANDRES_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_BRIANA (trainers) -- port engine surface
+	register_matchcall TRAINER_BRIANA
 	release
 	end
 
 Route105_EventScript_AndresRematch::
-	trainerbattle_rematch TRAINER_ANDRES_1, Route105_Text_AndresRematchIntro, Route105_Text_AndresRematchDefeated
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_BRIANA (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_BRIANA, Route105_Text_AndresRematchIntro, Route105_Text_AndresRematchDefeated
 	msgbox Route105_Text_AndresRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
 

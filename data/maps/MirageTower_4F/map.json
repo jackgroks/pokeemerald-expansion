@@ -15,7 +15,6 @@
   "connections": null,
   "object_events": [
     {
-      "local_id": "LOCALID_MIRAGE_ROOT_FOSSIL",
       "graphics_id": "OBJ_EVENT_GFX_FOSSIL",
       "x": 5,
       "y": 4,
@@ -26,10 +25,9 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MirageTower_4F_EventScript_RootFossil",
-      "flag": "FLAG_HIDE_MIRAGE_TOWER_ROOT_FOSSIL"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
-      "local_id": "LOCALID_MIRAGE_CLAW_FOSSIL",
       "graphics_id": "OBJ_EVENT_GFX_FOSSIL",
       "x": 7,
       "y": 4,
@@ -40,7 +38,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MirageTower_4F_EventScript_ClawFossil",
-      "flag": "FLAG_HIDE_MIRAGE_TOWER_CLAW_FOSSIL"
+      "flag": "FLAG_ITEM_GARBAGEFLAG"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
@@ -54,6 +52,19 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_RockSmash",
       "flag": "FLAG_TEMP_11"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 10,
+      "y": 4,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_CALM_MINT",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_CALM_MINT_SANDTOWER"
     }
   ],
   "warp_events": [

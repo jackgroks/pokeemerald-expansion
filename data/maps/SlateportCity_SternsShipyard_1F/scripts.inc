@@ -1,3 +1,5 @@
+.set LOCALID_DOCK, 1
+
 SlateportCity_SternsShipyard_1F_MapScripts::
 	.byte 0
 
@@ -15,7 +17,8 @@ SlateportCity_SternsShipyard_1F_EventScript_Dock::
 	applymovement LOCALID_DOCK, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	setflag FLAG_DOCK_REJECTED_DEVON_GOODS
-	setflag FLAG_HIDE_SLATEPORT_CITY_TEAM_AQUA
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
 	releaseall
 	end
 

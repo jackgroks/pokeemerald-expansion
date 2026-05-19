@@ -1,3 +1,8 @@
+.equ LOCALID_JACE, 1
+.equ LOCALID_KEEGAN, 2
+.equ LOCALID_JEFF, 3
+.equ LOCALID_ELI, 4
+
 LavaridgeTown_Gym_B1F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, LavaridgeTown_Gym_B1F_OnTransition
 	.byte 0
@@ -16,7 +21,8 @@ LavaridgeTown_Gym_B1F_EventScript_SetTrainerTempVars::
 	goto_if_defeated TRAINER_KEEGAN, LavaridgeTown_Gym_B1F_EventScript_SetJaceTempVar
 	setvar VAR_TEMP_7, 1
 LavaridgeTown_Gym_B1F_EventScript_SetJaceTempVar::
-	goto_if_defeated TRAINER_JACE, LavaridgeTown_Gym_B1F_EventScript_SetJeffTempVar
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_KOGA_2 (trainers) -- port engine surface
+	goto_if_defeated TRAINER_KOGA_2, LavaridgeTown_Gym_B1F_EventScript_SetJeffTempVar
 	setvar VAR_TEMP_8, 1
 LavaridgeTown_Gym_B1F_EventScript_SetJeffTempVar::
 	goto_if_defeated TRAINER_JEFF, LavaridgeTown_Gym_B1F_EventScript_SetEliTempVar
@@ -31,7 +37,8 @@ LavaridgeTown_Gym_B1F_EventScript_CheckBuryTrainers::
 	goto_if_defeated TRAINER_KEEGAN, LavaridgeTown_Gym_B1F_EventScript_CheckBuryJace
 	setobjectmovementtype LOCALID_KEEGAN, MOVEMENT_TYPE_BURIED
 LavaridgeTown_Gym_B1F_EventScript_CheckBuryJace::
-	goto_if_defeated TRAINER_JACE, LavaridgeTown_Gym_B1F_EventScript_CheckBuryJeff
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_KOGA_2 (trainers) -- port engine surface
+	goto_if_defeated TRAINER_KOGA_2, LavaridgeTown_Gym_B1F_EventScript_CheckBuryJeff
 	setobjectmovementtype LOCALID_JACE, MOVEMENT_TYPE_BURIED
 LavaridgeTown_Gym_B1F_EventScript_CheckBuryJeff::
 	goto_if_defeated TRAINER_JEFF, LavaridgeTown_Gym_B1F_EventScript_CheckBuryEli

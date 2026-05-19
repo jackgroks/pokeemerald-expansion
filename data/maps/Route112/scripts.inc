@@ -1,8 +1,13 @@
+.set LOCALID_GRUNT_1, 1
+.set LOCALID_GRUNT_2, 6
+
 Route112_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route112_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
 Route112_OnTransition:
+	callnative SetTimeBasedEncounters
 	clearflag FLAG_FORCE_MIRAGE_TOWER_VISIBLE
 	setvar VAR_JAGGED_PASS_ASH_WEATHER, 0
 	end
@@ -10,36 +15,36 @@ Route112_OnTransition:
 Route112_EventScript_MagmaGrunts::
 	lockall
 	delay 40
-	applymovement LOCALID_ROUTE112_GRUNT_1, Common_Movement_WalkInPlaceFasterRight
+	applymovement LOCALID_GRUNT_1, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	delay 20
 	msgbox Route112_Text_LeaderGoingToAwakenThing, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE112_GRUNT_1, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_GRUNT_1, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	delay 40
-	applymovement LOCALID_ROUTE112_GRUNT_2, Common_Movement_WalkInPlaceFasterLeft
+	applymovement LOCALID_GRUNT_2, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	delay 20
 	msgbox Route112_Text_YeahWeNeedMeteorite, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE112_GRUNT_2, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_GRUNT_2, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	delay 40
-	applymovement LOCALID_ROUTE112_GRUNT_1, Common_Movement_WalkInPlaceFasterRight
+	applymovement LOCALID_GRUNT_1, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	delay 20
 	msgbox Route112_Text_OhThatsWhyCrewWentToFallarbor, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE112_GRUNT_1, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_GRUNT_1, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	delay 40
-	applymovement LOCALID_ROUTE112_GRUNT_2, Common_Movement_WalkInPlaceFasterLeft
+	applymovement LOCALID_GRUNT_2, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	delay 20
 	msgbox Route112_Text_CantLetAnyonePassUntilTheyreBack, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE112_GRUNT_2, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_GRUNT_2, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
@@ -61,7 +66,8 @@ Route112_EventScript_Hiker::
 	end
 
 Route112_EventScript_Brice::
-	trainerbattle_single TRAINER_BRICE, Route112_Text_BriceIntro, Route112_Text_BriceDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_ELLIOT (trainers) -- port engine surface
+	trainerbattle_single TRAINER_ELLIOT, Route112_Text_BriceIntro, Route112_Text_BriceDefeat
 	msgbox Route112_Text_BricePostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -97,7 +103,8 @@ Route112_EventScript_Carol::
 	end
 
 Route112_EventScript_Bryant::
-	trainerbattle_single TRAINER_BRYANT, Route112_Text_BryantIntro, Route112_Text_BryantDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_ETHAN (trainers) -- port engine surface
+	trainerbattle_single TRAINER_ETHAN, Route112_Text_BryantIntro, Route112_Text_BryantDefeat
 	msgbox Route112_Text_BryantPostBattle, MSGBOX_AUTOCLOSE
 	end
 

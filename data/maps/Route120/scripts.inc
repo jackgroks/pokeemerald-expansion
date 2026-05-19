@@ -1,4 +1,7 @@
-@ LOCALID_BRIDGE_KECLEON_SHADOW is a second object which is identical to LOCALID_BRIDGE_KECLEON but has a reflection palette tag for the bridge shadow
+.set LOCALID_BRIDGE_KECLEON, 30
+.set LOCALID_STEVEN, 31
+.set LOCALID_BRIDGE_KECLEON_SHADOW, 36  @ They use a second object which is identical to Kecleon but has a reflection palette tag for the bridge shadow
+
 Route120_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, Route120_OnResume
 	map_script MAP_SCRIPT_ON_TRANSITION, Route120_OnTransition
@@ -6,6 +9,7 @@ Route120_MapScripts::
 	.byte 0
 
 Route120_OnResume:
+	callnative SetTimeBasedEncounters
 	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, Route120_EventScript_RemoveKecleonObject
 	end
 
@@ -54,6 +58,7 @@ Route120_EventScript_SetBridgeKecleonMovement::
 	return
 
 Route120_OnTransition:
+	callnative SetTimeBasedEncounters
 	call GabbyAndTy_EventScript_UpdateLocation
 	call Route120_EventScript_SetWeather
 	end
@@ -177,7 +182,7 @@ Route120_EventScript_StevenBattleKecleon::
 	closemessage
 	call_if_eq VAR_FACING, DIR_NORTH, Route120_EventScript_PlayerApproachKecleonNorth
 	call_if_eq VAR_FACING, DIR_WEST, Route120_EventScript_PlayerApproachKecleonWest
-	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFasterLeft
+	applymovement LOCALID_STEVEN, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	delay 20
 	msgbox Route120_Text_StevenUsedDevonScope, MSGBOX_DEFAULT
@@ -211,21 +216,21 @@ Route120_EventScript_RemoveBridgeKecleonPostBattle::
 	end
 
 Route120_EventScript_StevenGiveDeconScope::
-	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFasterDown
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+	applymovement LOCALID_STEVEN, Common_Movement_WalkInPlaceFasterDown
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox Route120_Text_StevenGiveDevonScope, MSGBOX_DEFAULT
 	giveitem ITEM_DEVON_SCOPE
 	setflag FLAG_RECEIVED_DEVON_SCOPE
 	msgbox Route120_Text_StevenGoodbye, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFasterDown
+	applymovement LOCALID_STEVEN, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 50
 	setfieldeffectargument 0, 1
 	dofieldeffect FLDEFF_NPCFLY_OUT
 	delay 15
-	removeobject LOCALID_ROUTE120_STEVEN
+	removeobject LOCALID_STEVEN
 	waitfieldeffect FLDEFF_NPCFLY_OUT
 	setmetatile 13, 15, METATILE_Fortree_WoodBridge1_Top, FALSE
 	setmetatile 12, 16, METATILE_Fortree_WoodBridge1_Bottom, FALSE
@@ -236,12 +241,12 @@ Route120_EventScript_StevenGiveDeconScope::
 	end
 
 Route120_EventScript_PlayerApproachKecleonNorth::
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	return
 
 Route120_EventScript_PlayerApproachKecleonWest::
-	applymovement LOCALID_PLAYER, Route120_Movement_ApproachKecleonWest
+	applymovement OBJ_EVENT_ID_PLAYER, Route120_Movement_ApproachKecleonWest
 	waitmovement 0
 	return
 
@@ -294,12 +299,14 @@ Route120_EventScript_Lorenzo::
 	end
 
 Route120_EventScript_Jenna::
-	trainerbattle_single TRAINER_JENNA, Route120_Text_JennaIntro, Route120_Text_JennaDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_EUSINE (trainers) -- port engine surface
+	trainerbattle_single TRAINER_EUSINE, Route120_Text_JennaIntro, Route120_Text_JennaDefeat
 	msgbox Route120_Text_JennaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route120_EventScript_Jeffrey::
-	trainerbattle_single TRAINER_JEFFREY_1, Route120_Text_JeffreyIntro, Route120_Text_JeffreyDefeat, Route120_EventScript_RegisterJeffrey
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_RIVAL_TOTODILE_5 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_RIVAL_TOTODILE_5, Route120_Text_JeffreyIntro, Route120_Text_JeffreyDefeat, Route120_EventScript_RegisterJeffrey
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route120_EventScript_RematchJeffrey
 	msgbox Route120_Text_JeffreyPostBattle, MSGBOX_DEFAULT
@@ -310,22 +317,26 @@ Route120_EventScript_RegisterJeffrey::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route120_Text_JeffreyRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_JEFFREY_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_RIVAL_TOTODILE_5 (trainers) -- port engine surface
+	register_matchcall TRAINER_RIVAL_TOTODILE_5
 	release
 	end
 
 Route120_EventScript_RematchJeffrey::
-	trainerbattle_rematch TRAINER_JEFFREY_1, Route120_Text_JeffreyRematchIntro, Route120_Text_JeffreyRematchDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_RIVAL_TOTODILE_5 (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_RIVAL_TOTODILE_5, Route120_Text_JeffreyRematchIntro, Route120_Text_JeffreyRematchDefeat
 	msgbox Route120_Text_JeffreyPostRematch, MSGBOX_AUTOCLOSE
 	end
 
 Route120_EventScript_Jennifer::
-	trainerbattle_single TRAINER_JENNIFER, Route120_Text_JenniferIntro, Route120_Text_JenniferDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GIOVANNI (trainers) -- port engine surface
+	trainerbattle_single TRAINER_GIOVANNI, Route120_Text_JenniferIntro, Route120_Text_JenniferDefeat
 	msgbox Route120_Text_JenniferPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route120_EventScript_Chip::
-	trainerbattle_single TRAINER_CHIP, Route120_Text_ChipIntro, Route120_Text_ChipDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GRUNT_16 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_GRUNT_16, Route120_Text_ChipIntro, Route120_Text_ChipDefeat
 	msgbox Route120_Text_ChipPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -355,7 +366,8 @@ Route120_EventScript_Leonel::
 	end
 
 Route120_EventScript_Callie::
-	trainerbattle_single TRAINER_CALLIE, Route120_Text_CallieIntro, Route120_Text_CallieDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_ETO (trainers) -- port engine surface
+	trainerbattle_single TRAINER_ETO, Route120_Text_CallieIntro, Route120_Text_CallieDefeat
 	msgbox Route120_Text_CalliePostBattle, MSGBOX_AUTOCLOSE
 	end
 

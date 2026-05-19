@@ -4,7 +4,8 @@ PacifidlogTown_MapScripts::
 	.byte 0
 
 PacifidlogTown_OnTransition:
-	setflag FLAG_VISITED_PACIFIDLOG_TOWN
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_VISITED_CIANWOOD_CITY (flags) -- port engine surface
+	setflag FLAG_VISITED_CIANWOOD_CITY
 	end
 
 PacifidlogTown_OnResume:

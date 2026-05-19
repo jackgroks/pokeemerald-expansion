@@ -22,11 +22,16 @@
       "map": "MAP_SAFARI_ZONE_NORTHEAST",
       "offset": 0,
       "direction": "up"
+    },
+    {
+      "map": "MAP_AQUA_HIDEOUT_UNUSED_RUBY_MAP3",
+      "offset": 26,
+      "direction": "down"
     }
   ],
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_RICH_BOY",
+      "graphics_id": "OBJ_EVENT_GFX_POLICEMAN",
       "x": 7,
       "y": 7,
       "elevation": 3,
@@ -73,8 +78,8 @@
       "movement_range_x": 1,
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_BIG_PEARL",
-      "script": "Common_EventScript_FindItem",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "SafariZone_Southeast_EventScript_ItemBigPearl",
       "flag": "FLAG_ITEM_SAFARI_ZONE_SOUTH_EAST_BIG_PEARL"
     },
     {
@@ -88,7 +93,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SafariZone_Southeast_EventScript_ExpansionZoneAttendant",
-      "flag": "FLAG_HIDE_SAFARI_ZONE_SOUTH_EAST_EXPANSION"
+      "flag": "FLAG_GARBAGEFLAG"
     }
   ],
   "warp_events": [],

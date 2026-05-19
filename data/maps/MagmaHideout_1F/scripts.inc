@@ -4,6 +4,18 @@ MagmaHideout_1F_MapScripts::
 
 MagmaHideout_1F_OnTransition:
 	setvar VAR_JAGGED_PASS_ASH_WEATHER, 0
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_DEFEATED_ENTEI (flags) -- port engine surface
+	goto_if_set FLAG_DEFEATED_ENTEI, MagmaHideout_End
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_UNLOCK_DOGS (flags) -- port engine surface
+	goto_if_set FLAG_UNLOCK_DOGS, MagmaHideout_Entei_CryFaint
+	end
+
+MagmaHideout_Entei_CryFaint::
+	playmoncry SPECIES_ENTEI, CRY_MODE_FAINT
+	release
+	end
+
+MagmaHideout_End::
 	end
 
 MagmaHideout_1F_EventScript_Grunt1::
@@ -12,7 +24,8 @@ MagmaHideout_1F_EventScript_Grunt1::
 	end
 
 MagmaHideout_1F_EventScript_Grunt2::
-	trainerbattle_single TRAINER_GRUNT_MAGMA_HIDEOUT_2, MagmaHideout_1F_Text_Grunt2Intro, MagmaHideout_1F_Text_Grunt2Defeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_RICHARDO (trainers) -- port engine surface
+	trainerbattle_single TRAINER_RICHARDO, MagmaHideout_1F_Text_Grunt2Intro, MagmaHideout_1F_Text_Grunt2Defeat
 	msgbox MagmaHideout_1F_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
 	end
 

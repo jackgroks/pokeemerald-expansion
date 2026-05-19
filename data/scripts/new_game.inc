@@ -98,232 +98,306 @@ EventScript_ResetAllBerries::
 	setberrytree BERRY_TREE_ROUTE_123_GREPA_2,  ITEM_TO_BERRY(ITEM_GREPA_BERRY),  BERRY_STAGE_BERRIES
 	setberrytree BERRY_TREE_ROUTE_123_QUALOT_4, ITEM_TO_BERRY(ITEM_QUALOT_BERRY), BERRY_STAGE_BERRIES
 	setberrytree BERRY_TREE_ROUTE_123_QUALOT_1, ITEM_TO_BERRY(ITEM_QUALOT_BERRY), BERRY_STAGE_BERRIES
-	setberrytree BERRY_TREE_ROUTE_123_POMEG_1,  ITEM_TO_BERRY(ITEM_POMEG_BERRY),  BERRY_STAGE_BERRIES
-	setberrytree BERRY_TREE_ROUTE_123_POMEG_2,  ITEM_TO_BERRY(ITEM_POMEG_BERRY),  BERRY_STAGE_BERRIES
-	setberrytree BERRY_TREE_ROUTE_123_GREPA_3,  ITEM_TO_BERRY(ITEM_GREPA_BERRY),  BERRY_STAGE_BERRIES
-	setberrytree BERRY_TREE_ROUTE_123_GREPA_4,  ITEM_TO_BERRY(ITEM_GREPA_BERRY),  BERRY_STAGE_BERRIES
-	setberrytree BERRY_TREE_ROUTE_123_QUALOT_2, ITEM_TO_BERRY(ITEM_QUALOT_BERRY), BERRY_STAGE_BERRIES
-	setberrytree BERRY_TREE_ROUTE_123_QUALOT_3, ITEM_TO_BERRY(ITEM_QUALOT_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_ROUTE_123_POMEG_1,  ITEM_TO_BERRY(ITEM_TAMATO_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_ROUTE_123_POMEG_2,  ITEM_TO_BERRY(ITEM_TAMATO_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_ROUTE_123_GREPA_3,  ITEM_TO_BERRY(ITEM_HONDEW_BERRY),  BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_ROUTE_123_GREPA_4,  ITEM_TO_BERRY(ITEM_HONDEW_BERRY),  BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_ROUTE_123_QUALOT_2, ITEM_TO_BERRY(ITEM_KELPSY_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_ROUTE_123_QUALOT_3, ITEM_TO_BERRY(ITEM_KELPSY_BERRY), BERRY_STAGE_BERRIES
 	setberrytree BERRY_TREE_ROUTE_123_PECHA,    ITEM_TO_BERRY(ITEM_PECHA_BERRY),  BERRY_STAGE_BERRIES
 	setberrytree BERRY_TREE_ROUTE_123_SITRUS,   ITEM_TO_BERRY(ITEM_SITRUS_BERRY), BERRY_STAGE_BERRIES
 	setberrytree BERRY_TREE_ROUTE_123_RAWST,    ITEM_TO_BERRY(ITEM_RAWST_BERRY),  BERRY_STAGE_BERRIES
 
 	@ Mirage Island
 	setberrytree BERRY_TREE_ROUTE_130_LIECHI, ITEM_TO_BERRY(ITEM_LIECHI_BERRY), BERRY_STAGE_BERRIES
+
+	@Johto Crystal Kanto
+
+	setberrytree BERRY_TREE_CHERI_1, ITEM_TO_BERRY(ITEM_CHERI_BERRY), BERRY_STAGE_BERRIES 
+	setberrytree BERRY_TREE_CHERI_2, ITEM_TO_BERRY(ITEM_CHERI_BERRY), BERRY_STAGE_BERRIES 
+	setberrytree BERRY_TREE_CHESTO_1, ITEM_TO_BERRY(ITEM_CHESTO_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_CHESTO_2, ITEM_TO_BERRY(ITEM_CHESTO_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_PECHA_1, ITEM_TO_BERRY(ITEM_PECHA_BERRY), BERRY_STAGE_BERRIES 
+	setberrytree BERRY_TREE_PECHA_2, ITEM_TO_BERRY(ITEM_PECHA_BERRY), BERRY_STAGE_BERRIES 
+	setberrytree BERRY_TREE_RAWST_1, ITEM_TO_BERRY(ITEM_RAWST_BERRY), BERRY_STAGE_BERRIES 
+	setberrytree BERRY_TREE_RAWST_2, ITEM_TO_BERRY(ITEM_RAWST_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_ASPEAR_1, ITEM_TO_BERRY(ITEM_ASPEAR_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_ASPEAR_2, ITEM_TO_BERRY(ITEM_ASPEAR_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_LEPPA_1, ITEM_TO_BERRY(ITEM_LEPPA_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_LEPPA_2, ITEM_TO_BERRY(ITEM_LEPPA_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_ORAN_1, ITEM_TO_BERRY(ITEM_ORAN_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_ORAN_2, ITEM_TO_BERRY(ITEM_ORAN_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_PERSIM_1, ITEM_TO_BERRY(ITEM_PERSIM_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_PERSIM_2, ITEM_TO_BERRY(ITEM_PERSIM_BERRY), BERRY_STAGE_BERRIES
+
+	setberrytree BERRY_TREE_LUM_1, ITEM_TO_BERRY(ITEM_LUM_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_LUM_2, ITEM_TO_BERRY(ITEM_LUM_BERRY), BERRY_STAGE_BERRIES
+	
+	setberrytree BERRY_TREE_SITRUS_1, ITEM_TO_BERRY(ITEM_SITRUS_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_SITRUS_2, ITEM_TO_BERRY(ITEM_SITRUS_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_POMEG_1, ITEM_TO_BERRY(ITEM_POMEG_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_POMEG_2, ITEM_TO_BERRY(ITEM_POMEG_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_POMEG_3, ITEM_TO_BERRY(ITEM_POMEG_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_KELPSY_1, ITEM_TO_BERRY(ITEM_KELPSY_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_KELPSY_2, ITEM_TO_BERRY(ITEM_KELPSY_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_KELPSY_3, ITEM_TO_BERRY(ITEM_KELPSY_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_QUALOT_1, ITEM_TO_BERRY(ITEM_QUALOT_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_QUALOT_2, ITEM_TO_BERRY(ITEM_QUALOT_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_QUALOT_3, ITEM_TO_BERRY(ITEM_QUALOT_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_HONDEW_1, ITEM_TO_BERRY(ITEM_HONDEW_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_HONDEW_2, ITEM_TO_BERRY(ITEM_HONDEW_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_HONDEW_3, ITEM_TO_BERRY(ITEM_HONDEW_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_GREPA_1, ITEM_TO_BERRY(ITEM_GREPA_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_GREPA_2, ITEM_TO_BERRY(ITEM_GREPA_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_GREPA_3, ITEM_TO_BERRY(ITEM_GREPA_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_TAMATO_1, ITEM_TO_BERRY(ITEM_TAMATO_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_TAMATO_2, ITEM_TO_BERRY(ITEM_TAMATO_BERRY), BERRY_STAGE_BERRIES
+	setberrytree BERRY_TREE_TAMATO_3, ITEM_TO_BERRY(ITEM_TAMATO_BERRY), BERRY_STAGE_BERRIES
 	return
 
 EventScript_ResetAllMapFlags::
-	setflag FLAG_HIDE_CONTEST_POKE_BALL
-	setflag FLAG_HIDE_ROUTE_111_VICTORIA_WINSTRATE
-	setflag FLAG_HIDE_ROUTE_111_VIVI_WINSTRATE
-	setflag FLAG_HIDE_ROUTE_111_VICKY_WINSTRATE
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_RIVAL
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_POKEBALL_CYNDAQUIL
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_POKEBALL_TOTODILE
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_POKEBALL_CHIKORITA
-	setflag FLAG_HIDE_PETALBURG_CITY_WALLY
-	setflag FLAG_UNKNOWN_0x363
-	setflag FLAG_HIDE_RUSTBORO_CITY_AQUA_GRUNT
-	setflag FLAG_HIDE_RUSTBORO_CITY_DEVON_EMPLOYEE_1
-	setflag FLAG_HIDE_RUSTBORO_CITY_RIVAL
-	setflag FLAG_HIDE_RUSTBORO_CITY_SCIENTIST
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_FAT_MAN
-	setflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
-	setflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
-	setflag FLAG_HIDE_ROUTE_104_MR_BRINEY
-	setflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
-	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
-	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
-	setflag FLAG_HIDE_ROUTE_104_WHITE_HERB_FLORIST
-	setflag FLAG_HIDE_ROUTE_110_BIRCH
-	setflag FLAG_HIDE_LILYCOVE_CONTEST_HALL_CONTEST_ATTENDANT_1
-	setflag FLAG_HIDE_LILYCOVE_CONTEST_HALL_CONTEST_ATTENDANT_2
-	setflag FLAG_HIDE_LILYCOVE_MUSEUM_PATRON_1
-	setflag FLAG_HIDE_LILYCOVE_MUSEUM_PATRON_2
-	setflag FLAG_HIDE_LILYCOVE_MUSEUM_PATRON_3
-	setflag FLAG_HIDE_LILYCOVE_MUSEUM_PATRON_4
-	setflag FLAG_HIDE_LILYCOVE_MUSEUM_TOURISTS
-	setflag FLAG_HIDE_PETALBURG_GYM_GREETER
-	setflag FLAG_HIDE_PETALBURG_GYM_WALLYS_DAD
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_BRENDAN
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MAY
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM
-	setflag FLAG_HIDE_PLAYERS_HOUSE_DAD
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_PICHU_DOLL
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_SWABLU_DOLL
-	setflag FLAG_HIDE_FANCLUB_OLD_LADY
-	setflag FLAG_HIDE_FANCLUB_BOY
-	setflag FLAG_HIDE_FANCLUB_LITTLE_BOY
-	setflag FLAG_HIDE_FANCLUB_LADY
-	setflag FLAG_HIDE_LILYCOVE_FAN_CLUB_INTERVIEWER
-	setflag FLAG_HIDE_ROUTE_118_GABBY_AND_TY_1
-	setflag FLAG_HIDE_ROUTE_120_GABBY_AND_TY_1
-	setflag FLAG_HIDE_ROUTE_111_GABBY_AND_TY_2
-	setflag FLAG_HIDE_ROUTE_118_GABBY_AND_TY_2
-	setflag FLAG_HIDE_ROUTE_120_GABBY_AND_TY_2
-	setflag FLAG_HIDE_ROUTE_111_GABBY_AND_TY_3
-	setflag FLAG_HIDE_ROUTE_118_GABBY_AND_TY_3
-	setflag FLAG_HIDE_SLATEPORT_CITY_CONTEST_REPORTER
-	setflag FLAG_HIDE_LILYCOVE_CONTEST_HALL_REPORTER
-	setflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WALLY
-	setflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WANDAS_BOYFRIEND
-	setflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WALLYS_UNCLE
-	setflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WANDA
-	setflag FLAG_HIDE_VERDANTURF_TOWN_SCOTT
-	setflag FLAG_HIDE_PETALBURG_CITY_WALLYS_DAD
-	setflag FLAG_HIDE_PETALBURG_GYM_WALLY
-	setflag FLAG_HIDE_SLATEPORT_CITY_STERNS_SHIPYARD_MR_BRINEY
-	setflag FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_ARCHIE
-	setflag FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_MAXIE
-	setflag FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_MAGMA_GRUNTS
-	setflag FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_KYOGRE
-	setflag FLAG_HIDE_MAGMA_HIDEOUT_4F_GROUDON
-	setflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_CAPTAIN_STERN
-	setflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_AQUA_GRUNT
-	setflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_ARCHIE
-	setflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_SS_TIDAL
-	setflag FLAG_HIDE_LILYCOVE_HARBOR_SSTIDAL
-	setflag FLAG_HIDE_SLATEPORT_CITY_GABBY_AND_TY
-	setflag FLAG_HIDE_SLATEPORT_CITY_CAPTAIN_STERN
-	setflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_SUBMARINE_SHADOW
-	setflag FLAG_HIDE_ROUTE_119_RIVAL
-	setflag FLAG_HIDE_ROUTE_119_SCOTT
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_STEVEN
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_WALLACE
-	setflag FLAG_HIDE_LANETTES_HOUSE_LANETTE
-	setflag FLAG_HIDE_TRICK_HOUSE_ENTRANCE_MAN
-	setflag FLAG_HIDE_MT_CHIMNEY_TRAINERS
-	setflag FLAG_HIDE_MT_CHIMNEY_LAVA_COOKIE_LADY
-	setflag FLAG_HIDE_RUSTURF_TUNNEL_BRINEY
-	setflag FLAG_HIDE_ROUTE_116_MR_BRINEY
-	setflag FLAG_HIDE_RUSTURF_TUNNEL_PEEKO
-	setflag FLAG_HIDE_RUSTURF_TUNNEL_AQUA_GRUNT
-	setflag FLAG_HIDE_RUSTURF_TUNNEL_WANDAS_BOYFRIEND
-	setflag FLAG_HIDE_RUSTURF_TUNNEL_WANDA
-	setflag FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_2F_ARCHIE
-	setflag FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_2F_AQUA_GRUNT_1
-	setflag FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_2F_AQUA_GRUNT_2
-	setflag FLAG_HIDE_SLATEPORT_MUSEUM_POPULATION
-	setflag FLAG_HIDE_BATTLE_TOWER_OPPONENT
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MOM_OUTSIDE
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_BEDROOM_MOM
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_RIVAL
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCH
-	setflag FLAG_HIDE_WEATHER_INSTITUTE_1F_WORKERS
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_UNKNOWN_0x380
-	setflag FLAG_HIDE_ROUTE_101_BIRCH
-	setflag FLAG_HIDE_ROUTE_103_BIRCH
-	setflag FLAG_HIDE_LILYCOVE_HARBOR_FERRY_SAILOR
-	setflag FLAG_HIDE_LILYCOVE_HARBOR_EVENT_TICKET_TAKER
-	setflag FLAG_HIDE_SOUTHERN_ISLAND_EON_STONE
-	setflag FLAG_HIDE_SOUTHERN_ISLAND_UNCHOSEN_EON_DUO_MON
-	setflag FLAG_UNKNOWN_0x393
-	setflag FLAG_HIDE_MT_PYRE_SUMMIT_MAXIE
-	setflag FLAG_HIDE_MAUVILLE_CITY_WATTSON
-	setflag FLAG_HIDE_MAUVILLE_CITY_SCOTT
-	setflag FLAG_HIDE_CHAMPIONS_ROOM_RIVAL
-	setflag FLAG_HIDE_CHAMPIONS_ROOM_BIRCH
-	setflag FLAG_HIDE_ROUTE_110_RIVAL_ON_BIKE
-	setflag FLAG_HIDE_ROUTE_119_RIVAL_ON_BIKE
-	setflag FLAG_HIDE_ROUTE_104_RIVAL
-	setflag FLAG_HIDE_LILYCOVE_MOTEL_GAME_DESIGNERS
-	setflag FLAG_HIDE_LAVARIDGE_TOWN_RIVAL
-	setflag FLAG_HIDE_LAVARIDGE_TOWN_RIVAL_ON_BIKE
-	setflag FLAG_HIDE_MOSSDEEP_CITY_HOUSE_2_WINGULL
-	setflag FLAG_HIDE_METEOR_FALLS_TEAM_AQUA
-	setflag FLAG_HIDE_DEWFORD_HALL_SLUDGE_BOMB_MAN
-	setflag FLAG_HIDE_FALLARBOR_HOUSE_PROF_COZMO
-	setflag FLAG_HIDE_WEATHER_INSTITUTE_2F_AQUA_GRUNT_M
-	setflag FLAG_HIDE_ROUTE_128_STEVEN
-	setflag FLAG_HIDE_ROUTE_128_ARCHIE
-	setflag FLAG_HIDE_ROUTE_128_MAXIE
-	setflag FLAG_HIDE_ROUTE_116_DEVON_EMPLOYEE
-	setflag FLAG_HIDE_SLATEPORT_CITY_TM_SALESMAN
-	setflag FLAG_HIDE_SLATEPORT_CITY_SCOTT
-	setflag FLAG_HIDE_VICTORY_ROAD_ENTRANCE_WALLY
-	setflag FLAG_HIDE_VICTORY_ROAD_EXIT_WALLY
-	setflag FLAG_HIDE_SS_TIDAL_CORRIDOR_MR_BRINEY
-	setflag FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_STEVEN
-	setflag FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_BELDUM_POKEBALL
-	setflag FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_INVISIBLE_NINJA_BOY
-	setflag FLAG_HIDE_OLDALE_TOWN_RIVAL
-	setflag FLAG_HIDE_ROUTE_101_BOY
-	setflag FLAG_HIDE_PETALBURG_CITY_SCOTT
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_RAYQUAZA
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_KYOGRE
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_GROUDON
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_RESIDENTS
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_ARCHIE
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_MAXIE
-	setflag FLAG_HIDE_ROUTE_111_DESERT_FOSSIL
-	setflag FLAG_HIDE_ROUTE_111_PLAYER_DESCENT
-	setflag FLAG_HIDE_DESERT_UNDERPASS_FOSSIL
-	setflag FLAG_HIDE_MOSSDEEP_CITY_TEAM_MAGMA
-	setflag FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_1F_TEAM_MAGMA
-	setflag FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_2F_TEAM_MAGMA
-	setflag FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_2F_STEVEN
-	setflag FLAG_HIDE_LILYCOVE_CONTEST_HALL_BLEND_MASTER
-	setflag FLAG_HIDE_DEOXYS
-	setflag FLAG_HIDE_SAFARI_ZONE_SOUTH_EAST_EXPANSION
-	setflag FLAG_HIDE_FALLARBOR_TOWN_BATTLE_TENT_SCOTT
-	setflag FLAG_HIDE_EVER_GRANDE_POKEMON_CENTER_1F_SCOTT
-	setflag FLAG_HIDE_SKY_PILLAR_WALLACE
-	setflag FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL
-	call EventScript_ResetAllBerries
-	end
+	@HnS FLAGHEAP1
 
-EventScript_ResetAllMapFlagsFrlg::
-	setflag FLAG_HIDE_OAK_IN_HIS_LAB
-	setflag FLAG_HIDE_OAK_IN_PALLET_TOWN
-	setflag FLAG_HIDE_BILL_HUMAN_SEA_COTTAGE
-	setflag FLAG_HIDE_PEWTER_CITY_RUNNING_SHOES_GUY
-	setflag FLAG_HIDE_POKEHOUSE_FUJI
-	setflag FLAG_HIDE_LIFT_KEY
-	setflag FLAG_HIDE_SILPH_SCOPE
-	setflag FLAG_HIDE_CERULEAN_RIVAL
-	setflag FLAG_HIDE_SS_ANNE_RIVAL
-	setflag FLAG_HIDE_VERMILION_CITY_OAKS_AIDE
-	setflag FLAG_HIDE_SAFFRON_CIVILIANS
-	setflag FLAG_HIDE_ROUTE_22_RIVAL
-	setflag FLAG_HIDE_OAK_IN_CHAMP_ROOM
-	setflag FLAG_HIDE_CREDITS_RIVAL
-	setflag FLAG_HIDE_CREDITS_OAK
-	setflag FLAG_HIDE_CINNABAR_BILL
-	setflag FLAG_HIDE_CINNABAR_SEAGALLOP
-	setflag FLAG_HIDE_CINNABAR_POKECENTER_BILL
-	setflag FLAG_HIDE_LORELEI_IN_HER_HOUSE
-	setflag FLAG_HIDE_SAFFRON_FAN_CLUB_BLACKBELT
-	setflag FLAG_HIDE_SAFFRON_FAN_CLUB_ROCKER
-	setflag FLAG_HIDE_SAFFRON_FAN_CLUB_WOMAN
-	setflag FLAG_HIDE_SAFFRON_FAN_CLUB_BEAUTY
-	setflag FLAG_HIDE_TWO_ISLAND_GAME_CORNER_LOSTELLE
-	setflag FLAG_HIDE_TWO_ISLAND_GAME_CORNER_BIKER
-	setflag FLAG_HIDE_TWO_ISLAND_WOMAN
-	setflag FLAG_HIDE_TWO_ISLAND_BEAUTY
-	setflag FLAG_HIDE_TWO_ISLAND_SUPER_NERD
-	setflag FLAG_HIDE_LOSTELLE_IN_HER_HOME
-	setflag FLAG_HIDE_THREE_ISLAND_LONE_BIKER
-	setflag FLAG_HIDE_FOUR_ISLAND_RIVAL
-	setflag FLAG_HIDE_DOTTED_HOLE_SCIENTIST
-	setflag FLAG_HIDE_RESORT_GORGEOUS_SELPHY
-	setflag FLAG_HIDE_RESORT_GORGEOUS_INSIDE_SELPHY
-	setflag FLAG_HIDE_SELPHYS_BUTLER
-	setflag FLAG_HIDE_DEOXYS
-	setflag FLAG_HIDE_LORELEI_HOUSE_MEOWTH_DOLL
-	setflag FLAG_HIDE_LORELEI_HOUSE_CHANSEY_DOLL
-	setflag FLAG_HIDE_LORELEIS_HOUSE_NIDORAN_F_DOLL
-	setflag FLAG_HIDE_LORELEI_HOUSE_JIGGLYPUFF_DOLL
-	setflag FLAG_HIDE_LORELEIS_HOUSE_NIDORAN_M_DOLL
-	setflag FLAG_HIDE_LORELEIS_HOUSE_FEAROW_DOLL
-	setflag FLAG_HIDE_LORELEIS_HOUSE_PIDGEOT_DOLL
-	setflag FLAG_HIDE_LORELEIS_HOUSE_LAPRAS_DOLL
-	setflag FLAG_HIDE_POSTGAME_GOSSIPERS
-	setflag FLAG_HIDE_FAME_CHECKER_ERIKA_JOURNALS
-	setflag FLAG_HIDE_FAME_CHECKER_KOGA_JOURNAL
-	setflag FLAG_HIDE_FAME_CHECKER_LT_SURGE_JOURNAL
-	setflag FLAG_HIDE_SAFFRON_CITY_POKECENTER_SABRINA_JOURNALS
-	setvar VAR_MASSAGE_COOLDOWN_STEP_COUNTER, 500
+	setflag FLAG_HIDE_BATTLE_TOWER_OPPONENT
+	setflag FLAG_HIDE_DEOXYS @???
+	setflag FLAG_HIDE_CONTEST_POKE_BALL @???
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_MOMS_FRIEND2 (flags) -- port engine surface
+	setflag FLAG_HIDE_MOMS_FRIEND2 
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_SILVER_CHERRYGROVE (flags) -- port engine surface
+	setflag FLAG_HIDE_SILVER_CHERRYGROVE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_ROUTE_30_NPCS (flags) -- port engine surface
+	setflag FLAG_HIDE_ROUTE_30_NPCS
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_MRPOKEMON (flags) -- port engine surface
+	setflag FLAG_HIDE_MRPOKEMON
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_TOHJO_GIOVANNI (flags) -- port engine surface
+	setflag FLAG_HIDE_TOHJO_GIOVANNI
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_LEAGUE_BLACKBELT (flags) -- port engine surface
+	setflag FLAG_HIDE_LEAGUE_BLACKBELT
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_CELADON_FALKNER (flags) -- port engine surface
+	setflag FLAG_HIDE_CELADON_FALKNER
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DOJO_FALKNER (flags) -- port engine surface
+	setflag FLAG_HIDE_DOJO_FALKNER
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_VIRIDIAN_BUGSY (flags) -- port engine surface
+	setflag FLAG_HIDE_VIRIDIAN_BUGSY
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DOJO_BUGSY (flags) -- port engine surface
+	setflag FLAG_HIDE_DOJO_BUGSY
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DEPTSTORE_WHITNEY (flags) -- port engine surface
+	setflag FLAG_HIDE_DEPTSTORE_WHITNEY
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DOJO_WHITNEY (flags) -- port engine surface
+	setflag FLAG_HIDE_DOJO_WHITNEY
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_BELLCHIME_MORTY (flags) -- port engine surface
+	setflag FLAG_HIDE_BELLCHIME_MORTY
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DOJO_MORTY (flags) -- port engine surface
+	setflag FLAG_HIDE_DOJO_MORTY
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DOJO_CHUCK (flags) -- port engine surface
+	setflag FLAG_HIDE_DOJO_CHUCK
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_CAFE_JASMINE (flags) -- port engine surface
+	setflag FLAG_HIDE_CAFE_JASMINE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DOJO_JASMINE (flags) -- port engine surface
+	setflag FLAG_HIDE_DOJO_JASMINE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_LAKE_PRYCE (flags) -- port engine surface
+	setflag FLAG_HIDE_LAKE_PRYCE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DOJO_PRYCE (flags) -- port engine surface
+	setflag FLAG_HIDE_DOJO_PRYCE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DEN_CLAIR (flags) -- port engine surface
+	setflag FLAG_HIDE_DEN_CLAIR
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DOJO_CLAIR (flags) -- port engine surface
+	setflag FLAG_HIDE_DOJO_CLAIR
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DIGLETT_BROCK (flags) -- port engine surface
+	setflag FLAG_HIDE_DIGLETT_BROCK
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DOJO_BROCK (flags) -- port engine surface
+	setflag FLAG_HIDE_DOJO_BROCK
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_CAPE_MISTY (flags) -- port engine surface
+	setflag FLAG_HIDE_CAPE_MISTY
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DOJO_MISTY (flags) -- port engine surface
+	setflag FLAG_HIDE_DOJO_MISTY
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_PLANT_SURGE (flags) -- port engine surface
+	setflag FLAG_HIDE_PLANT_SURGE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DOJO_SURGE (flags) -- port engine surface
+	setflag FLAG_HIDE_DOJO_SURGE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_FOUNTAIN_ERIKA (flags) -- port engine surface
+	setflag FLAG_HIDE_FOUNTAIN_ERIKA
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DOJO_ERIKA (flags) -- port engine surface
+	setflag FLAG_HIDE_DOJO_ERIKA
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_ROUTE22_JANINE (flags) -- port engine surface
+	setflag FLAG_HIDE_ROUTE22_JANINE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DOJO_JANINE (flags) -- port engine surface
+	setflag FLAG_HIDE_DOJO_JANINE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_OLIVINE_SABRINA (flags) -- port engine surface
+	setflag FLAG_HIDE_OLIVINE_SABRINA
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DOJO_SABRINA (flags) -- port engine surface
+	setflag FLAG_HIDE_DOJO_SABRINA
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_CINNABAR_BLAINE (flags) -- port engine surface
+	setflag FLAG_HIDE_CINNABAR_BLAINE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DOJO_BLAINE (flags) -- port engine surface
+	setflag FLAG_HIDE_DOJO_BLAINE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_DOJO_BLUE (flags) -- port engine surface
+	setflag FLAG_HIDE_DOJO_BLUE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_ILEX_FOREST_SECOND_CELEBI (flags) -- port engine surface
+	setflag FLAG_HIDE_ILEX_FOREST_SECOND_CELEBI
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_OLIVINE_PORT_OAK (flags) -- port engine surface
+	setflag FLAG_HIDE_OLIVINE_PORT_OAK
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_ROUTE22_GIOVANNI_SILVER (flags) -- port engine surface
+	setflag FLAG_HIDE_ROUTE22_GIOVANNI_SILVER
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_MTMOON_JIRACHI (flags) -- port engine surface
+	setflag FLAG_HIDE_MTMOON_JIRACHI
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_UNUSED_SET4 (flags) -- port engine surface
+	setflag FLAG_UNUSED_SET4
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_UNUSED_SET5 (flags) -- port engine surface
+	setflag FLAG_UNUSED_SET5
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_UNUSED_SET6 (flags) -- port engine surface
+	setflag FLAG_UNUSED_SET6
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_UNUSED_SET7 (flags) -- port engine surface
+	setflag FLAG_UNUSED_SET7
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_UNUSED_SET8 (flags) -- port engine surface
+	setflag FLAG_UNUSED_SET8
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_UNUSED_SET9 (flags) -- port engine surface
+	setflag FLAG_UNUSED_SET9
+	
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_COMPLETED_AERODACTYL_PUZZLE (flags) -- port engine surface
+	clearflag FLAG_COMPLETED_AERODACTYL_PUZZLE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_COMPLETED_HOOH_PUZZLE (flags) -- port engine surface
+	clearflag FLAG_COMPLETED_HOOH_PUZZLE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_COMPLETED_KABUTO_PUZZLE (flags) -- port engine surface
+	clearflag FLAG_COMPLETED_KABUTO_PUZZLE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_COMPLETED_OMANYTE_PUZZLE (flags) -- port engine surface
+	clearflag FLAG_COMPLETED_OMANYTE_PUZZLE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GOT_SILK_SCARF (flags) -- port engine surface
+	clearflag FLAG_GOT_SILK_SCARF
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GOT_MYSTICWATER (flags) -- port engine surface
+	clearflag FLAG_GOT_MYSTICWATER
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_GUIDE_GENT_CHERRYGROVE (flags) -- port engine surface
+	clearflag FLAG_HIDE_GUIDE_GENT_CHERRYGROVE
+	clearflag FLAG_ADVENTURE_STARTED
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_DELIVERED_EGG (flags) -- port engine surface
+	clearflag FLAG_DELIVERED_EGG
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_SHOWN_ELM_TOGEPI (flags) -- port engine surface
+	clearflag FLAG_SHOWN_ELM_TOGEPI
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_ENABLE_RADIO (flags) -- port engine surface
+	clearflag FLAG_ENABLE_RADIO
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_ENABLE_BAOBA_MATCH_CALL (flags) -- port engine surface
+	clearflag FLAG_ENABLE_BAOBA_MATCH_CALL
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_SSAQUA_1F_GRANDPA (flags) -- port engine surface
+	clearflag FLAG_HIDE_SSAQUA_1F_GRANDPA
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_CAUGHT_CELEBI (flags) -- port engine surface
+	clearflag FLAG_CAUGHT_CELEBI
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_RETURNED_MACHINE_PART (flags) -- port engine surface
+	clearflag FLAG_RETURNED_MACHINE_PART
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_IN_KANTO_SAFARI_ZONE (flags) -- port engine surface
+	clearflag FLAG_IN_KANTO_SAFARI_ZONE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_IS_KANTO_CHAMPION (flags) -- port engine surface
+	clearflag FLAG_IS_KANTO_CHAMPION
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_DEFEATED_RED (flags) -- port engine surface
+	clearflag FLAG_DEFEATED_RED
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_RECEIVED_ODD_EGG (flags) -- port engine surface
+	clearflag FLAG_RECEIVED_ODD_EGG
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_VISITED_KANTO (flags) -- port engine surface
+	clearflag FLAG_VISITED_KANTO
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_CERULEAN_GYM_POKEMON (flags) -- port engine surface
+	clearflag FLAG_HIDE_CERULEAN_GYM_POKEMON
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_NEWBARKTOWN_LAB_AIDE (flags) -- port engine surface
+	clearflag FLAG_HIDE_NEWBARKTOWN_LAB_AIDE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_AZALEA_TOWN_CUT_MASTER (flags) -- port engine surface
+	clearflag FLAG_HIDE_AZALEA_TOWN_CUT_MASTER
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_SUMMONED_MTMOON_JIRACHI (flags) -- port engine surface
+	clearflag FLAG_SUMMONED_MTMOON_JIRACHI
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_UNUSED_UNSET7 (flags) -- port engine surface
+	clearflag FLAG_UNUSED_UNSET7
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_UNUSED_UNSET8 (flags) -- port engine surface
+	clearflag FLAG_UNUSED_UNSET8
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_UNUSED_UNSET9 (flags) -- port engine surface
+	clearflag FLAG_UNUSED_UNSET9
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_BADGE09_GET (flags) -- port engine surface
+	clearflag FLAG_BADGE09_GET
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_BADGE10_GET (flags) -- port engine surface
+	clearflag FLAG_BADGE10_GET
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_BADGE11_GET (flags) -- port engine surface
+	clearflag FLAG_BADGE11_GET
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_BADGE12_GET (flags) -- port engine surface
+	clearflag FLAG_BADGE12_GET
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_BADGE13_GET (flags) -- port engine surface
+	clearflag FLAG_BADGE13_GET
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_BADGE14_GET (flags) -- port engine surface
+	clearflag FLAG_BADGE14_GET
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_BADGE15_GET (flags) -- port engine surface
+	clearflag FLAG_BADGE15_GET
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_BADGE16_GET (flags) -- port engine surface
+	clearflag FLAG_BADGE16_GET
+
+	// TODO(pe-migration): missing in pe-expansion -- VAR_VIOLET_CITY_STATE (vars) -- port engine surface
+	setvar VAR_VIOLET_CITY_STATE, 0 @CITY STATES
+	// TODO(pe-migration): missing in pe-expansion -- VAR_CHERRYGROVE_CITY_STATE (vars) -- port engine surface
+	setvar VAR_CHERRYGROVE_CITY_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_AZALEA_TOWN_STATE (vars) -- port engine surface
+	setvar VAR_AZALEA_TOWN_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_GOLDENROD_CITY_STATE (vars) -- port engine surface
+	setvar VAR_GOLDENROD_CITY_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_ECRUTEAK_CITY_STATE (vars) -- port engine surface
+	setvar VAR_ECRUTEAK_CITY_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_MAHOGANY_TOWN_STATE (vars) -- port engine surface
+	setvar VAR_MAHOGANY_TOWN_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_OLIVINE_CITY_STATE (vars) -- port engine surface
+	setvar VAR_OLIVINE_CITY_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_CIANWOOD_CITY_STATE (vars) -- port engine surface
+	setvar VAR_CIANWOOD_CITY_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_SAFARI_ZONE_GATE_STATE (vars) -- port engine surface
+	setvar VAR_SAFARI_ZONE_GATE_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_BLACKTHORN_CITY_STATE (vars) -- port engine surface
+	setvar VAR_BLACKTHORN_CITY_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_PALLET_TOWN_STATE (vars) -- port engine surface
+	setvar VAR_PALLET_TOWN_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_VIRIDIAN_CITY_STATE (vars) -- port engine surface
+	setvar VAR_VIRIDIAN_CITY_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_PEWTER_CITY_STATE (vars) -- port engine surface
+	setvar VAR_PEWTER_CITY_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_CERULEAN_CITY_STATE (vars) -- port engine surface
+	setvar VAR_CERULEAN_CITY_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_VERMILION_CITY_STATE (vars) -- port engine surface
+	setvar VAR_VERMILION_CITY_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_LAVENDER_TOWN_STATE (vars) -- port engine surface
+	setvar VAR_LAVENDER_TOWN_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_CELADON_CITY_STATE (vars) -- port engine surface
+	setvar VAR_CELADON_CITY_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_SAFFRON_CITY_STATE (vars) -- port engine surface
+	setvar VAR_SAFFRON_CITY_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_FUCHSIA_CITY_STATE (vars) -- port engine surface
+	setvar VAR_FUCHSIA_CITY_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_CINNABAR_ISLAND_STATE (vars) -- port engine surface
+	setvar VAR_CINNABAR_ISLAND_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_MT_SILVER_STATE (vars) -- port engine surface
+	setvar VAR_MT_SILVER_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_ROUTE27_STATE (vars) -- port engine surface
+	setvar VAR_ROUTE27_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_LEAGUE_STATE (vars) -- port engine surface
+	setvar VAR_LEAGUE_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_SSAQUA_STATE (vars) -- port engine surface
+	setvar VAR_SSAQUA_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_SUICUNE_ENCOUNTERS (vars) -- port engine surface
+	setvar VAR_SUICUNE_ENCOUNTERS, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_NUM_BADGES (vars) -- port engine surface
+	setvar VAR_NUM_BADGES, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_KANTO_SAFARI_ZONE_PROGRESS (vars) -- port engine surface
+	setvar VAR_KANTO_SAFARI_ZONE_PROGRESS, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_BAOBA_QUEST_STATE (vars) -- port engine surface
+	setvar VAR_BAOBA_QUEST_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_PALLETTOWN_LABSTATE (vars) -- port engine surface
+	setvar VAR_PALLETTOWN_LABSTATE, 0	
+	// TODO(pe-migration): missing in pe-expansion -- VAR_TOHJO_FALLS_GIOVANNI_STATE (vars) -- port engine surface
+	setvar VAR_TOHJO_FALLS_GIOVANNI_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_ROUTE22_GIOVANNI_STATE (vars) -- port engine surface
+	setvar VAR_ROUTE22_GIOVANNI_STATE, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_ROUTE27_BAOBA_CALL (vars) -- port engine surface
+	setvar VAR_ROUTE27_BAOBA_CALL, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_UNUSED_HNS_VAR4 (vars) -- port engine surface
+	setvar VAR_UNUSED_HNS_VAR4, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_UNUSED_HNS_VAR5 (vars) -- port engine surface
+	setvar VAR_UNUSED_HNS_VAR5, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_UNUSED_HNS_VAR6 (vars) -- port engine surface
+	setvar VAR_UNUSED_HNS_VAR6, 0
+	// TODO(pe-migration): missing in pe-expansion -- VAR_UNUSED_HNS_VAR7 (vars) -- port engine surface
+	setvar VAR_UNUSED_HNS_VAR7, 0
+
+	additem ITEM_EXP_SHARE
+
+	call EventScript_ResetAllBerries
 	end

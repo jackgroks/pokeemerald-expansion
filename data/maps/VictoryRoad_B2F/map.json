@@ -15,7 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_3",
+      "graphics_id": "OBJ_EVENT_GFX_MAN",
       "x": 15,
       "y": 6,
       "elevation": 3,
@@ -28,7 +28,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_3",
+      "graphics_id": "OBJ_EVENT_GFX_MAN",
       "x": 43,
       "y": 14,
       "elevation": 3,
@@ -41,7 +41,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
+      "graphics_id": "OBJ_EVENT_GFX_WORKER_F",
       "x": 2,
       "y": 17,
       "elevation": 3,
@@ -54,7 +54,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
+      "graphics_id": "OBJ_EVENT_GFX_WORKER_F",
       "x": 35,
       "y": 22,
       "elevation": 3,
@@ -75,12 +75,12 @@
       "movement_range_x": 1,
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_FULL_HEAL",
-      "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_VICTORY_ROAD_B2F_FULL_HEAL"
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "VictoryRoad_B2F_EventScript_ItemFullHeal",
+      "flag": "FLAG_ITEM_GARBAGEFLAG"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
+      "graphics_id": "OBJ_EVENT_GFX_WORKER_F",
       "x": 25,
       "y": 18,
       "elevation": 4,
@@ -93,7 +93,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_3",
+      "graphics_id": "OBJ_EVENT_GFX_MAN",
       "x": 25,
       "y": 21,
       "elevation": 4,
@@ -134,6 +134,13 @@
       "elevation": 3,
       "dest_map": "MAP_VICTORY_ROAD_B1F",
       "dest_warp_id": "6"
+    },
+    {
+      "x": 19,
+      "y": 1,
+      "elevation": 0,
+      "dest_map": "MAP_VICTORY_ROAD_MOLTRES",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [],

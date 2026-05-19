@@ -1,4 +1,6 @@
 VictoryRoad_B1F_MapScripts::
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
+	map_script MAP_SCRIPT_ON_TRANSITION, SetTimeEncounters
 	.byte 0
 
 VictoryRoad_B1F_EventScript_Samuel::
@@ -22,7 +24,8 @@ VictoryRoad_B1F_EventScript_Mitchell::
 	end
 
 VictoryRoad_B1F_EventScript_Halle::
-	trainerbattle_single TRAINER_HALLE, VictoryRoad_B1F_Text_HalleIntro, VictoryRoad_B1F_Text_HalleDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_PRYCE_1 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_PRYCE_1, VictoryRoad_B1F_Text_HalleIntro, VictoryRoad_B1F_Text_HalleDefeat
 	msgbox VictoryRoad_B1F_Text_HallePostBattle, MSGBOX_AUTOCLOSE
 	end
 

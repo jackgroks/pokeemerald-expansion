@@ -1,4 +1,10 @@
+.set LOCALID_GRUNT_1, 12
+.set LOCALID_GRUNT_2, 13
+.set LOCALID_GRUNT_3, 14
+
 Route121_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SetTimeEncounters
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
 Route121_EventScript_Woman::
@@ -16,19 +22,20 @@ Route121_EventScript_SafariZoneSign::
 Route121_EventScript_AquaGruntsMoveOut::
 	lockall
 	playbgm MUS_ENCOUNTER_AQUA, FALSE
-	applymovement LOCALID_ROUTE121_GRUNT_2, Common_Movement_WalkInPlaceRight
+	applymovement LOCALID_GRUNT_2, Common_Movement_WalkInPlaceRight
 	waitmovement 0
 	msgbox Route121_Text_OkayMoveOutToMtPyre, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE121_GRUNT_1, Route121_Movement_Grunt1Exit
-	applymovement LOCALID_ROUTE121_GRUNT_2, Route121_Movement_Grunt2Exit
-	applymovement LOCALID_ROUTE121_GRUNT_3, Route121_Movement_Grunt3Exit
+	applymovement LOCALID_GRUNT_1, Route121_Movement_Grunt1Exit
+	applymovement LOCALID_GRUNT_2, Route121_Movement_Grunt2Exit
+	applymovement LOCALID_GRUNT_3, Route121_Movement_Grunt3Exit
 	waitmovement 0
 	fadedefaultbgm
-	removeobject LOCALID_ROUTE121_GRUNT_1
-	removeobject LOCALID_ROUTE121_GRUNT_2
-	removeobject LOCALID_ROUTE121_GRUNT_3
-	setvar VAR_ROUTE121_STATE, 1
+	removeobject LOCALID_GRUNT_1
+	removeobject LOCALID_GRUNT_2
+	removeobject LOCALID_GRUNT_3
+	// TODO(pe-migration): missing in pe-expansion -- VAR_GARBAGEVAR (vars) -- port engine surface
+	setvar VAR_GARBAGEVAR, 1
 	releaseall
 	end
 
@@ -107,7 +114,8 @@ Route121_EventScript_Joy::
 	end
 
 Route121_EventScript_Jessica::
-	trainerbattle_single TRAINER_JESSICA_1, Route121_Text_JessicaIntro, Route121_Text_JessicaDefeat, Route121_EventScript_RegisterJessica
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_ARIANA_1 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_ARIANA_1, Route121_Text_JessicaIntro, Route121_Text_JessicaDefeat, Route121_EventScript_RegisterJessica
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route121_EventScript_RematchJessica
 	msgbox Route121_Text_JessicaPostBattle, MSGBOX_DEFAULT
@@ -118,17 +126,20 @@ Route121_EventScript_RegisterJessica::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route121_Text_JessicaRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_JESSICA_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_ARIANA_1 (trainers) -- port engine surface
+	register_matchcall TRAINER_ARIANA_1
 	release
 	end
 
 Route121_EventScript_RematchJessica::
-	trainerbattle_rematch TRAINER_JESSICA_1, Route121_Text_JessicaRematchIntro, Route121_Text_JessicaRematchDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_ARIANA_1 (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_ARIANA_1, Route121_Text_JessicaRematchIntro, Route121_Text_JessicaRematchDefeat
 	msgbox Route121_Text_JessicaPostRematch, MSGBOX_AUTOCLOSE
 	end
 
 Route121_EventScript_Cale::
-	trainerbattle_single TRAINER_CALE, Route121_Text_CaleIntro, Route121_Text_CaleDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_ETHEL (trainers) -- port engine surface
+	trainerbattle_single TRAINER_ETHEL, Route121_Text_CaleIntro, Route121_Text_CaleDefeat
 	msgbox Route121_Text_CalePostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -148,7 +159,8 @@ Route121_EventScript_Marcel::
 	end
 
 Route121_EventScript_Cristin::
-	trainerbattle_single TRAINER_CRISTIN_1, Route121_Text_CristinIntro, Route121_Text_CristinDefeat, Route121_EventScript_RegisterCristin
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_HILLARY (trainers) -- port engine surface
+	trainerbattle_single TRAINER_HILLARY, Route121_Text_CristinIntro, Route121_Text_CristinDefeat, Route121_EventScript_RegisterCristin
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route121_EventScript_RematchCristin
 	msgbox Route121_Text_CristinPostBattle, MSGBOX_DEFAULT
@@ -159,12 +171,14 @@ Route121_EventScript_RegisterCristin::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route121_Text_CristinRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_CRISTIN_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_HILLARY (trainers) -- port engine surface
+	register_matchcall TRAINER_HILLARY
 	release
 	end
 
 Route121_EventScript_RematchCristin::
-	trainerbattle_rematch TRAINER_CRISTIN_1, Route121_Text_CristinRematchIntro, Route121_Text_CristinRematchDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_HILLARY (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_HILLARY, Route121_Text_CristinRematchIntro, Route121_Text_CristinRematchDefeat
 	msgbox Route121_Text_CristinPostRematch, MSGBOX_AUTOCLOSE
 	end
 

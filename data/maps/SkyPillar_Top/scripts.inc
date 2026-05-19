@@ -1,3 +1,5 @@
+.set LOCALID_RAYQUAZA_SLEEPING, 1
+
 SkyPillar_Top_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, SkyPillar_Top_OnResume
 	map_script MAP_SCRIPT_ON_TRANSITION, SkyPillar_Top_OnTransition
@@ -29,7 +31,8 @@ SkyPillar_Top_EventScript_TryShowRayquaza::
 	return
 
 SkyPillar_Top_EventScript_ShowRayquaza::
-	clearflag FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG_STILL (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG_STILL
 	return
 
 SkyPillar_Top_OnWarp:
@@ -41,6 +44,13 @@ SkyPillar_Top_EventScript_RayquazaFaceDown::
 	end
 
 SkyPillar_Top_EventScript_Rayquaza::
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_DIFFICULTY_HARD (flags) -- port engine surface
+	call_if_set FLAG_DIFFICULTY_HARD, SkyPillar_Top_EventScript_RayquazaHard
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_DIFFICULTY_HARD (flags) -- port engine surface
+	call_if_unset FLAG_DIFFICULTY_HARD, SkyPillar_Top_EventScript_RayquazaNormal
+	end
+
+SkyPillar_Top_EventScript_RayquazaNormal::
 	lockall
 	waitse
 	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
@@ -58,6 +68,43 @@ SkyPillar_Top_EventScript_Rayquaza::
 	setflag FLAG_DEFEATED_RAYQUAZA
 	releaseall
 	end
+
+SkyPillar_Top_EventScript_RayquazaHard::
+	lockall
+	waitse
+	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
+	delay 40
+	waitmoncry
+	setwildbattle SPECIES_RAYQUAZA, 50
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_DIFFICULTY_HARD (flags) -- port engine surface
+	call_if_set FLAG_DIFFICULTY_HARD, SkyPillar_Top_EventScript_RayquazaHard_Stats
+	special BattleSetup_StartLegendaryBattle
+	waitstate
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	calculatemonstats
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, SkyPillar_Top_EventScript_DefeatedRayquaza
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, SkyPillar_Top_EventScript_RanFromRayquaza
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, SkyPillar_Top_EventScript_RanFromRayquaza
+	setflag FLAG_DEFEATED_RAYQUAZA
+	releaseall
+	end
+
+SkyPillar_Top_EventScript_RayquazaHard_Stats::
+	setvar VAR_0x8000, 250 @HP
+	setvar VAR_0x8001, 240 @ATK
+	setvar VAR_0x8002, 150 @DEF
+	setvar VAR_0x8003, 170 @SPD
+	setvar VAR_0x8005, 240 @SP. ATK
+	setvar VAR_0x8006, 150 @SP. ATK
+	special SetHpStat
+	special SetAtkStat
+	special SetDefStat
+	special SetSpAtkStat
+	special SetSpDefStat
+	special SetSpdStat
+	return
 
 SkyPillar_Top_EventScript_DefeatedRayquaza::
 	setflag FLAG_DEFEATED_RAYQUAZA
@@ -88,10 +135,10 @@ SkyPillar_Top_EventScript_RanFromRayquaza2::
 SkyPillar_Top_EventScript_AwakenRayquaza::
 	lockall
 	fadeoutbgm 1
-	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceUp
 	waitmovement 0
 	special SpawnCameraObject
-	applymovement LOCALID_CAMERA, SkyPillar_Top_Movement_CameraPanUp
+	applymovement OBJ_EVENT_ID_CAMERA, SkyPillar_Top_Movement_CameraPanUp
 	waitmovement 0
 	special RemoveCameraObject
 	applymovement LOCALID_RAYQUAZA_SLEEPING, SkyPillar_Top_Movement_RayquazaStir
@@ -121,10 +168,11 @@ SkyPillar_Top_EventScript_AwakenRayquaza::
 	delay 20
 	fadeinbgm 1
 	special SpawnCameraObject
-	applymovement LOCALID_CAMERA, SkyPillar_Top_Movement_CameraPanDown
+	applymovement OBJ_EVENT_ID_CAMERA, SkyPillar_Top_Movement_CameraPanDown
 	waitmovement 0
 	special RemoveCameraObject
-	setvar VAR_SOOTOPOLIS_CITY_STATE, 5
+	// TODO(pe-migration): missing in pe-expansion -- VAR_GARBAGEVAR (vars) -- port engine surface
+	setvar VAR_GARBAGEVAR, 5
 	setvar VAR_SKY_PILLAR_STATE, 1
 	setvar VAR_SKY_PILLAR_RAYQUAZA_CRY_DONE, 1
 	releaseall

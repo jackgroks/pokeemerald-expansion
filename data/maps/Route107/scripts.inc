@@ -1,8 +1,11 @@
 Route107_MapScripts::
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
+	map_script MAP_SCRIPT_ON_TRANSITION, SetTimeEncounters
 	.byte 0
 
 Route107_EventScript_Darrin::
-	trainerbattle_single TRAINER_DARRIN, Route107_Text_DarrinIntro, Route107_Text_DarrinDefeated
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JO_AND_ZOE (trainers) -- port engine surface
+	trainerbattle_single TRAINER_JO_AND_ZOE, Route107_Text_DarrinIntro, Route107_Text_DarrinDefeated
 	msgbox Route107_Text_DarrinPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -48,7 +51,8 @@ Route107_EventScript_Ray::
 	end
 
 Route107_EventScript_Camron::
-	trainerbattle_single TRAINER_CAMRON, Route107_Text_CamronIntro, Route107_Text_CamronDefeated
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GREGORY (trainers) -- port engine surface
+	trainerbattle_single TRAINER_GREGORY, Route107_Text_CamronIntro, Route107_Text_CamronDefeated
 	msgbox Route107_Text_CamronPostBattle, MSGBOX_AUTOCLOSE
 	end
 

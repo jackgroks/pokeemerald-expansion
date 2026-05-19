@@ -1,3 +1,5 @@
+.set LOCALID_LUGIA, 1
+
 NavelRock_Bottom_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, NavelRock_Bottom_OnTransition
 	map_script MAP_SCRIPT_ON_RESUME, NavelRock_Bottom_OnResume
@@ -24,7 +26,7 @@ NavelRock_Bottom_OnResume:
 NavelRock_Bottom_EventScript_TryRemoveLugia::
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
-	removeobject LOCALID_NAVEL_ROCK_LUGIA
+	removeobject LOCALID_LUGIA
 	return
 
 NavelRock_Bottom_EventScript_Lugia::
@@ -61,11 +63,26 @@ NavelRock_Bottom_EventScript_Lugia::
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, NavelRock_Bottom_EventScript_RanFromLugia
 	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, NavelRock_Bottom_EventScript_RanFromLugia
 	setflag FLAG_CAUGHT_LUGIA
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_EXTRA_LEGENDARIES (flags) -- port engine surface
+	call_if_set FLAG_EXTRA_LEGENDARIES, NavelRock_Bottom_Enable_Johto_Legendaries
 	release
 	end
 
+NavelRock_Bottom_Enable_Johto_Legendaries::
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_UNLOCK_DOGS (flags) -- port engine surface
+	setflag FLAG_UNLOCK_DOGS
+	playmoncry SPECIES_SUICUNE, CRY_MODE_NORMAL
+	waitmoncry
+	playmoncry SPECIES_ENTEI, CRY_MODE_NORMAL
+	waitmoncry
+	playmoncry SPECIES_RAIKOU, CRY_MODE_NORMAL
+	waitmoncry
+	return
+
 NavelRock_Bottom_EventScript_DefeatedLugia::
 	setflag FLAG_DEFEATED_LUGIA
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_EXTRA_LEGENDARIES (flags) -- port engine surface
+	call_if_set FLAG_EXTRA_LEGENDARIES, NavelRock_Bottom_Enable_Johto_Legendaries
 	setvar VAR_0x8004, SPECIES_LUGIA
 	goto Common_EventScript_LegendaryFlewAway
 	end

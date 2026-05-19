@@ -2,8 +2,8 @@
   "id": "MAP_FALLARBOR_TOWN_BATTLE_TENT_LOBBY",
   "name": "FallarborTown_BattleTentLobby",
   "layout": "LAYOUT_BATTLE_TENT_LOBBY",
-  "music": "MUS_B_TOWER_RS",
-  "region_map_section": "MAPSEC_FALLARBOR_TOWN",
+  "music": "MUS_PL_B_ARCADE",
+  "region_map_section": "MAPSEC_TRAINER_HILL",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_INDOOR",
@@ -15,7 +15,6 @@
   "connections": null,
   "object_events": [
     {
-      "local_id": "LOCALID_FALLARBOR_TENT_ATTENDANT",
       "graphics_id": "OBJ_EVENT_GFX_BLACK_BELT",
       "x": 6,
       "y": 5,
@@ -30,8 +29,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_HIKER",
-      "x": 1,
-      "y": 5,
+      "x": 3,
+      "y": 8,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_LEFT_AND_RIGHT",
       "movement_range_x": 1,
@@ -56,8 +55,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_LASS",
-      "x": 10,
-      "y": 9,
+      "x": 9,
+      "y": 8,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 1,
@@ -66,19 +65,6 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "FallarborTown_BattleTentLobby_EventScript_Lass",
       "flag": "0"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_SCOTT",
-      "x": 0,
-      "y": 7,
-      "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
-      "movement_range_x": 1,
-      "movement_range_y": 1,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "FallarborTown_BattleTentLobby_EventScript_Scott",
-      "flag": "FLAG_HIDE_FALLARBOR_TOWN_BATTLE_TENT_SCOTT"
     }
   ],
   "warp_events": [
@@ -86,14 +72,14 @@
       "x": 6,
       "y": 9,
       "elevation": 0,
-      "dest_map": "MAP_FALLARBOR_TOWN",
+      "dest_map": "MAP_TRAINER_HILL_COURTYARD",
       "dest_warp_id": "1"
     },
     {
       "x": 7,
       "y": 9,
       "elevation": 0,
-      "dest_map": "MAP_FALLARBOR_TOWN",
+      "dest_map": "MAP_TRAINER_HILL_COURTYARD",
       "dest_warp_id": "1"
     }
   ],
@@ -101,8 +87,8 @@
   "bg_events": [
     {
       "type": "sign",
-      "x": 4,
-      "y": 5,
+      "x": 1,
+      "y": 6,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "FallarborTown_BattleTentLobby_EventScript_RulesBoard"

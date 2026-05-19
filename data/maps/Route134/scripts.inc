@@ -1,8 +1,10 @@
 Route134_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, Route134_OnResume
+	map_script MAP_SCRIPT_ON_TRANSITION, SetTimeEncounters
 	.byte 0
 
 Route134_OnResume:
+	callnative SetTimeBasedEncounters
 	setdivewarp MAP_UNDERWATER_ROUTE134, 8, 6
 	end
 
@@ -27,12 +29,14 @@ Route134_EventScript_Aaron::
 	end
 
 Route134_EventScript_Hitoshi::
-	trainerbattle_single TRAINER_HITOSHI, Route134_Text_HitoshiIntro, Route134_Text_HitoshiDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JASMINE_1_3 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_JASMINE_1_3, Route134_Text_HitoshiIntro, Route134_Text_HitoshiDefeat
 	msgbox Route134_Text_HitoshiPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route134_EventScript_Hudson::
-	trainerbattle_single TRAINER_HUDSON, Route134_Text_HudsonIntro, Route134_Text_HudsonDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_CHUCK_1 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_CHUCK_1, Route134_Text_HudsonIntro, Route134_Text_HudsonDefeat
 	msgbox Route134_Text_HudsonPostBattle, MSGBOX_AUTOCLOSE
 	end
 

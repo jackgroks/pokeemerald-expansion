@@ -1,9 +1,14 @@
+.set LOCALID_RIVAL, 16
+.set LOCALID_RIVAL_ON_BIKE, 25
+.set LOCALID_SCOTT, 43
+
 Route119_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, Route119_OnResume
 	map_script MAP_SCRIPT_ON_TRANSITION, Route119_OnTransition
 	.byte 0
 
 Route119_OnResume:
+	callnative SetTimeBasedEncounters
 	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, Route119_EventScript_TryRemoveKecleon
 	end
 
@@ -14,6 +19,7 @@ Route119_EventScript_TryRemoveKecleon::
 	return
 
 Route119_OnTransition:
+	callnative SetTimeBasedEncounters
 	call Common_EventScript_SetupRivalGfxId
 	call Common_EventScript_SetupRivalOnBikeGfxId
 	call_if_eq VAR_WEATHER_INSTITUTE_STATE, 1, Route119_EventScript_MoveInstituteWorkersDownstairs
@@ -21,10 +27,77 @@ Route119_OnTransition:
 	end
 
 Route119_EventScript_MoveInstituteWorkersDownstairs::
-	setflag FLAG_HIDE_WEATHER_INSTITUTE_2F_WORKERS
-	clearflag FLAG_HIDE_WEATHER_INSTITUTE_1F_WORKERS
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	setflag FLAG_GARBAGEFLAG
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_GARBAGEFLAG (flags) -- port engine surface
+	clearflag FLAG_GARBAGEFLAG
 	setvar VAR_WEATHER_INSTITUTE_STATE, 2
 	return
+
+Route119_EventScript_SapphireKecleon::
+	lock
+	faceplayer
+	setvar VAR_0x8009, 7
+	checkitem ITEM_DEVON_SCOPE
+	goto_if_eq VAR_RESULT, TRUE, Route119_EventScript_SapphireKecleon2
+	msgbox Kecleon_Text_SomethingUnseeable, MSGBOX_DEFAULT
+	release
+	end
+
+Route119_EventScript_SapphireKecleon2::
+	msgbox Kecleon_Text_WantToUseDevonScope, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, Route119_EventScript_SapphireKecleon3
+	release
+	end
+
+Route119_EventScript_SapphireKecleon3::
+	msgbox Kecleon_Text_UseDevonScopeMonAttacked, MSGBOX_DEFAULT
+	closemessage
+	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
+	waitmovement 0
+	applymovement VAR_LAST_TALKED, Movement_KecleonAppears
+	waitmovement 0
+	waitse
+	playmoncry SPECIES_KECLEON, CRY_MODE_ENCOUNTER
+	delay 40
+	waitmoncry
+	setwildbattle SPECIES_KECLEON, 29
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
+	dowildbattle
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, Route119_EventScript_SapphireKecleon4
+	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, Route119_EventScript_SapphireKecleon4
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, Route119_EventScript_SapphireKecleon5
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, Route119_EventScript_SapphireKecleon5
+	release
+	end
+
+Route119_EventScript_SapphireKecleon4::
+	msgbox Route119_EventScript_SapphireKecleon_Text1, MSGBOX_DEFAULT
+	closemessage
+	giveitem ITEM_SAPPHIRE
+	closemessage
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_SAPPHIRE_KECLEON (flags) -- port engine surface
+	setflag FLAG_SAPPHIRE_KECLEON
+	goto Common_EventScript_RemoveStaticPokemon
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	releaseall
+	end
+
+Route119_EventScript_SapphireKecleon5::
+	msgbox Route119_EventScript_SapphireKecleon_Text2, MSGBOX_DEFAULT
+	closemessage
+	releaseall
+	end
+
+Route119_EventScript_SapphireKecleon_Text1:
+	.string "The KECLEON dropped a\n"
+	.string "SHINY object!$"
+
+Route119_EventScript_SapphireKecleon_Text2:
+	.string "The invisible KECLEON\n"
+	.string "is still here…$"
 
 Route119_EventScript_RivalTrigger1::
 	setvar VAR_TEMP_1, 1
@@ -38,20 +111,20 @@ Route119_EventScript_RivalTrigger2::
 
 Route119_EventScript_RivalEncounter::
 	lockall
-	addobject LOCALID_ROUTE119_RIVAL_ON_BIKE
+	addobject LOCALID_RIVAL_ON_BIKE
 	checkplayergender
 	call_if_eq VAR_RESULT, MALE, Route119_EventScript_PlayMayMusic
 	call_if_eq VAR_RESULT, FEMALE, Route119_EventScript_PlayBrendanMusic
 	delay 65
 	call_if_eq VAR_TEMP_1, 1, Route119_EventScript_RivalEnter1
 	call_if_eq VAR_TEMP_1, 2, Route119_EventScript_RivalEnter2
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 30
 	call_if_eq VAR_TEMP_1, 1, Route119_EventScript_SetRivalPos1
 	call_if_eq VAR_TEMP_1, 2, Route119_EventScript_SetRivalPos2
-	removeobject LOCALID_ROUTE119_RIVAL_ON_BIKE
-	addobject LOCALID_ROUTE119_RIVAL
+	removeobject LOCALID_RIVAL_ON_BIKE
+	addobject LOCALID_RIVAL
 	delay 30
 	checkplayergender
 	goto_if_eq VAR_RESULT, MALE, Route119_EventScript_BattleMay
@@ -136,78 +209,79 @@ Route119_EventScript_RivalExitScottArrive::
 	closemessage
 	call_if_eq VAR_TEMP_1, 1, Route119_EventScript_SetRivalPos1
 	call_if_eq VAR_TEMP_1, 2, Route119_EventScript_SetRivalPos2
-	removeobject LOCALID_ROUTE119_RIVAL
-	addobject LOCALID_ROUTE119_RIVAL_ON_BIKE
+	removeobject LOCALID_RIVAL
+	addobject LOCALID_RIVAL_ON_BIKE
 	delay 30
 	call_if_eq VAR_TEMP_1, 1, Route119_EventScript_RivalExit1
 	call_if_eq VAR_TEMP_1, 2, Route119_EventScript_RivalExit2
-	removeobject LOCALID_ROUTE119_RIVAL_ON_BIKE
-	setvar VAR_ROUTE119_STATE, 1
+	removeobject LOCALID_RIVAL_ON_BIKE
+	// TODO(pe-migration): missing in pe-expansion -- VAR_GARBAGEVAR (vars) -- port engine surface
+	setvar VAR_GARBAGEVAR, 1
 	savebgm MUS_DUMMY
 	fadedefaultbgm
 	delay 60
 	call_if_eq VAR_TEMP_1, 1, Route119_EventScript_SetScottPos1
 	call_if_eq VAR_TEMP_1, 2, Route119_EventScript_SetScottPos2
-	addobject LOCALID_ROUTE119_SCOTT
-	applymovement LOCALID_ROUTE119_SCOTT, Route119_Movement_ScottEnter
+	addobject LOCALID_SCOTT
+	applymovement LOCALID_SCOTT, Route119_Movement_ScottEnter
 	waitmovement 0
 	addvar VAR_SCOTT_STATE, 1
 	msgbox Route119_Text_ScottWayToGoBeSeeingYou, MSGBOX_DEFAULT
 	closemessage
 	call_if_eq VAR_TEMP_1, 1, Route119_EventScript_ScottExit1
 	call_if_eq VAR_TEMP_1, 2, Route119_EventScript_ScottExit2
-	removeobject LOCALID_ROUTE119_SCOTT
+	removeobject LOCALID_SCOTT
 	releaseall
 	end
 
 Route119_EventScript_SetScottPos1::
-	setobjectxyperm LOCALID_ROUTE119_SCOTT, 27, 25
+	setobjectxyperm LOCALID_SCOTT, 27, 25
 	return
 
 Route119_EventScript_SetScottPos2::
-	setobjectxyperm LOCALID_ROUTE119_SCOTT, 28, 25
+	setobjectxyperm LOCALID_SCOTT, 28, 25
 	return
 
 Route119_EventScript_ScottExit1::
-	applymovement LOCALID_ROUTE119_SCOTT, Route119_Movement_ScottExit1
+	applymovement LOCALID_SCOTT, Route119_Movement_ScottExit1
 	waitmovement 0
 	return
 
 Route119_EventScript_ScottExit2::
-	applymovement LOCALID_ROUTE119_SCOTT, Route119_Movement_ScottExit2
+	applymovement LOCALID_SCOTT, Route119_Movement_ScottExit2
 	waitmovement 0
 	return
 
 Route119_EventScript_RivalEnter1::
-	applymovement LOCALID_ROUTE119_RIVAL_ON_BIKE, Route119_Movement_RivalEnter1
+	applymovement LOCALID_RIVAL_ON_BIKE, Route119_Movement_RivalEnter1
 	waitmovement 0
 	return
 
 Route119_EventScript_RivalEnter2::
-	applymovement LOCALID_ROUTE119_RIVAL_ON_BIKE, Route119_Movement_RivalEnter2
+	applymovement LOCALID_RIVAL_ON_BIKE, Route119_Movement_RivalEnter2
 	waitmovement 0
 	return
 
 Route119_EventScript_RivalExit1::
-	applymovement LOCALID_PLAYER, Route119_Movement_PlayerWatchRivalExit1
-	applymovement LOCALID_ROUTE119_RIVAL_ON_BIKE, Route119_Movement_RivalExit1
+	applymovement OBJ_EVENT_ID_PLAYER, Route119_Movement_PlayerWatchRivalExit1
+	applymovement LOCALID_RIVAL_ON_BIKE, Route119_Movement_RivalExit1
 	waitmovement 0
 	return
 
 Route119_EventScript_RivalExit2::
-	applymovement LOCALID_PLAYER, Route119_Movement_PlayerWatchRivalExit2
-	applymovement LOCALID_ROUTE119_RIVAL_ON_BIKE, Route119_Movement_RivalExit2
+	applymovement OBJ_EVENT_ID_PLAYER, Route119_Movement_PlayerWatchRivalExit2
+	applymovement LOCALID_RIVAL_ON_BIKE, Route119_Movement_RivalExit2
 	waitmovement 0
 	return
 
 Route119_EventScript_SetRivalPos1::
-	setobjectxyperm LOCALID_ROUTE119_RIVAL, 25, 32
-	setobjectxyperm LOCALID_ROUTE119_RIVAL_ON_BIKE, 25, 32
+	setobjectxyperm LOCALID_RIVAL, 25, 32
+	setobjectxyperm LOCALID_RIVAL_ON_BIKE, 25, 32
 	return
 
 Route119_EventScript_SetRivalPos2::
-	setobjectxyperm LOCALID_ROUTE119_RIVAL, 26, 32
-	setobjectxyperm LOCALID_ROUTE119_RIVAL_ON_BIKE, 26, 32
+	setobjectxyperm LOCALID_RIVAL, 26, 32
+	setobjectxyperm LOCALID_RIVAL_ON_BIKE, 26, 32
 	return
 
 Route119_Movement_PlayerWatchRivalExit1:
@@ -348,7 +422,8 @@ Route119_EventScript_Kent::
 	end
 
 Route119_EventScript_Jackson::
-	trainerbattle_single TRAINER_JACKSON_1, Route119_Text_JacksonIntro, Route119_Text_JacksonDefeat, Route119_EventScript_RegisterJackson
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_RIVAL_CHIKORITA_4 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_RIVAL_CHIKORITA_4, Route119_Text_JacksonIntro, Route119_Text_JacksonDefeat, Route119_EventScript_RegisterJackson
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route119_EventScript_RematchJackson
 	msgbox Route119_Text_JacksonPostBattle, MSGBOX_DEFAULT
@@ -359,17 +434,20 @@ Route119_EventScript_RegisterJackson::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route119_Text_JacksonRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_JACKSON_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_RIVAL_CHIKORITA_4 (trainers) -- port engine surface
+	register_matchcall TRAINER_RIVAL_CHIKORITA_4
 	release
 	end
 
 Route119_EventScript_RematchJackson::
-	trainerbattle_rematch TRAINER_JACKSON_1, Route119_Text_JacksonRematchIntro, Route119_Text_JacksonRematchDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_RIVAL_CHIKORITA_4 (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_RIVAL_CHIKORITA_4, Route119_Text_JacksonRematchIntro, Route119_Text_JacksonRematchDefeat
 	msgbox Route119_Text_JacksonPostRematch, MSGBOX_AUTOCLOSE
 	end
 
 Route119_EventScript_Catherine::
-	trainerbattle_single TRAINER_CATHERINE_1, Route119_Text_CatherineIntro, Route119_Text_CatherineDefeat, Route119_EventScript_RegisterCatherine
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GRUNT_3 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_GRUNT_3, Route119_Text_CatherineIntro, Route119_Text_CatherineDefeat, Route119_EventScript_RegisterCatherine
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route119_EventScript_RematchCatherine
 	msgbox Route119_Text_CatherinePostBattle, MSGBOX_DEFAULT
@@ -380,12 +458,14 @@ Route119_EventScript_RegisterCatherine::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route119_Text_CatherineRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_CATHERINE_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GRUNT_3 (trainers) -- port engine surface
+	register_matchcall TRAINER_GRUNT_3
 	release
 	end
 
 Route119_EventScript_RematchCatherine::
-	trainerbattle_rematch TRAINER_CATHERINE_1, Route119_Text_CatherineRematchIntro, Route119_Text_CatherineRematchDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GRUNT_3 (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_GRUNT_3, Route119_Text_CatherineRematchIntro, Route119_Text_CatherineRematchDefeat
 	msgbox Route119_Text_CatherinePostRematch, MSGBOX_AUTOCLOSE
 	end
 
@@ -410,22 +490,26 @@ Route119_EventScript_Takashi::
 	end
 
 Route119_EventScript_Hideo::
-	trainerbattle_single TRAINER_HIDEO, Route119_Text_HideoIntro, Route119_Text_HideoDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JASMINE_1_2 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_JASMINE_1_2, Route119_Text_HideoIntro, Route119_Text_HideoDefeat
 	msgbox Route119_Text_HideoPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route119_EventScript_Chris::
-	trainerbattle_single TRAINER_CHRIS, Route119_Text_ChrisIntro, Route119_Text_ChrisDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GRUNT_17 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_GRUNT_17, Route119_Text_ChrisIntro, Route119_Text_ChrisDefeat
 	msgbox Route119_Text_ChrisPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route119_EventScript_Fabian::
-	trainerbattle_single TRAINER_FABIAN, Route119_Text_FabianIntro, Route119_Text_FabianDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_NOB (trainers) -- port engine surface
+	trainerbattle_single TRAINER_NOB, Route119_Text_FabianIntro, Route119_Text_FabianDefeat
 	msgbox Route119_Text_FabianPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route119_EventScript_Dayton::
-	trainerbattle_single TRAINER_DAYTON, Route119_Text_DaytonIntro, Route119_Text_DaytonDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_JOHN (trainers) -- port engine surface
+	trainerbattle_single TRAINER_JOHN, Route119_Text_DaytonIntro, Route119_Text_DaytonDefeat
 	msgbox Route119_Text_DaytonPostBattle, MSGBOX_AUTOCLOSE
 	end
 

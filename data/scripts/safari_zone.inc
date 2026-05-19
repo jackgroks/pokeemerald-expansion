@@ -1,29 +1,26 @@
 SafariZone_EventScript_OutOfBallsMidBattle::
-#ifdef IS_FRLG
-	setvar VAR_MAP_SCENE_FUCHSIA_CITY_SAFARI_ZONE_ENTRANCE, 3
-#else
 	setvar VAR_SAFARI_ZONE_STATE, 1
-#endif
 	special ExitSafariMode
-#ifdef IS_FRLG
-	setwarp MAP_FUCHSIA_CITY_SAFARI_ZONE_ENTRANCE, 4, 1
-#else
-	setwarp MAP_ROUTE121_SAFARI_ZONE_ENTRANCE, 2, 5
-#endif
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_IN_KANTO_SAFARI_ZONE (flags) -- port engine surface
+	goto_if_set FLAG_IN_KANTO_SAFARI_ZONE, SafariZone_EventScript_ExitKanto
+	// TODO(pe-migration): missing in pe-expansion -- MAP_SAFARI_ZONE_GATE_SAFARI_ZONE_ENTRANCE (map_groups) -- port engine surface
+	setwarp MAP_SAFARI_ZONE_GATE_SAFARI_ZONE_ENTRANCE, 9, 3
 	end
 
 SafariZone_EventScript_Exit::
-#ifdef IS_FRLG
-	setvar VAR_MAP_SCENE_FUCHSIA_CITY_SAFARI_ZONE_ENTRANCE, 1
-#else
 	setvar VAR_SAFARI_ZONE_STATE, 1
-#endif
 	special ExitSafariMode
-#ifdef IS_FRLG
-	warp MAP_FUCHSIA_CITY_SAFARI_ZONE_ENTRANCE, 4, 1
-#else
-	warp MAP_ROUTE121_SAFARI_ZONE_ENTRANCE, 2, 5
-#endif
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_IN_KANTO_SAFARI_ZONE (flags) -- port engine surface
+	goto_if_set FLAG_IN_KANTO_SAFARI_ZONE, SafariZone_EventScript_ExitKanto
+	// TODO(pe-migration): missing in pe-expansion -- MAP_SAFARI_ZONE_GATE_SAFARI_ZONE_ENTRANCE (map_groups) -- port engine surface
+	warp MAP_SAFARI_ZONE_GATE_SAFARI_ZONE_ENTRANCE, 9, 3
+	waitstate
+	end
+
+SafariZone_EventScript_ExitKanto::
+	// TODO(pe-migration): missing in pe-expansion -- FLAG_IN_KANTO_SAFARI_ZONE (flags) -- port engine surface
+	clearflag FLAG_IN_KANTO_SAFARI_ZONE
+	warp MAP_FUCHSIA_CITY_SAFARI_ZONE_ENTRANCE, 5, 6
 	waitstate
 	end
 
@@ -69,9 +66,7 @@ SafariZone_EventScript_ChoosePokeblock::
 	special OpenPokeblockCaseOnFeeder
 	waitstate
 	goto_if_ne VAR_RESULT, 0xFFFF, SafariZone_EventScript_PokeblockPlaced
-#ifdef BUGFIX
-	releaseall  @ Only gets called from EventScript_PokeBlockFeeder which uses lockall.
-#endif
+	releaseall
 	end
 
 SafariZone_EventScript_PokeblockPlaced::
@@ -112,10 +107,10 @@ SafariZone_Text_PokeblockWasPlaced:
 	.string "The {STR_VAR_1} was placed\n"
 	.string "on the {POKEBLOCK} FEEDER.$"
 
-Route121_SafariZoneEntrance_Text_WelcomeToSafariZone:
+Route121_SafariZoneGate_SafariZoneEntrance_Text_WelcomeToSafariZone:
 	.string "Welcome to the SAFARI ZONE!\p"
 	.string "Here, you may witness many kinds of\n"
-	.string "POKéMON rarely seen in HOENN.\p"
+	.string "POKéMON rarely seen in JOHTO.\p"
 	.string "And, you'll see them in their wild,\n"
 	.string "untamed state in natural habitats.\p"
 	.string "What's more, we've thrown open the\n"
@@ -124,14 +119,14 @@ Route121_SafariZoneEntrance_Text_WelcomeToSafariZone:
 	.string "for keeps!\p"
 	.string "Come in and enjoy the SAFARI ZONE!$"
 
-Route121_SafariZoneEntrance_Text_WelcomeFirstTime:
+Route121_SafariZoneGate_SafariZoneEntrance_Text_WelcomeFirstTime:
 	.string "Welcome to the SAFARI ZONE!\n"
 	.string "Is it your first time here?$"
 
-Route121_SafariZoneEntrance_Text_ComeInAndEnjoy:
+Route121_SafariZoneGate_SafariZoneEntrance_Text_ComeInAndEnjoy:
 	.string "Come in and enjoy the SAFARI ZONE!$"
 
-Route121_SafariZoneEntrance_Text_FirstTimeInfo:
+Route121_SafariZoneGate_SafariZoneEntrance_Text_FirstTimeInfo:
 	.string "When you enter the SAFARI ZONE, you\n"
 	.string "start with 30 SAFARI BALLS for\l"
 	.string "catching POKéMON.\p"
@@ -140,46 +135,46 @@ Route121_SafariZoneEntrance_Text_FirstTimeInfo:
 	.string "walked 500 steps.\p"
 	.string "Come in and enjoy the SAFARI ZONE!$"
 
-Route121_SafariZoneEntrance_Text_WouldYouLikeToPlay:
+Route121_SafariZoneGate_SafariZoneEntrance_Text_WouldYouLikeToPlay:
 	.string "Welcome to the SAFARI ZONE!\p"
 	.string "All you can catch for just ¥500!\n"
 	.string "Would you like to play a SAFARI Game?$"
 
-Route121_SafariZoneEntrance_Text_PlayAnotherTime:
+Route121_SafariZoneGate_SafariZoneEntrance_Text_PlayAnotherTime:
 	.string "Okay.\n"
 	.string "Please play another time!$"
 
-Route121_SafariZoneEntrance_Text_NotEnoughMoney:
+Route121_SafariZoneGate_SafariZoneEntrance_Text_NotEnoughMoney:
 	.string "You don't have enough money.\n"
 	.string "Sorry.$"
 
-Route121_SafariZoneEntrance_Text_ThatWillBe500Please:
+Route121_SafariZoneGate_SafariZoneEntrance_Text_ThatWillBe500Please:
 	.string "That will be ¥500, please.$"
 
-Route121_SafariZoneEntrance_Text_HereAreYourSafariBalls:
+Route121_SafariZoneGate_SafariZoneEntrance_Text_HereAreYourSafariBalls:
 	.string "Here are your SAFARI BALLS.$"
 
-Route121_SafariZoneEntrance_Text_Received30SafariBalls:
+Route121_SafariZoneGate_SafariZoneEntrance_Text_Received30SafariBalls:
 	.string "{PLAYER} received 30 SAFARI BALLS.$"
 
-Route121_SafariZoneEntrance_Text_PleaseEnjoyYourself:
+Route121_SafariZoneGate_SafariZoneEntrance_Text_PleaseEnjoyYourself:
 	.string "We'll let you know when your game\n"
 	.string "is over.\p"
 	.string "So, until then, enjoy yourself, please!\n"
 	.string "Off you go on your wild excursion!$"
 
-Route121_SafariZoneEntrance_Text_PCIsFull:
+Route121_SafariZoneGate_SafariZoneEntrance_Text_PCIsFull:
 	.string "Excuse me!\n"
 	.string "Your PC BOX is full.$"
 
-Route121_SafariZoneEntrance_Text_YouNeedPokeblockCase:
+Route121_SafariZoneGate_SafariZoneEntrance_Text_YouNeedPokeblockCase:
 	.string "Excuse me!\n"
 	.string "You seem to be without a {POKEBLOCK} CASE.\p"
 	.string "Your SAFARI Game will be much more\n"
 	.string "fruitful if you use {POKEBLOCK}S.\p"
 	.string "Please come back with a {POKEBLOCK} CASE.\p"
 	.string "You may obtain a {POKEBLOCK} CASE from\n"
-	.string "the LILYCOVE CONTEST HALL.$"
+	.string "the JOHTO SAFARI ZONE.$"
 
 SafariZone_South_Text_StillHaveTimeExit:
 	.string "You still have time left. Would you like\n"
@@ -239,7 +234,7 @@ SafariZone_South_Text_Youngster:
 	.string "I guess POKéMON must have eaten it\n"
 	.string "without me noticing.$"
 
-Route121_SafariZoneEntrance_Text_TrainerTip:
+Route121_SafariZoneGate_SafariZoneEntrance_Text_TrainerTip:
 	.string "SAFARI ZONE TRAINER TIP!\p"
 	.string "Throw {POKEBLOCK}S at wild POKéMON to make\n"
 	.string "them less likely to flee.$"

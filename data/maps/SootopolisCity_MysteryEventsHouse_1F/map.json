@@ -15,8 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "local_id": "LOCALID_MYSTERY_EVENTS_OLD_MAN",
-      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN",
+      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN_2",
       "x": 6,
       "y": 4,
       "elevation": 0,
@@ -46,7 +45,7 @@
     },
     {
       "x": 3,
-      "y": 1,
+      "y": 0,
       "elevation": 3,
       "dest_map": "MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F",
       "dest_warp_id": "0"

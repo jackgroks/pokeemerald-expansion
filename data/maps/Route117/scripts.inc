@@ -1,11 +1,22 @@
+.set LOCALID_DAYCARE_MAN, 3
 .set LOCALID_DAYCARE_MON_0, 25
 .set LOCALID_DAYCARE_MON_1, 26
 
 Route117_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route117_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
+.macro getdaycaregfx var0:req var1:req var2:req var3:req
+callfunc ScrFunc_getdaycaregfx
+.2byte \var0
+.2byte \var1
+.2byte \var2
+.2byte \var3
+.endm
+
 Route117_OnTransition:
+	callnative SetTimeBasedEncounters
 	call Route117_EventScript_TryMoveDayCareMan
 	@ set flags for OW daycare mons
 	setflag FLAG_TEMP_1
@@ -19,9 +30,13 @@ Route117_OnTransition:
 Route117_EventScript_ShowDaycareMon1:
 	@ set pokemon movement type based on compatibility
 	special SetDaycareCompatibilityString
+	@ 0:
 	call_if_eq VAR_RESULT, PARENTS_INCOMPATIBLE, Route117_EventScript_DaycareMonIncompatible
-	@ Don't do anything if PARENTS_LOW_COMPATIBILITY
+	@ 20: do nothing if low compatibility
+	@ call_if_eq VAR_RESULT, PARENTS_LOW_COMPATIBILITY, Route117_EventScript_DaycareMonLowCompatibility
+	@ 50:
 	call_if_eq VAR_RESULT, PARENTS_MED_COMPATIBILITY, Route117_EventScript_DaycareMonMedCompatibility
+	@ 70:
 	call_if_eq VAR_RESULT, PARENTS_MAX_COMPATIBILITY, Route117_EventScript_DaycareMonMaxCompatibility
 	clearflag FLAG_TEMP_2
 Route117_EventScript_ShowDaycareMon0:
@@ -74,7 +89,8 @@ Route117_EventScript_DayCareSign::
 	end
 
 Route117_EventScript_Isaac::
-	trainerbattle_single TRAINER_ISAAC_1, Route117_Text_IsaacIntro, Route117_Text_IsaacDefeat, Route117_EventScript_RegisterIsaac
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_CHUCK_1_3 (trainers) -- port engine surface
+	trainerbattle_single TRAINER_CHUCK_1_3, Route117_Text_IsaacIntro, Route117_Text_IsaacDefeat, Route117_EventScript_RegisterIsaac
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route117_EventScript_RematchIsaac
 	msgbox Route117_Text_IsaacPostBattle, MSGBOX_DEFAULT
@@ -85,12 +101,14 @@ Route117_EventScript_RegisterIsaac::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route117_Text_IsaacRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_ISAAC_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_CHUCK_1_3 (trainers) -- port engine surface
+	register_matchcall TRAINER_CHUCK_1_3
 	release
 	end
 
 Route117_EventScript_RematchIsaac::
-	trainerbattle_rematch TRAINER_ISAAC_1, Route117_Text_IsaacRematchIntro, Route117_Text_IsaacRematchDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_CHUCK_1_3 (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_CHUCK_1_3, Route117_Text_IsaacRematchIntro, Route117_Text_IsaacRematchDefeat
 	msgbox Route117_Text_IsaacPostRematch, MSGBOX_AUTOCLOSE
 	end
 
@@ -116,7 +134,8 @@ Route117_EventScript_RematchLydia::
 	end
 
 Route117_EventScript_Dylan::
-	trainerbattle_single TRAINER_DYLAN_1, Route117_Text_DylanIntro, Route117_Text_DylanDefeat, Route117_EventScript_RegisterDylan
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_LEWIS (trainers) -- port engine surface
+	trainerbattle_single TRAINER_LEWIS, Route117_Text_DylanIntro, Route117_Text_DylanDefeat, Route117_EventScript_RegisterDylan
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route117_EventScript_RematchDylan
 	msgbox Route117_Text_DylanPostBattle, MSGBOX_DEFAULT
@@ -127,12 +146,14 @@ Route117_EventScript_RegisterDylan::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route117_Text_DylanRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_DYLAN_1
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_LEWIS (trainers) -- port engine surface
+	register_matchcall TRAINER_LEWIS
 	release
 	end
 
 Route117_EventScript_RematchDylan::
-	trainerbattle_rematch TRAINER_DYLAN_1, Route117_Text_DylanRematchIntro, Route117_Text_DylanRematchDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_LEWIS (trainers) -- port engine surface
+	trainerbattle_rematch TRAINER_LEWIS, Route117_Text_DylanRematchIntro, Route117_Text_DylanRematchDefeat
 	msgbox Route117_Text_DylanPostRematch, MSGBOX_AUTOCLOSE
 	end
 
@@ -211,7 +232,8 @@ Route117_EventScript_Brandi::
 	end
 
 Route117_EventScript_Aisha::
-	trainerbattle_single TRAINER_AISHA, Route117_Text_AishaIntro, Route117_Text_AishaDefeat
+	// TODO(pe-migration): missing in pe-expansion -- TRAINER_ARNIE (trainers) -- port engine surface
+	trainerbattle_single TRAINER_ARNIE, Route117_Text_AishaIntro, Route117_Text_AishaDefeat
 	msgbox Route117_Text_AishaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
