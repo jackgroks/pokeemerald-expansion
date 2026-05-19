@@ -3,6 +3,7 @@
 
 #include "constants/battle_partner.h"
 #include "constants/opponents_frlg.h"
+#include "constants/opponents_hns.h"
 
 #define TRAINER_NONE                          0
 #define TRAINER_SAWYER_1                      1
@@ -870,7 +871,11 @@
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT_EMERALD     861
+// TRAINERS_COUNT_EMERALD bumped 861 → 864 by HMS Defiant (2026-05-19, Phase 5-prep R5)
+// to accommodate HnS-only trainer slots 861 (NOLAND_BF_BRAIN), 862 (PROTON_1), and 863
+// (KIP2). MAX_TRAINERS_COUNT_EMERALD stays at 864 (already sufficient).
+// See constants/opponents_hns.h for the HnS-only constants and full disposition note.
+#define TRAINERS_COUNT_EMERALD     864
 #define MAX_TRAINERS_COUNT_EMERALD 864
 
 #if IS_FRLG
