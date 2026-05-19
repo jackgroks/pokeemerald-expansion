@@ -54,6 +54,13 @@ enum ScrollMulti
     SCROLL_MULTI_BATTLE_TENT_RULES,
     SCROLL_MULTI_BADGES,
     SCROLL_MULTI_SILPHCO_FLOORS,
+    // HnS-port additive entry: HnS-Johto Lounge7 + TrainerHill_Courtyard
+    // reference SCROLL_MULTI_BF_MOVE_TUTOR_3 (third tutor option). Enum
+    // entry only; matching scroll-multi data-table entry is NOT yet added,
+    // so runtime invocation of tutor 3 will fall through to default.
+    // TODO: add data-table entry in post-Phase-5 facility integration pass.
+    // Phase 5-prep R3.
+    SCROLL_MULTI_BF_MOVE_TUTOR_3,
 };
 
 #define MAX_SCROLL_MULTI_ON_SCREEN 6
