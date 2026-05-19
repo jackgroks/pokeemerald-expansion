@@ -1,7 +1,8 @@
-.macro IsFollowerFieldMoveUser var:req
-callfunc ScrFunc_IsFollowerFieldMoveUser
-.2byte \var
-.endm
+@ RC migrate-phase-4: HnS-landed IsFollowerFieldMoveUser macro removed.
+@ pe-expansion already defines isfollowerfieldmoveuser (lowercase) in
+@ asm/macros/event.inc as a callnative wrapper around the C function
+@ IsFollowerFieldMoveUser in src/event_object_movement.c. Call sites
+@ below use the lowercase pe form.
 
 @ Interact with cuttable tree
 EventScript_CutTree::
@@ -18,7 +19,7 @@ EventScript_CutTree::
 	msgbox Text_MonUsedFieldMove, MSGBOX_DEFAULT
 	closemessage
 EventScript_CutTreeCommon:
-	IsFollowerFieldMoveUser VAR_0x8004
+	isfollowerfieldmoveuser VAR_0x8004
 	@setfieldeffectargument 3, VAR_0x8004 @ skip pose if so
 	@dofieldeffect FLDEFF_USE_CUT_ON_TREE
 	@waitstate
@@ -85,7 +86,7 @@ EventScript_RockSmash::
 	closemessage
 EventScript_RockSmashCommon:
 	@ check if follower should use the field move
-	IsFollowerFieldMoveUser VAR_0x8004
+	isfollowerfieldmoveuser VAR_0x8004
 	@setfieldeffectargument 3, VAR_0x8004 @ skip pose if so
 	@dofieldeffect FLDEFF_USE_ROCK_SMASH
 	@waitstate
@@ -123,7 +124,7 @@ EventScript_Headbutt::
 	closemessage
 EventScript_HeadbuttCommon:
 	@ check if follower should use the field move
-	IsFollowerFieldMoveUser VAR_0x8004
+	isfollowerfieldmoveuser VAR_0x8004
 EventScript_HeadbuttTree:: @ fallthrough
 	setflag FLAG_SAFE_FOLLOWER_MOVEMENT
 	call_if_eq VAR_0x8004, TRUE, EventScript_FollowerFieldMove
@@ -161,10 +162,9 @@ Text_MonUsedHeadbutt::
 
 
 EventScript_FollowerFieldMove:
-	callfunc ScrFunc_GetDirectionToFace
-	.2byte VAR_0x8005
-	.byte OBJ_EVENT_ID_FOLLOWER
-	.byte OBJ_EVENT_ID_PLAYER
+	@ RC migrate-phase-4: HnS callfunc ScrFunc_GetDirectionToFace rewritten
+	@ to pe's getdirectiontoface macro (callnative GetDirectionToFaceScript).
+	getdirectiontoface VAR_0x8005, OBJ_EVENT_ID_FOLLOWER, OBJ_EVENT_ID_PLAYER
 	specialvar VAR_0x8006, GetPlayerFacingDirection
 	goto_if_eq VAR_0x8005, DIR_NONE, EventScript_FollowerFieldMoveEnd
 	@ Swap follower and player
