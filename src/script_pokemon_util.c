@@ -726,3 +726,40 @@ void CalculateMonStatsScript(struct ScriptContext *ctx)
     for (i = 0; i < PARTY_SIZE; i++)
         CalculateMonStats(&gPlayerParty[i]);
 }
+
+// RC migrate-phase-5-prep: callnative wrapper for the script-command
+// checkpcspace. Reads itemId + quantity (both u16, both VarGet-resolved to
+// allow VAR_* args); sets VAR_RESULT to TRUE if the player's PC has room for
+// `quantity` more of `itemId`, FALSE otherwise. Required by the HnS-landed
+// obtain_item.inc fall-through-to-PC routing.
+void CheckPCSpaceScript(struct ScriptContext *ctx)
+{
+    enum Item itemId = VarGet(ScriptReadHalfword(ctx));
+    u16 quantity = VarGet(ScriptReadHalfword(ctx));
+
+    Script_RequestEffects(SCREFF_V1);
+
+    gSpecialVar_Result = CheckPCHasSpace(itemId, quantity);
+}
+
+// RC migrate-phase-5-prep: callnative wrapper for the script-command
+// checkpartymonlevel. Reads a u16 level argument; sets VAR_RESULT to TRUE if the
+// party mon at slot gSpecialVar_0x8004 has that exact level, otherwise FALSE.
+// Required by the HnS-landed BattleFrontier_Lounge9 IV setter flow, which calls
+// `special ChoosePartyMon` (writing the chosen slot to VAR_0x8004) and then
+// `checkpartymonlevel 100` to gate level-100-only behavior. Mirrors HnS's
+// ScrCmd_checkpartymonlevel semantics (slot-from-0x8004) but fixes the upstream
+// bug where the `level` arg was read and then ignored in favor of a hardcoded
+// 100 comparison.
+void CheckPartyMonLevelScript(struct ScriptContext *ctx)
+{
+    u16 level = ScriptReadHalfword(ctx);
+    u8 slot = gSpecialVar_0x8004;
+
+    Script_RequestEffects(SCREFF_V1);
+
+    if (slot < PARTY_SIZE && GetMonData(&gPlayerParty[slot], MON_DATA_LEVEL) == level)
+        gSpecialVar_Result = TRUE;
+    else
+        gSpecialVar_Result = FALSE;
+}

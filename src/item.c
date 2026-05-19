@@ -461,6 +461,18 @@ bool32 AddPCItem(enum Item itemId, u16 count)
     return BagPocket_AddItem(&dummyPocket, itemId, count);
 }
 
+// RC migrate-phase-5-prep: pe-native equivalent of HnS's CheckPCHasSpace.
+// Mirrors CheckBagHasSpace (line 246) but against the PC pocket. Returns TRUE
+// if the player's PC has room for `count` more of `itemId`. Required by the
+// HnS-landed obtain_item.inc fall-through-to-PC routing (see commit 9dde40a74b).
+// Pe upstream removed this helper when modernizing the PC item system; this
+// re-introduces it as an additive function next to its sibling CheckPCHasItem.
+bool32 CheckPCHasSpace(enum Item itemId, u16 count)
+{
+    struct BagPocket dummyPocket = DUMMY_PC_BAG_POCKET;
+    return BagPocket_GetFreeSpaceForItem(&dummyPocket, itemId) >= count;
+}
+
 static void NONNULL BagPocket_CompactItems(struct BagPocket *pocket)
 {
     struct ItemSlot tempItem;
