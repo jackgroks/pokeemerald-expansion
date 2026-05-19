@@ -569,8 +569,8 @@ const u32 gTrainerFrontPic_Nurse[] = INCBIN_U32("graphics/trainers/front_pics/nu
 const u16 gTrainerPalette_Nurse[] = INCBIN_U16("graphics/trainers/front_pics/nurse.gbapal");
 const u32 gTrainerFrontPic_Petrel[] = INCBIN_U32("graphics/trainers/front_pics/petrel.4bpp.smol");
 const u16 gTrainerPalette_Petrel[] = INCBIN_U16("graphics/trainers/front_pics/petrel.gbapal");
-const u32 gTrainerFrontPic_AromaLady[] = INCBIN_U32("graphics/trainers/front_pics/officer.4bpp.smol");
-const u16 gTrainerPalette_AromaLady[] = INCBIN_U16("graphics/trainers/front_pics/officer.gbapal");
+const u32 gTrainerFrontPic_Policeman[] = INCBIN_U32("graphics/trainers/front_pics/policeman.4bpp.smol");
+const u16 gTrainerPalette_Policeman[] = INCBIN_U16("graphics/trainers/front_pics/policeman.gbapal");
 const u32 gTrainerFrontPic_Proton[] = INCBIN_U32("graphics/trainers/front_pics/proton.4bpp.smol");
 const u16 gTrainerPalette_Proton[] = INCBIN_U16("graphics/trainers/front_pics/proton.gbapal");
 const u32 gTrainerFrontPic_RocketGruntF[] = INCBIN_U32("graphics/trainers/front_pics/rocket_grunt_f.4bpp.smol");
@@ -579,8 +579,8 @@ const u32 gTrainerFrontPic_RocketGruntM[] = INCBIN_U32("graphics/trainers/front_
 const u16 gTrainerPalette_RocketGruntM[] = INCBIN_U16("graphics/trainers/front_pics/rocket_grunt_m.gbapal");
 const u32 gTrainerFrontPic_Sage[] = INCBIN_U32("graphics/trainers/front_pics/sage.4bpp.smol");
 const u16 gTrainerPalette_Sage[] = INCBIN_U16("graphics/trainers/front_pics/sage.gbapal");
-const u32 gTrainerFrontPic_Wally[] = INCBIN_U32("graphics/trainers/front_pics/wally.4bpp.smol");
-const u16 gTrainerPalette_Wally[] = INCBIN_U16("graphics/trainers/front_pics/wally.gbapal");
+const u32 gTrainerFrontPic_Silver[] = INCBIN_U32("graphics/trainers/front_pics/silver.4bpp.smol");
+const u16 gTrainerPalette_Silver[] = INCBIN_U16("graphics/trainers/front_pics/silver.gbapal");
 const u32 gTrainerFrontPic_SuperNerd[] = INCBIN_U32("graphics/trainers/front_pics/super_nerd.4bpp.smol");
 const u16 gTrainerPalette_SuperNerd[] = INCBIN_U16("graphics/trainers/front_pics/super_nerd.gbapal");
 
@@ -778,12 +778,12 @@ const struct TrainerSprite gTrainerSprites[] =
     TRAINER_SPRITE(TRAINER_PIC_FRONT_MR_FUJI, gTrainerFrontPic_MrFuji, gTrainerPalette_MrFuji),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_NURSE, gTrainerFrontPic_Nurse, gTrainerPalette_Nurse),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_PETREL, gTrainerFrontPic_Petrel, gTrainerPalette_Petrel),
-    TRAINER_SPRITE(TRAINER_PIC_FRONT_POLICEMAN, gTrainerFrontPic_AromaLady, gTrainerPalette_AromaLady),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_POLICEMAN, gTrainerFrontPic_Policeman, gTrainerPalette_Policeman),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_PROTON, gTrainerFrontPic_Proton, gTrainerPalette_Proton),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_ROCKET_GRUNT_F, gTrainerFrontPic_RocketGruntF, gTrainerPalette_RocketGruntF),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_ROCKET_GRUNT_M, gTrainerFrontPic_RocketGruntM, gTrainerPalette_RocketGruntM),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_SAGE, gTrainerFrontPic_Sage, gTrainerPalette_Sage),
-    TRAINER_SPRITE(TRAINER_PIC_FRONT_SILVER, gTrainerFrontPic_Wally, gTrainerPalette_Wally),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_SILVER, gTrainerFrontPic_Silver, gTrainerPalette_Silver),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_SUPER_NERD, gTrainerFrontPic_SuperNerd, gTrainerPalette_SuperNerd),
 };
 
