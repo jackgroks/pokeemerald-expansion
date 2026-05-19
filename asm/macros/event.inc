@@ -2361,6 +2361,23 @@
 	callnative PlayFirstMonCry, requests_effects=1
 	.endm
 
+	@ RC migrate-phase-4: re-introduces the pokeemerald-era checkpartymove
+	@ command as a callnative wrapper. Checks if any non-egg party member
+	@ knows the specified move. If so, VAR_RESULT is set to the (zero-indexed)
+	@ party slot of the first match and VAR_0x8004 is set to that mon's
+	@ species. Otherwise VAR_RESULT is set to PARTY_SIZE.
+	.macro checkpartymove move:req
+	callnative CheckPartyMoveScript, requests_effects=1
+	.2byte \move
+	.endm
+
+	@ RC migrate-phase-4: re-introduces the pokeemerald-era calculatemonstats
+	@ command as a callnative wrapper. Re-runs CalculateMonStats over every
+	@ party slot.
+	.macro calculatemonstats
+	callnative CalculateMonStatsScript, requests_effects=1
+	.endm
+
 	@ Buffers the nickname of the first alive party member.
 	.macro bufferlivemonnickname stringVarId:req
 	callnative BufferFirstLiveMonNickname, requests_effects=1

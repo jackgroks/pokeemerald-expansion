@@ -51,7 +51,7 @@
 
 #else
 
-#define FLAG_UNUSED_0x020    0x20 // Unused Flag
+#define FLAG_FINITE_TMS      0x20 // RC: HnS finite-TM economy; set => TMs are consumed on teach (move tutors use the *Finite branches).
 #define FLAG_UNUSED_0x021    0x21 // Unused Flag
 #define FLAG_UNUSED_0x022    0x22 // Unused Flag
 #define FLAG_UNUSED_0x023    0x23 // Unused Flag

@@ -7,13 +7,11 @@ Route117_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, SetTimeEncounters
 	.byte 0
 
-.macro getdaycaregfx var0:req var1:req var2:req var3:req
-callfunc ScrFunc_getdaycaregfx
-.2byte \var0
-.2byte \var1
-.2byte \var2
-.2byte \var3
-.endm
+@ RC migrate-phase-4: HnS-landed getdaycaregfx macro redef removed.
+@ pe-expansion already defines getdaycaregfx (4 args, same positional
+@ shape) in asm/macros/event.inc as a callnative wrapper around
+@ GetDaycareGraphics in src/event_object_movement.c. Call sites below
+@ already use the pe form.
 
 Route117_OnTransition:
 	callnative SetTimeBasedEncounters

@@ -10,26 +10,20 @@ gText_FollowerDefault::
 gText_WantsToFly::
 	.string "{STR_VAR_1} looks up at the\nsky restlessly.\pWould you like to use FLY?$"
 
-.macro playfirstmoncry
-callfunc ScrFunc_playfirstmoncry
-.endm
-
-.macro bufferlivemonnickname out:req
-callfunc ScrFunc_bufferlivemonnickname
-.byte \out
-.endm
-
-.macro emote obj:req id:req
-callfunc ScrFunc_emote
-.byte \obj
-.byte \id
-.endm
+@ RC migrate-phase-4: HnS-landed macro redefs removed.
+@ pe-expansion already defines playfirstmoncry, bufferlivemonnickname, and
+@ getfolloweraction in asm/macros/event.inc as callnative wrappers around
+@ the equivalent C functions in src/scrcmd.c / src/event_object_movement.c.
+@ HnS's emote macro is dropped: no script in pe's tree invokes it, and
+@ pe has no ScrFunc_emote / matching engine surface. If a future feature
+@ needs script-driven object-event emotes, add it as a callnative wrapper
+@ around ObjectEventEmote (port from HnS) and register a new macro.
 
 EventScript_Follower::
 	lock
-	bufferlivemonnickname 0
+	bufferlivemonnickname STR_VAR_1
 	playfirstmoncry
-	callfunc ScrFunc_getfolloweraction
+	getfolloweraction
 EventScript_FollowerEnd::
 	waitfieldeffect FLDEFF_EMOTE
 	release

@@ -575,6 +575,13 @@ enum TrainerClassID
     TRAINER_CLASS_COUNT,
 };
 
+// HnS-ported trainers reference Gen-1 class names without the _FRLG suffix
+// that pe-expansion uses. The semantics are identical (both reference the same
+// Gen-1 trainer class artwork/data slots), so alias additively.
+#define TRAINER_CLASS_SUPER_NERD TRAINER_CLASS_SUPER_NERD_FRLG
+#define TRAINER_CLASS_BIKER      TRAINER_CLASS_BIKER_FRLG
+#define TRAINER_CLASS_BURGLAR    TRAINER_CLASS_BURGLAR_FRLG
+
 #define TRAINER_ENCOUNTER_MUSIC_MALE         0 // Used for Youngsters, Bug Catchers, male School Kids, Sailors, male running and cycling Triathletes, male Pokémon Breeders, and Campers
 #define TRAINER_ENCOUNTER_MUSIC_FEMALE       1 // Used for Lasses, Ladies, Beauties, Aroma Ladies, female running and cycling Triathletes, female Pokémon Breeders, and Parasol Ladies
 #define TRAINER_ENCOUNTER_MUSIC_GIRL         2 // Used for Tubers, Picnickers, female School Kids, and Young Couples
@@ -589,6 +596,19 @@ enum TrainerClassID
 #define TRAINER_ENCOUNTER_MUSIC_HIKER       11 // Used for Hikers, Ruin Maniacs, Kindlers, and Fishermen
 #define TRAINER_ENCOUNTER_MUSIC_INTERVIEWER 12
 #define TRAINER_ENCOUNTER_MUSIC_RICH        13 // Used for Rich Boys and Gentlemen
+
+// HnS HG-style encounter music slots (ported from pokemonHnS for HnS-content trainers).
+// Values picked to extend pe's existing 0–13 range additively without colliding.
+// Runtime behavior follows pe's existing music dispatch; new slots fall through to
+// default music until Phase 4 ports the HG-specific music assignments.
+#define TRAINER_ENCOUNTER_MUSIC_HG_CHAMPION    14 // Lance and Red
+#define TRAINER_ENCOUNTER_MUSIC_HG_BOY_1       15
+#define TRAINER_ENCOUNTER_MUSIC_HG_BOY_2       16
+#define TRAINER_ENCOUNTER_MUSIC_HG_GIRL_1      17
+#define TRAINER_ENCOUNTER_MUSIC_HG_GIRL_2      18
+#define TRAINER_ENCOUNTER_MUSIC_HG_SUSPICIOUS_1 19
+#define TRAINER_ENCOUNTER_MUSIC_HG_SUSPICIOUS_2 20
+#define TRAINER_ENCOUNTER_MUSIC_HG_SAGE        21
 
 #define TRAINER_GENDER_MALE   0
 #define TRAINER_GENDER_FEMALE 1

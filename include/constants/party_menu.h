@@ -4,6 +4,49 @@
 #define PC_MON_CHOSEN 0xFE
 #define PARTY_NOTHING_CHOSEN 0xFF
 
+// RC migrate-phase-4: HnS-style tutor-move indices, ported additively from
+// pokemonHnS/include/constants/party_menu.h. These are zero-indexed slot
+// numbers used by HnS's move-tutor scripts (move_tutors.inc) when invoking
+// MoveTutor_EventScript_OpenPartyMenu via VAR_0x8005. Eventual full
+// integration (engine-side party-menu callback that resolves these to
+// MOVE_* IDs) is later Phase 4 / content work; defining the constants
+// now unblocks asm assembly of move_tutors.inc.
+#define TUTOR_MOVE_MEGA_PUNCH      0
+#define TUTOR_MOVE_SWORDS_DANCE    1
+#define TUTOR_MOVE_MEGA_KICK       2
+#define TUTOR_MOVE_BODY_SLAM       3
+#define TUTOR_MOVE_DOUBLE_EDGE     4
+#define TUTOR_MOVE_COUNTER         5
+#define TUTOR_MOVE_SEISMIC_TOSS    6
+#define TUTOR_MOVE_HEADBUTT        7
+#define TUTOR_MOVE_METRONOME       8
+#define TUTOR_MOVE_SOFT_BOILED     9
+#define TUTOR_MOVE_DREAM_EATER     10
+#define TUTOR_MOVE_THUNDER_WAVE    11
+#define TUTOR_MOVE_EXPLOSION       12
+#define TUTOR_MOVE_ROCK_SLIDE      13
+#define TUTOR_MOVE_SUBSTITUTE      14
+#define TUTOR_MOVE_DYNAMIC_PUNCH   15
+#define TUTOR_MOVE_ROLLOUT         16
+#define TUTOR_MOVE_PSYCH_UP        17
+#define TUTOR_MOVE_SNORE           18
+#define TUTOR_MOVE_ICY_WIND        19
+#define TUTOR_MOVE_ENDURE          20
+#define TUTOR_MOVE_MUD_SLAP        21
+#define TUTOR_MOVE_ICE_PUNCH       22
+#define TUTOR_MOVE_SWAGGER         23
+#define TUTOR_MOVE_SLEEP_TALK      24
+#define TUTOR_MOVE_SWIFT           25
+#define TUTOR_MOVE_DEFENSE_CURL    26
+#define TUTOR_MOVE_THUNDER_PUNCH   27
+#define TUTOR_MOVE_FIRE_PUNCH      28
+#define TUTOR_MOVE_FURY_CUTTER     29
+#define TUTOR_MOVE_FRENZY_PLANT    30
+#define TUTOR_MOVE_BLAST_BURN      31
+#define TUTOR_MOVE_HYDRO_CANNON    32
+#define TUTOR_MOVE_MIMIC           33 // HnS reused this slot; kept for script-side compat
+#define TUTOR_MOVE_COUNT           34
+
 #define AILMENT_NONE  0
 #define AILMENT_PSN   1
 #define AILMENT_PRZ   2
