@@ -28,7 +28,6 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_MUSEUM_1F_CURATOR",
       "graphics_id": "OBJ_EVENT_GFX_GENTLEMAN",
       "x": 16,
       "y": 2,
@@ -39,10 +38,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "LilycoveCity_LilycoveMuseum_1F_EventScript_Curator",
-      "flag": "FLAG_HIDE_LILYCOVE_MUSEUM_CURATOR"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SCHOOL_KID_M",
+      "graphics_id": "OBJ_EVENT_GFX_LITTLE_BOY",
       "x": 13,
       "y": 7,
       "elevation": 3,
@@ -55,7 +54,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_ARTIST",
+      "graphics_id": "OBJ_EVENT_GFX_UNUSED_WOMAN_4",
       "x": 13,
       "y": 10,
       "elevation": 3,
@@ -81,7 +80,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_4",
+      "graphics_id": "OBJ_EVENT_GFX_LASS",
       "x": 3,
       "y": 8,
       "elevation": 3,
@@ -104,11 +103,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "LilycoveCity_LilycoveMuseum_1F_EventScript_Woman2",
-      "flag": "FLAG_HIDE_LILYCOVE_MUSEUM_PATRON_1"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
-      "local_id": "LOCALID_MUSEUM_1F_ARTIST_2",
-      "graphics_id": "OBJ_EVENT_GFX_ARTIST",
+      "graphics_id": "OBJ_EVENT_GFX_UNUSED_WOMAN_4",
       "x": 19,
       "y": 3,
       "elevation": 3,
@@ -118,7 +116,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "LilycoveCity_LilycoveMuseum_1F_EventScript_Artist2",
-      "flag": "FLAG_HIDE_LILYCOVE_MUSEUM_PATRON_4"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_FAT_MAN",
@@ -131,10 +129,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "LilycoveCity_LilycoveMuseum_1F_EventScript_FatMan",
-      "flag": "FLAG_HIDE_LILYCOVE_MUSEUM_TOURISTS"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_PSYCHIC_M",
+      "graphics_id": "OBJ_EVENT_GFX_TRAINER_TOWER_DUDE",
       "x": 6,
       "y": 2,
       "elevation": 3,
@@ -144,7 +142,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "LilycoveCity_LilycoveMuseum_1F_EventScript_PsychicM",
-      "flag": "FLAG_HIDE_LILYCOVE_MUSEUM_PATRON_3"
+      "flag": "FLAG_GARBAGEFLAG"
     }
   ],
   "warp_events": [

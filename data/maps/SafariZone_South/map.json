@@ -31,7 +31,6 @@
   ],
   "object_events": [
     {
-      "local_id": "LOCALID_SAFARI_EXIT_ATTENDANT",
       "graphics_id": "OBJ_EVENT_GFX_CAMPER",
       "x": 32,
       "y": 34,
@@ -45,7 +44,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_BOY_1",
+      "graphics_id": "OBJ_EVENT_GFX_MR_FUJI",
       "x": 26,
       "y": 28,
       "elevation": 3,
@@ -58,7 +57,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_4",
+      "graphics_id": "OBJ_EVENT_GFX_COOLTRAINER_M",
       "x": 16,
       "y": 6,
       "elevation": 5,
@@ -115,7 +114,7 @@
       "x": 32,
       "y": 33,
       "elevation": 0,
-      "dest_map": "MAP_ROUTE121_SAFARI_ZONE_ENTRANCE",
+      "dest_map": "MAP_ROUTE121_SAFARI_ZONE_GATE_SAFARI_ZONE_ENTRANCE",
       "dest_warp_id": "0"
     }
   ],

@@ -3,7 +3,7 @@
   "name": "LavaridgeTown_Gym_B1F",
   "layout": "LAYOUT_LAVARIDGE_TOWN_GYM_B1F",
   "music": "MUS_GYM",
-  "region_map_section": "MAPSEC_LAVARIDGE_TOWN",
+  "region_map_section": "MAPSEC_GOLDENROD_CITY",
   "requires_flash": false,
   "weather": "WEATHER_FOG_HORIZONTAL",
   "map_type": "MAP_TYPE_INDOOR",
@@ -15,8 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "local_id": "LOCALID_JACE",
-      "graphics_id": "OBJ_EVENT_GFX_MAN_5",
+      "graphics_id": "OBJ_EVENT_GFX_ROCKER",
       "x": 4,
       "y": 18,
       "elevation": 3,
@@ -29,8 +28,7 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_KEEGAN",
-      "graphics_id": "OBJ_EVENT_GFX_MAN_5",
+      "graphics_id": "OBJ_EVENT_GFX_ROCKER",
       "x": 3,
       "y": 6,
       "elevation": 0,
@@ -43,8 +41,7 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_JEFF",
-      "graphics_id": "OBJ_EVENT_GFX_MAN_5",
+      "graphics_id": "OBJ_EVENT_GFX_ROCKER",
       "x": 13,
       "y": 17,
       "elevation": 0,
@@ -57,7 +54,6 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_ELI",
       "graphics_id": "OBJ_EVENT_GFX_HIKER",
       "x": 4,
       "y": 16,

@@ -3,7 +3,7 @@
   "name": "Route114",
   "layout": "LAYOUT_ROUTE114",
   "music": "MUS_ROUTE110",
-  "region_map_section": "MAPSEC_ROUTE_114",
+  "region_map_section": "MAPSEC_ROUTE_39",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
   "map_type": "MAP_TYPE_ROUTE",
@@ -104,7 +104,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MANIAC",
+      "graphics_id": "OBJ_EVENT_GFX_SUPER_NERD",
       "x": 20,
       "y": 56,
       "elevation": 3,
@@ -138,9 +138,9 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_RARE_CANDY",
-      "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_ROUTE_114_RARE_CANDY"
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Route114_EventScript_ItemRareCandy",
+      "flag": "FLAG_ITEM_GARBAGEFLAG"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -151,9 +151,9 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_PROTEIN",
-      "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_ROUTE_114_PROTEIN"
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Route114_EventScript_ItemProtein",
+      "flag": "FLAG_ITEM_GARBAGEFLAG"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
@@ -195,7 +195,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_4",
+      "graphics_id": "OBJ_EVENT_GFX_COOLTRAINER_M",
       "x": 27,
       "y": 42,
       "elevation": 3,
@@ -208,7 +208,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
+      "graphics_id": "OBJ_EVENT_GFX_FISHER",
       "x": 25,
       "y": 6,
       "elevation": 3,
@@ -221,7 +221,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
+      "graphics_id": "OBJ_EVENT_GFX_FISHER",
       "x": 19,
       "y": 26,
       "elevation": 3,
@@ -234,7 +234,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_5",
+      "graphics_id": "OBJ_EVENT_GFX_ROCKER",
       "x": 30,
       "y": 58,
       "elevation": 5,
@@ -299,7 +299,7 @@
       "flag": "FLAG_TEMP_15"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_LASS",
+      "graphics_id": "OBJ_EVENT_GFX_PSYCHIC_M",
       "x": 24,
       "y": 44,
       "elevation": 3,
@@ -312,7 +312,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_LASS",
+      "graphics_id": "OBJ_EVENT_GFX_PSYCHIC_M",
       "x": 23,
       "y": 44,
       "elevation": 3,
@@ -359,12 +359,12 @@
       "movement_range_x": 1,
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_ENERGY_POWDER",
-      "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_ROUTE_114_ENERGY_POWDER"
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Route114_EventScript_ItemEnergyPowder",
+      "flag": "FLAG_ITEM_GARBAGEFLAG"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
+      "graphics_id": "OBJ_EVENT_GFX_FISHER",
       "x": 28,
       "y": 16,
       "elevation": 3,
@@ -480,7 +480,7 @@
       "y": 38,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route114_EventScript_LanettesHouseSign"
+      "script": "Route114_EventScript_BillsHouseSign"
     },
     {
       "type": "hidden_item",
@@ -503,7 +503,7 @@
       "y": 30,
       "elevation": 3,
       "item": "ITEM_REVIVE",
-      "flag": "FLAG_HIDDEN_ITEM_ROUTE_114_REVIVE"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_113_REVIVE"
     }
   ]
 }

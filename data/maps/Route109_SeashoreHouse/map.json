@@ -3,7 +3,7 @@
   "name": "Route109_SeashoreHouse",
   "layout": "LAYOUT_ROUTE109_SEASHORE_HOUSE",
   "music": "MUS_DEWFORD",
-  "region_map_section": "MAPSEC_ROUTE_109",
+  "region_map_section": "MAPSEC_ROUTE_34",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_INDOOR",
@@ -15,7 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_POKEFAN_M",
+      "graphics_id": "OBJ_EVENT_GFX_ATTENDANT_M",
       "x": 6,
       "y": 2,
       "elevation": 3,
@@ -41,7 +41,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_TUBER_M",
+      "graphics_id": "OBJ_EVENT_GFX_BURGLAR",
       "x": 14,
       "y": 9,
       "elevation": 3,

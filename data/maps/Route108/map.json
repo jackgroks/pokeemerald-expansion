@@ -3,7 +3,7 @@
   "name": "Route108",
   "layout": "LAYOUT_ROUTE108",
   "music": "MUS_ROUTE104",
-  "region_map_section": "MAPSEC_ROUTE_108",
+  "region_map_section": "MAPSEC_ROUTE_33",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
   "map_type": "MAP_TYPE_ROUTE",
@@ -26,7 +26,7 @@
   ],
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M",
+      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M_WATER",
       "x": 52,
       "y": 13,
       "elevation": 1,
@@ -39,7 +39,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F",
+      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F_WATER",
       "x": 35,
       "y": 12,
       "elevation": 1,
@@ -52,7 +52,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M",
+      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M_WATER",
       "x": 13,
       "y": 13,
       "elevation": 1,
@@ -65,7 +65,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F",
+      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F_WATER",
       "x": 8,
       "y": 7,
       "elevation": 1,
@@ -78,7 +78,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
+      "graphics_id": "OBJ_EVENT_GFX_WORKER_F",
       "x": 41,
       "y": 5,
       "elevation": 3,
@@ -112,9 +112,9 @@
       "movement_range_x": 1,
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_STAR_PIECE",
-      "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_ROUTE_108_STAR_PIECE"
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Route108_EventScript_ItemStarPiece",
+      "flag": "FLAG_ITEM_GARBAGEFLAG"
     }
   ],
   "warp_events": [

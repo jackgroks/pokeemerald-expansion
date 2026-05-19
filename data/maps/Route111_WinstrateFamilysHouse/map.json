@@ -3,7 +3,7 @@
   "name": "Route111_WinstrateFamilysHouse",
   "layout": "LAYOUT_HOUSE2",
   "music": "MUS_RUSTBORO",
-  "region_map_section": "MAPSEC_ROUTE_111",
+  "region_map_section": "MAPSEC_ROUTE_36",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_INDOOR",
@@ -15,8 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "local_id": "LOCALID_WINSTRATE_HOUSE_VIVI",
-      "graphics_id": "OBJ_EVENT_GFX_LASS",
+      "graphics_id": "OBJ_EVENT_GFX_PSYCHIC_M",
       "x": 7,
       "y": 5,
       "elevation": 3,
@@ -29,8 +28,7 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_WINSTRATE_HOUSE_VICTOR",
-      "graphics_id": "OBJ_EVENT_GFX_MAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_BALDING_MAN",
       "x": 4,
       "y": 5,
       "elevation": 3,
@@ -43,8 +41,7 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_WINSTRATE_HOUSE_VICTORIA",
-      "graphics_id": "OBJ_EVENT_GFX_POKEFAN_F",
+      "graphics_id": "OBJ_EVENT_GFX_BILL",
       "x": 7,
       "y": 4,
       "elevation": 3,
@@ -57,8 +54,7 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_WINSTRATE_HOUSE_VICKY",
-      "graphics_id": "OBJ_EVENT_GFX_EXPERT_F",
+      "graphics_id": "OBJ_EVENT_GFX_OLD_WOMAN",
       "x": 4,
       "y": 4,
       "elevation": 3,

@@ -15,7 +15,6 @@
   "connections": null,
   "object_events": [
     {
-      "local_id": "LOCALID_SS_TIDAL_EXIT_SAILOR",
       "graphics_id": "OBJ_EVENT_GFX_SAILOR",
       "x": 1,
       "y": 11,
@@ -42,7 +41,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_EXPERT_M",
+      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN_1",
       "x": 9,
       "y": 2,
       "elevation": 3,
@@ -52,10 +51,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SSTidalCorridor_EventScript_Briney",
-      "flag": "FLAG_HIDE_SS_TIDAL_CORRIDOR_MR_BRINEY"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WINGULL",
+      "graphics_id": "OBJ_EVENT_GFX_SLOWPOKE_NO_TAIL",
       "x": 7,
       "y": 2,
       "elevation": 3,
@@ -65,11 +64,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SSTidalCorridor_EventScript_Peeko",
-      "flag": "FLAG_HIDE_SS_TIDAL_CORRIDOR_MR_BRINEY"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
-      "local_id": "LOCALID_SS_TIDAL_SCOTT",
-      "graphics_id": "OBJ_EVENT_GFX_SCOTT",
+      "graphics_id": "OBJ_EVENT_GFX_PROF_OAK",
       "x": 9,
       "y": 10,
       "elevation": 3,
@@ -79,7 +77,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_SS_TIDAL_CORRIDOR_SCOTT"
+      "flag": "FLAG_GARBAGEFLAG"
     }
   ],
   "warp_events": [

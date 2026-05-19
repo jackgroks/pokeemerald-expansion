@@ -28,7 +28,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_POKEFAN_F",
+      "graphics_id": "OBJ_EVENT_GFX_BILL",
       "x": 7,
       "y": 7,
       "elevation": 3,
@@ -41,7 +41,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
+      "graphics_id": "OBJ_EVENT_GFX_COOLTRAINER_F",
       "x": 7,
       "y": 2,
       "elevation": 3,
@@ -54,7 +54,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
+      "graphics_id": "OBJ_EVENT_GFX_COOLTRAINER_F",
       "x": 9,
       "y": 2,
       "elevation": 3,
@@ -67,7 +67,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
+      "graphics_id": "OBJ_EVENT_GFX_COOLTRAINER_F",
       "x": 15,
       "y": 6,
       "elevation": 3,
@@ -80,7 +80,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
+      "graphics_id": "OBJ_EVENT_GFX_COOLTRAINER_F",
       "x": 17,
       "y": 6,
       "elevation": 3,
@@ -93,7 +93,6 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_DEPARTMENT_STORE_STAIRS_WOMAN",
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
       "x": 9,
       "y": 5,

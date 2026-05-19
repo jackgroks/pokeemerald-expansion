@@ -3,7 +3,7 @@
   "name": "RusturfTunnel",
   "layout": "LAYOUT_RUSTURF_TUNNEL",
   "music": "MUS_PETALBURG_WOODS",
-  "region_map_section": "MAPSEC_RUSTURF_TUNNEL",
+  "region_map_section": "MAPSEC_RUINS_OF_ALPH",
   "requires_flash": false,
   "weather": "WEATHER_FOG_HORIZONTAL",
   "map_type": "MAP_TYPE_UNDERGROUND",
@@ -15,7 +15,6 @@
   "connections": null,
   "object_events": [
     {
-      "local_id": "LOCALID_RUSTURF_TUNNEL_WANDAS_BF",
       "graphics_id": "OBJ_EVENT_GFX_BLACK_BELT",
       "x": 23,
       "y": 5,
@@ -26,7 +25,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "RusturfTunnel_EventScript_WandasBoyfriend",
-      "flag": "FLAG_HIDE_RUSTURF_TUNNEL_WANDAS_BOYFRIEND"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
@@ -39,7 +38,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_RockSmash",
-      "flag": "FLAG_HIDE_RUSTURF_TUNNEL_ROCK_1"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -50,9 +49,9 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_POKE_BALL",
-      "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_RUSTURF_TUNNEL_POKE_BALL"
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "RusturfTunnel_EventScript_ItemPokeBall",
+      "flag": "FLAG_ITEM_GARBAGEFLAG"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -63,13 +62,12 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_MAX_ETHER",
-      "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_RUSTURF_TUNNEL_MAX_ETHER"
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "RusturfTunnel_EventScript_ItemMaxEther",
+      "flag": "FLAG_ITEM_GARBAGEFLAG"
     },
     {
-      "local_id": "LOCALID_RUSTURF_TUNNEL_BRINEY",
-      "graphics_id": "OBJ_EVENT_GFX_EXPERT_M",
+      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN_1",
       "x": 5,
       "y": 4,
       "elevation": 3,
@@ -79,11 +77,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_RUSTURF_TUNNEL_BRINEY"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
-      "local_id": "LOCALID_RUSTURF_TUNNEL_GRUNT",
-      "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
+      "graphics_id": "OBJ_EVENT_GFX_ROCKET_M",
       "x": 14,
       "y": 5,
       "elevation": 3,
@@ -93,11 +90,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "RusturfTunnel_EventScript_Grunt",
-      "flag": "FLAG_HIDE_RUSTURF_TUNNEL_AQUA_GRUNT"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
-      "local_id": "LOCALID_RUSTURF_TUNNEL_PEEKO",
-      "graphics_id": "OBJ_EVENT_GFX_WINGULL",
+      "graphics_id": "OBJ_EVENT_GFX_MON_BASE+SPECIES_WINGULL",
       "x": 14,
       "y": 4,
       "elevation": 3,
@@ -107,7 +103,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "RusturfTunnel_EventScript_Peeko",
-      "flag": "FLAG_HIDE_RUSTURF_TUNNEL_PEEKO"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
@@ -120,7 +116,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_RockSmash",
-      "flag": "FLAG_HIDE_RUSTURF_TUNNEL_ROCK_2"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_HIKER",
@@ -136,7 +132,6 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_RUSTURF_TUNNEL_WANDA",
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
       "x": 25,
       "y": 4,
@@ -147,7 +142,98 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "RusturfTunnel_EventScript_Wanda",
-      "flag": "FLAG_HIDE_RUSTURF_TUNNEL_WANDA"
+      "flag": "FLAG_GARBAGEFLAG"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 6,
+      "y": 2,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_11"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 31,
+      "y": 6,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_13"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 32,
+      "y": 7,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_14"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 33,
+      "y": 8,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_15"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 18,
+      "y": 15,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_17"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 24,
+      "y": 14,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_16"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 7,
+      "y": 7,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_12"
     }
   ],
   "warp_events": [
@@ -188,7 +274,7 @@
       "x": 9,
       "y": 4,
       "elevation": 3,
-      "var": "VAR_RUSTURF_TUNNEL_STATE",
+      "var": "VAR_GARBAGEVAR",
       "var_value": "2",
       "script": "RusturfTunnel_EventScript_AquaGruntBackUp"
     },
@@ -197,7 +283,7 @@
       "x": 9,
       "y": 5,
       "elevation": 3,
-      "var": "VAR_RUSTURF_TUNNEL_STATE",
+      "var": "VAR_GARBAGEVAR",
       "var_value": "2",
       "script": "RusturfTunnel_EventScript_AquaGruntBackUp"
     },

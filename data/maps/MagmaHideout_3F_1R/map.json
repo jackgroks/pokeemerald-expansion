@@ -15,7 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_M",
+      "graphics_id": "OBJ_EVENT_GFX_PETREL",
       "x": 2,
       "y": 7,
       "elevation": 4,
@@ -25,10 +25,10 @@
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "5",
       "script": "MagmaHideout_3F_1R_EventScript_Grunt9",
-      "flag": "FLAG_HIDE_MAGMA_HIDEOUT_GRUNTS"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_F",
+      "graphics_id": "OBJ_EVENT_GFX_ARIANA",
       "x": 21,
       "y": 21,
       "elevation": 0,
@@ -38,19 +38,19 @@
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "4",
       "script": "MagmaHideout_3F_1R_EventScript_Grunt16",
-      "flag": "FLAG_HIDE_MAGMA_HIDEOUT_GRUNTS"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
       "x": 9,
-      "y": 16,
+      "y": 17,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_NUGGET",
-      "script": "Common_EventScript_FindItem",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MagmaHideout_3F_1R_EventScript_ItemNugget",
       "flag": "FLAG_ITEM_MAGMA_HIDEOUT_3F_1R_NUGGET"
     }
   ],
@@ -75,6 +75,13 @@
       "elevation": 0,
       "dest_map": "MAP_MAGMA_HIDEOUT_2F_1R",
       "dest_warp_id": "2"
+    },
+    {
+      "x": 6,
+      "y": 13,
+      "elevation": 0,
+      "dest_map": "MAP_MAGMA_HIDEOUT_3F_1R_ENTEI",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [],

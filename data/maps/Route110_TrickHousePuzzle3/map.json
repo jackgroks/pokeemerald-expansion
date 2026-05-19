@@ -3,7 +3,7 @@
   "name": "Route110_TrickHousePuzzle3",
   "layout": "LAYOUT_ROUTE110_TRICK_HOUSE_PUZZLE3",
   "music": "MUS_TRICK_HOUSE",
-  "region_map_section": "MAPSEC_ROUTE_110",
+  "region_map_section": "MAPSEC_ROUTE_35",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_INDOOR",
@@ -62,9 +62,9 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_WOOD_MAIL",
-      "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_TRICK_HOUSE_PUZZLE_3_WOOD_MAIL"
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Route110_TrickHousePuzzle3_EventScript_ItemWoodMail",
+      "flag": "FLAG_ITEM_GARBAGEFLAG"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -75,9 +75,9 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_SHADOW_MAIL",
-      "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_TRICK_HOUSE_PUZZLE_3_SHADOW_MAIL"
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Route110_TrickHousePuzzle3_EventScript_ItemShadowMail",
+      "flag": "FLAG_ITEM_GARBAGEFLAG"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",

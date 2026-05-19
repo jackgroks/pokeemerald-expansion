@@ -3,7 +3,7 @@
   "name": "Route109",
   "layout": "LAYOUT_ROUTE109",
   "music": "MUS_ROUTE104",
-  "region_map_section": "MAPSEC_ROUTE_109",
+  "region_map_section": "MAPSEC_ROUTE_34",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
   "map_type": "MAP_TYPE_ROUTE",
@@ -26,7 +26,6 @@
   ],
   "object_events": [
     {
-      "local_id": "LOCALID_ROUTE109_BOAT",
       "graphics_id": "OBJ_EVENT_GFX_MR_BRINEYS_BOAT",
       "x": 21,
       "y": 26,
@@ -37,11 +36,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
-      "local_id": "LOCALID_ROUTE109_BRINEY",
-      "graphics_id": "OBJ_EVENT_GFX_EXPERT_M",
+      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN_1",
       "x": 21,
       "y": 24,
       "elevation": 3,
@@ -51,10 +49,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route109_EventScript_MrBriney",
-      "flag": "FLAG_HIDE_ROUTE_109_MR_BRINEY"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M",
+      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M_WATER",
       "x": 12,
       "y": 36,
       "elevation": 3,
@@ -67,7 +65,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F",
+      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F_WATER",
       "x": 25,
       "y": 39,
       "elevation": 1,
@@ -106,7 +104,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_TUBER_M",
+      "graphics_id": "OBJ_EVENT_GFX_BURGLAR",
       "x": 19,
       "y": 10,
       "elevation": 3,
@@ -119,7 +117,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_TUBER_F",
+      "graphics_id": "OBJ_EVENT_GFX_ENGINEER",
       "x": 22,
       "y": 7,
       "elevation": 3,
@@ -153,12 +151,12 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_PP_UP",
-      "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_ROUTE_109_PP_UP"
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Route109_EventScript_ItemPPUp",
+      "flag": "FLAG_ITEM_GARBAGEFLAG"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_TUBER_F",
+      "graphics_id": "OBJ_EVENT_GFX_ENGINEER",
       "x": 29,
       "y": 32,
       "elevation": 3,
@@ -171,7 +169,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_TUBER_F",
+      "graphics_id": "OBJ_EVENT_GFX_ENGINEER",
       "x": 28,
       "y": 31,
       "elevation": 3,
@@ -184,7 +182,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
+      "graphics_id": "OBJ_EVENT_GFX_FISHER",
       "x": 21,
       "y": 56,
       "elevation": 0,
@@ -197,7 +195,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_TUBER_M",
+      "graphics_id": "OBJ_EVENT_GFX_BURGLAR",
       "x": 24,
       "y": 18,
       "elevation": 3,
@@ -210,7 +208,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_TUBER_F",
+      "graphics_id": "OBJ_EVENT_GFX_ENGINEER",
       "x": 25,
       "y": 18,
       "elevation": 3,
@@ -223,7 +221,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_POKEFAN_F",
+      "graphics_id": "OBJ_EVENT_GFX_BILL",
       "x": 30,
       "y": 32,
       "elevation": 3,
@@ -236,7 +234,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_4",
+      "graphics_id": "OBJ_EVENT_GFX_LASS",
       "x": 8,
       "y": 41,
       "elevation": 3,
@@ -249,7 +247,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_4",
+      "graphics_id": "OBJ_EVENT_GFX_COOLTRAINER_M",
       "x": 9,
       "y": 41,
       "elevation": 3,
@@ -262,7 +260,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN",
+      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN_2",
       "x": 33,
       "y": 6,
       "elevation": 3,
@@ -275,7 +273,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_ZIGZAGOON_2",
+      "graphics_id": "OBJ_EVENT_GFX_MON_BASE+SPECIES_ZIGZAGOON",
       "x": 32,
       "y": 6,
       "elevation": 3,
@@ -288,7 +286,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_TUBER_F",
+      "graphics_id": "OBJ_EVENT_GFX_ENGINEER",
       "x": 17,
       "y": 13,
       "elevation": 3,
@@ -301,7 +299,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_TUBER_M",
+      "graphics_id": "OBJ_EVENT_GFX_BURGLAR",
       "x": 27,
       "y": 7,
       "elevation": 3,
@@ -322,12 +320,12 @@
       "movement_range_x": 1,
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_POTION",
-      "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_ROUTE_109_POTION"
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Route109_EventScript_ItemPotion",
+      "flag": "FLAG_ITEM_GARBAGEFLAG"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_5",
+      "graphics_id": "OBJ_EVENT_GFX_ROCKER",
       "x": 17,
       "y": 56,
       "elevation": 3,

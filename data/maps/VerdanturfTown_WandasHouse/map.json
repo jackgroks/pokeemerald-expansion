@@ -3,7 +3,7 @@
   "name": "VerdanturfTown_WandasHouse",
   "layout": "LAYOUT_VERDANTURF_TOWN_WANDAS_HOUSE",
   "music": "MUS_VERDANTURF",
-  "region_map_section": "MAPSEC_VERDANTURF_TOWN",
+  "region_map_section": "MAPSEC_OLIVINE_CITY",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_INDOOR",
@@ -15,7 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_WALLY",
+      "graphics_id": "OBJ_EVENT_GFX_SILVER",
       "x": 14,
       "y": 5,
       "elevation": 3,
@@ -38,10 +38,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "VerdanturfTown_WandasHouse_EventScript_WandasBoyfriend",
-      "flag": "FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WANDAS_BOYFRIEND"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_POKEFAN_M",
+      "graphics_id": "OBJ_EVENT_GFX_ATTENDANT_M",
       "x": 7,
       "y": 2,
       "elevation": 3,
@@ -51,10 +51,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "VerdanturfTown_WandasHouse_EventScript_WallysUncle",
-      "flag": "FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WALLYS_UNCLE"
+      "flag": "FLAG_GARBAGEFLAG"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_POKEFAN_F",
+      "graphics_id": "OBJ_EVENT_GFX_BILL",
       "x": 2,
       "y": 4,
       "elevation": 3,
@@ -77,7 +77,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "VerdanturfTown_WandasHouse_EventScript_Wanda",
-      "flag": "FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WANDA"
+      "flag": "FLAG_GARBAGEFLAG"
     }
   ],
   "warp_events": [
