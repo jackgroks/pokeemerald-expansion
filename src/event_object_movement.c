@@ -2635,34 +2635,24 @@ void GetFollowerAction(struct ScriptContext *ctx) // Essentially a big switch fo
     // Gym type advantage/disadvantage
     if (GetCurrentMapMusic() == MUS_GYM || GetCurrentMapMusic() == MUS_RG_GYM)
     {
+        // Phase 2 minimal-strip: pe-Hoenn gym-city cases removed (all stubbed to MAPSEC_NONE in
+        // pe_hoenn_strip_stubs.h, would trigger duplicate case errors). Pe-Kanto + HnS-Johto/Kanto
+        // gym typing TBD: add HnS Johto cases (MAPSEC_VIOLET_CITY -> FLYING, MAPSEC_AZALEA_TOWN
+        // -> BUG, etc.) when follower-emotion typing is desired for HnS gyms.
         switch (gMapHeader.regionMapSectionId)
         {
-        case MAPSEC_RUSTBORO_CITY:
         case MAPSEC_PEWTER_CITY:
             multi = TYPE_ROCK;
             break;
-        case MAPSEC_DEWFORD_TOWN:
-            multi = TYPE_FIGHTING;
-            break;
-        case MAPSEC_MAUVILLE_CITY:
         case MAPSEC_VERMILION_CITY:
             multi = TYPE_ELECTRIC;
             break;
-        case MAPSEC_LAVARIDGE_TOWN:
         case MAPSEC_CINNABAR_ISLAND:
             multi = TYPE_FIRE;
             break;
-        case MAPSEC_PETALBURG_CITY:
-            multi = TYPE_NORMAL;
-            break;
-        case MAPSEC_FORTREE_CITY:
-            multi = TYPE_FLYING;
-            break;
-        case MAPSEC_MOSSDEEP_CITY:
         case MAPSEC_SAFFRON_CITY:
             multi = TYPE_PSYCHIC;
             break;
-        case MAPSEC_SOOTOPOLIS_CITY:
         case MAPSEC_CERULEAN_CITY:
             multi = TYPE_WATER;
             break;

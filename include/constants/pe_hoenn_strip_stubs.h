@@ -237,15 +237,24 @@
 #define LOCALID_VERDANTURF_NURSE         0
 
 // HnS Johto trainer classes — pe doesn't ship these. T3 trainer port aliased
-// trainer SLOTS via opponents_hns.h but not classes. Stub to TRAINER_CLASS_PKMN_TRAINER
+// trainer SLOTS via opponents_hns.h but not classes. Stub to TRAINER_CLASS_PKMN_TRAINER_1
 // (0) which is pe's default. Battle dialogue/AI may be slightly off until proper
 // class porting; trainer fights still work mechanically.
-#define TRAINER_CLASS_FIREBREATHER       TRAINER_CLASS_PKMN_TRAINER
-#define TRAINER_CLASS_JUGGLER            TRAINER_CLASS_PKMN_TRAINER
-#define TRAINER_CLASS_KIMONO_GIRL        TRAINER_CLASS_PKMN_TRAINER
-#define TRAINER_CLASS_POLICEMAN          TRAINER_CLASS_PKMN_TRAINER
-#define TRAINER_CLASS_PSYCHIC_M          TRAINER_CLASS_PKMN_TRAINER
-#define TRAINER_CLASS_SAGE               TRAINER_CLASS_PKMN_TRAINER
-#define TRAINER_CLASS_TEAM_ROCKET        TRAINER_CLASS_PKMN_TRAINER
+#define TRAINER_CLASS_FIREBREATHER       TRAINER_CLASS_PKMN_TRAINER_1
+#define TRAINER_CLASS_JUGGLER            TRAINER_CLASS_PKMN_TRAINER_1
+#define TRAINER_CLASS_KIMONO_GIRL        TRAINER_CLASS_PKMN_TRAINER_1
+#define TRAINER_CLASS_POLICEMAN          TRAINER_CLASS_PKMN_TRAINER_1
+#define TRAINER_CLASS_PSYCHIC_M          TRAINER_CLASS_PKMN_TRAINER_1
+#define TRAINER_CLASS_SAGE               TRAINER_CLASS_PKMN_TRAINER_1
+#define TRAINER_CLASS_TEAM_ROCKET        TRAINER_CLASS_PKMN_TRAINER_1
+
+// HnS-specific TRAINER_ENCOUNTER_MUSIC_* (encounter jingles). Pe has HG_*
+// prefixed variants but not HnS's bare names. Alias to closest HG match.
+#define TRAINER_ENCOUNTER_MUSIC_ROCKET   TRAINER_ENCOUNTER_MUSIC_HG_SUSPICIOUS_1
+#define TRAINER_ENCOUNTER_MUSIC_SILVER   TRAINER_ENCOUNTER_MUSIC_HG_BOY_2
+
+// HnS move-name typo bridges (HnS source uses MOVE_SMELLING_SALT, pe uses
+// MOVE_SMELLINGSALT). Per pe-CLAUDE.md additive-alias pattern.
+#define MOVE_SMELLING_SALT               MOVE_SMELLINGSALT
 
 #endif // GUARD_PE_HOENN_STRIP_STUBS_H
