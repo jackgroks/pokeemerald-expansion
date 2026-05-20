@@ -115,6 +115,42 @@ audits can reconcile them.
     `DAILY_FLAGS_START`'s base computation, re-anchor `FLAG_HNS_LAST_SLOT`
     on the new chain rather than the literal `+ 0x351` offset.
 
+- **2026-05-20 (HMS Defiant, Phase 5-prep R6e-followup) — VARS region
+  extended by 66 slots; VARS_END rebased.**
+  Added `include/constants/vars_hns.h` with 66 HnS-only progression VAR
+  `#define`s, each `(VARS_START + 0x100 + N)` for N in 0..65 (slot range
+  `(VARS_START + 0x100)..(VARS_START + 0x141)` = `0x4100..0x4141`). `vars.h`
+  now `#include`s `vars_hns.h` after the vanilla VAR block and before the
+  `VARS_END` definition. `VARS_END` was rebased from the literal `0x40FF`
+  to `HNS_VARS_END` (= `VAR_VIOLET_CITY_STATE` = `(VARS_START + 0x141)`).
+  - **Auto-derived bumps:** `VARS_COUNT` recomputes via
+    `(VARS_END - VARS_START + 1)` from 256 to 322. `SaveBlock1.vars[]`
+    auto-resizes from 512 bytes (256 * 2) to 644 bytes (322 * 2); +132
+    bytes total. Compile-time assert at `src/save.c:82` confirms
+    `sizeof(struct SaveBlock1)` stays within
+    `SECTOR_DATA_SIZE * 4 = 15872` bytes (verified passing post-bump).
+  - **Why this is non-additive:** the `VARS_END` definition itself
+    changed (from literal `0x40FF` to `HNS_VARS_END`-based). Pe's vanilla
+    persistent VAR range was completely full (every slot in
+    `0x4000..0x40FF` allocated through `VAR_UNUSED_0x40FF`), so additive
+    placement required extending the END marker. No code reads VAR
+    offsets as numeric literals (verified via grep — all access goes
+    through `VarGet`/`VarSet` at `src/event_data.c`, which indexes into
+    `gSaveBlock1Ptr->vars[]` via arithmetic), so the SaveBlock1 byte
+    shift downstream of `vars[]` is safe.
+  - **Slot semantics:** HnS's own VAR values (also in the `0x4000..0x40FF`
+    range) cannot be copied verbatim because every pe slot in that range
+    is already taken. All 66 are re-slotted onto fresh
+    `(VARS_START + 0x100 + N)` slots in alphabetical order matching the
+    audit list. Zero name collisions with pe's existing 360 `VAR_*`
+    defines across `vars.h` + `vars_frlg.h` (verified by intersection
+    grep before authoring).
+  - **Upstream-merge rule:** If RHH later defines any of these 66 names
+    (unlikely — they're HnS Johto/Kanto-specific), prefer RHH's slot and
+    drop RC's `vars_hns.h` entry for that name. If RHH extends `VARS_END`
+    past `0x40FF` themselves, anchor `HNS_VARS_START` on the new
+    `VARS_END + 1` rather than the literal `+ 0x100` offset.
+
 ## Additive renames (HnS-engine-name → pe-native infrastructure)
 
 These are *not* non-additive (no slot bumps, no schema growth, no value
