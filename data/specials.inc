@@ -639,3 +639,6 @@ gSpecials::
 	def_special StickerManGetBragFlags
 	def_special CheckAddCoins
 	def_special SetPartnerTrainerIdFromVar
+
+	@ HnS-only specials (additive, post-Phase-4-R6a). Stubs in src/special_hns.c.
+	.include "data/specials_hns.inc"
