@@ -115,6 +115,40 @@ audits can reconcile them.
     `DAILY_FLAGS_START`'s base computation, re-anchor `FLAG_HNS_LAST_SLOT`
     on the new chain rather than the literal `+ 0x351` offset.
 
+## Additive renames (HnS-engine-name → pe-native infrastructure)
+
+These are *not* non-additive (no slot bumps, no schema growth, no value
+changes) but are documented here because future upstream merges need to know
+the alias exists, and downstream auditors should not confuse them for
+stub-aliases.
+
+- **2026-05-19 (HMS Druid, Phase 5-prep R6c) — `OBJ_EVENT_GFX_MON_BASE`
+  aliased to pe's `OBJ_EVENT_MON`.**
+  Pe-expansion ships RHH's follower-pokemon feature, which encodes "this
+  object event is a species sprite" by ORing bit-14 (`OBJ_EVENT_MON = (1u
+  << 14)`) into `graphicsId`. HnS uses the same scheme under a different
+  constant name (`OBJ_EVENT_GFX_MON_BASE = 0x200` plus an 11-bit mask).
+  Aliasing in `include/constants/event_objects_hns.h`:
+  ```
+  #define OBJ_EVENT_GFX_MON_BASE  OBJ_EVENT_MON
+  ```
+  makes 2782 HnS-imported `OBJ_EVENT_GFX_MON_BASE+SPECIES_X` references
+  resolve to pe's native `OBJ_EVENT_GFX_SPECIES(X)` form. Pe already
+  implements the full dispatch (`SpeciesToGraphicsInfo` at
+  `src/event_object_movement.c:3218-3219`), the masks
+  (`OBJ_EVENT_MON_SPECIES_MASK`), the consumer macros (`IS_OW_MON_OBJ`,
+  `OW_SPECIES`, `OW_SHINY`, `OW_FEMALE`), and all downstream call sites.
+  No engine code added; no graphics-info table edits; no slot bumps.
+  - **Companion data patch:** HnS's `+SPECIES_SHINY_TAG` shiny encoding
+    (additive offset) does not match pe's bit-13-shiny scheme. The one
+    affected site (`data/maps/Route20/map.json`, Dennis's Red Gyarados /
+    shiny Magikarp) is rewritten to `OBJ_EVENT_GFX_SPECIES_SHINY(MAGIKARP)`.
+  - **Upstream-merge rule:** If RHH ever defines `OBJ_EVENT_GFX_MON_BASE`
+    upstream (unlikely — the upstream name is `OBJ_EVENT_MON`), drop RC's
+    alias. If the bit-14 / bit-13 / bit-12 scheme in `event_objects.h`
+    changes value (extremely unlikely without a save-data bump), re-verify
+    the alias still resolves to a flag bit and not a bare integer.
+
 ## Schema discipline
 
 Per `@~/.claude/rules/schema-discipline.md`, schema changes are additive by

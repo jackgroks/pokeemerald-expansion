@@ -14,8 +14,9 @@
  *
  * Audit input: `.context/chore/migrate-to-pe-expansion/r6-audit/objgfx_gap_full.txt`
  * (40 OBJ_EVENT_GFX_* undefined in pe, audited by HMS Dasher). The 40th entry,
- * OBJ_EVENT_GFX_MON_BASE, is intentionally EXCLUDED from this header — it is
- * a species-indexed engine port handled separately in R6c (HMS Druid).
+ * OBJ_EVENT_GFX_MON_BASE, is the species-indexed-sprite scheme — handled at
+ * the bottom of this header by HMS Druid (R6c) by aliasing onto pe's native
+ * follower-pokemon infrastructure (`OBJ_EVENT_MON`).
  *
  * Strategy: every HnS slot collides with a pre-existing pe-Hoenn slot at the
  * same numeric value. Rather than allocate new slots (which would require
@@ -107,5 +108,60 @@
 #define OBJ_EVENT_GFX_TRAIN_BACK                 202
 #define OBJ_EVENT_GFX_WHIRLPOOL                  203
 #define OBJ_EVENT_GFX_SLOWPOKE_NO_TAIL           211
+
+// -----------------------------------------------------------------------------
+// Species-indexed OW sprites (R6c, HMS Druid, 2026-05-19)
+// -----------------------------------------------------------------------------
+//
+// HnS maps and scripts reference Pokemon overworld sprites as
+// `OBJ_EVENT_GFX_MON_BASE + SPECIES_X` (and rarely `+SPECIES_SHINY_TAG`).
+// Pe-expansion ships the *same* species-indexed scheme upstream from RHH's
+// follower-pokemon feature, but under a different constant name:
+//
+//   HnS                              | pe-expansion (upstream)
+//   ---------------------------------|---------------------------------------
+//   OBJ_EVENT_GFX_MON_BASE (0x200)   | OBJ_EVENT_MON (1u << 14, i.e. 0x4000)
+//   + SPECIES_SHINY_TAG (additive)   | OBJ_EVENT_MON_SHINY (1u << 13)
+//   OBJ_EVENT_GFX_SPECIES_MASK       | OBJ_EVENT_MON_SPECIES_MASK
+//   IS_OW_MON_OBJ / OW_SPECIES       | IS_OW_MON_OBJ / OW_SPECIES (identical
+//                                    | macro names, pe-side defs)
+//
+// Pe already implements the full dispatch:
+//
+//   src/event_object_movement.c:3218-3219
+//     if (graphicsId & OBJ_EVENT_MON)
+//         return SpeciesToGraphicsInfo(graphicsId & OBJ_EVENT_MON_SPECIES_MASK,
+//                                      graphicsId & OBJ_EVENT_MON_SHINY,
+//                                      graphicsId & OBJ_EVENT_MON_FEMALE);
+//
+// Because pe-expansion already defines:
+//
+//   #define OBJ_EVENT_GFX_SPECIES(name) (SPECIES_##name + OBJ_EVENT_MON)
+//
+// the HnS authored expression `OBJ_EVENT_GFX_MON_BASE + SPECIES_X` is
+// runtime-equivalent to pe's `OBJ_EVENT_GFX_SPECIES(X)` once `MON_BASE` aliases
+// `OBJ_EVENT_MON`. The graphics-info table, palette tags, dynamic-palette
+// loader, weather form changes, follower-helper, shop interaction (`shop.c`),
+// load_save migration, and battle_pike Latios/Latias swap site — all the
+// consumers HnS has — are present and engine-equivalent in pe.
+//
+// This is NOT a stub alias: it is a rename of HnS's foreign constant onto
+// pe's existing functional infrastructure. The dispatch HnS needs already
+// exists in pe-vanilla via the upstream follower-pokemon feature.
+//
+// Shiny-tag caveat (Route20 Magikarp / Red Gyarados event):
+//   HnS encodes shiny as `+SPECIES_SHINY_TAG` where SPECIES_SHINY_TAG=500
+//   (HnS) or 5000 (pe). Pe's runtime extracts shiny via a bit-13 mask, not
+//   an additive offset. T-tooling (or a follow-up data patch) must rewrite
+//   any `MON_BASE+SPECIES_X+SPECIES_SHINY_TAG` site to
+//   `OBJ_EVENT_GFX_SPECIES_SHINY(X)`. As of R6c, the only such site is
+//   `data/maps/Route20/map.json` (Dennis's Red Gyarados / shiny Magikarp).
+//   That single line is patched in this commit alongside the alias.
+//
+// Schema-additive against `event_objects.h`: zero existing definitions
+// touched; no NUM_OBJ_EVENT_GFX bump; no OBJ_EVENT_MON value change. The
+// alias is a pure macro rename.
+
+#define OBJ_EVENT_GFX_MON_BASE  OBJ_EVENT_MON
 
 #endif // GUARD_CONSTANTS_EVENT_OBJECTS_HNS_H
