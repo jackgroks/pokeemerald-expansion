@@ -37,6 +37,11 @@
 #define SPECIAL_BATTLE_EREADER 2
 #define SPECIAL_BATTLE_MULTI 3
 
+// HnS-imported Battle Frontier facility selectors (Phase-2-deferred maps;
+// see battle_frontier_hns.h banner for the unreachable-in-Johto-play
+// disposition).
+#include "constants/battle_frontier_hns.h"
+
 // Facility trainer Battles
 #define FACILITY_BATTLE_TOWER           0
 #define FACILITY_BATTLE_DOME            1

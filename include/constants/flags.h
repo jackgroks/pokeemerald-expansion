@@ -1572,10 +1572,16 @@
 #define FLAG_UNUSED_0x91E                           (SYSTEM_FLAGS + 0xBE) // Unused Flag
 #define FLAG_UNUSED_0x91F                           (SYSTEM_FLAGS + 0xBF) // Unused Flag
 
+// HnS Johto/Kanto progression flags (Phase 5-prep R6d, HMS Warspite, 2026-05-19).
+// 658 flags occupying (SYSTEM_FLAGS + 0xC0)..(SYSTEM_FLAGS + 0x351); see CLAUDE.md
+// "Non-additive bumps" entry. DAILY_FLAGS_START below rebases on FLAG_HNS_LAST_SLOT
+// so byte-alignment lands at (SYSTEM_FLAGS + 0x358) instead of (SYSTEM_FLAGS + 0xC0).
+#include "constants/flags_hns.h"
+
 // Daily Flags
 // These flags are cleared once per day
 // The start and end are byte-aligned because the flags are cleared in byte increments
-#define DAILY_FLAGS_START                           (FLAG_UNUSED_0x91F + (8 - FLAG_UNUSED_0x91F % 8))
+#define DAILY_FLAGS_START                           (FLAG_HNS_LAST_SLOT + (8 - FLAG_HNS_LAST_SLOT % 8))
 #define FLAG_UNUSED_0x920                           (DAILY_FLAGS_START + 0x0)  // Unused Flag
 #define FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY     (DAILY_FLAGS_START + 0x1)
 #define FLAG_DAILY_SECRET_BASE                      (DAILY_FLAGS_START + 0x2)

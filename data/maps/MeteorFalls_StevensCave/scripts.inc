@@ -54,7 +54,7 @@ MeteorFalls_StevensCave_EventScript_StevenRematch::
 	// TODO(pe-migration): missing in pe-expansion -- FLAG_STEVEN_REMATCH (flags) -- port engine surface
 	clearflag FLAG_STEVEN_REMATCH
 	// TODO(pe-migration): missing in pe-expansion -- FLAG_ARCEUS_EGG_GIVE (flags) -- port engine surface
-	goto_if_unset FLAG_ARCEUS_EGG_GIVE MeteorFalls_StevensCave_EventScript_StevenArceusEvent
+	goto_if_unset FLAG_ARCEUS_EGG_GIVE, MeteorFalls_StevensCave_EventScript_StevenArceusEvent
 	release
 	end
 
