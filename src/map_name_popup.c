@@ -81,10 +81,17 @@ static const u16 sMapPopUp_PaletteTable[][16] =
 
 static const u16 sMapPopUp_Palette_Underwater[16] = INCBIN_U16("graphics/map_popup/underwater.gbapal");
 
+// Phase 2 minimal-strip: pe-Hoenn theme assignments dropped. Every non-Kanto
+// MAPSEC defaults to MAPPOPUP_THEME_WOOD (enum value 0). Restore per-MAPSEC
+// theming when HnS-region popups are styled (e.g., Johto cities → MARBLE).
+//
 // -1 in the size excludes MAPSEC_NONE.
 // The MAPSEC values for Kanto (between MAPSEC_DYNAMIC and MAPSEC_AQUA_HIDEOUT) are also excluded,
 // and this is then handled by subtracting KANTO_MAPSEC_COUNT here and in LoadMapNamePopUpWindowBg.
-static const u8 sMapSectionToThemeId[MAPSEC_COUNT - KANTO_MAPSEC_COUNT - 1] =
+static const u8 sMapSectionToThemeId[MAPSEC_COUNT - KANTO_MAPSEC_COUNT - 1] = {0};
+// Original Hoenn theming below (kept as documentation):
+#if 0
+static const u8 sMapSectionToThemeId_OriginalHoenn[] =
 {
     [MAPSEC_LITTLEROOT_TOWN] = MAPPOPUP_THEME_WOOD,
     [MAPSEC_OLDALE_TOWN] = MAPPOPUP_THEME_WOOD,
@@ -191,6 +198,7 @@ static const u8 sMapSectionToThemeId[MAPSEC_COUNT - KANTO_MAPSEC_COUNT - 1] =
     [MAPSEC_NAVEL_ROCK - KANTO_MAPSEC_COUNT] = MAPPOPUP_THEME_STONE,
     [MAPSEC_TRAINER_HILL - KANTO_MAPSEC_COUNT] = MAPPOPUP_THEME_MARBLE,
 };
+#endif // 0 -- end of original Hoenn sMapSectionToThemeId reference
 
 #if OW_POPUP_GENERATION == GEN_5
 // Gen5 assets
@@ -205,7 +213,12 @@ static const u16 sMapPopUpTilesPalette_BW_Black[] = {0};
 static const u16 sMapPopUpTilesPalette_BW_White[] = {0};
 #endif
 
-static const u8 sRegionMapSectionId_To_PopUpThemeIdMapping_BW[] =
+// Phase 2 minimal-strip: pe-Hoenn BW-theme mappings dropped; all popups
+// default to MAPPOPUP_THEME_BW_DEFAULT (enum 0).
+static const u8 sRegionMapSectionId_To_PopUpThemeIdMapping_BW[] = {0};
+// Original Hoenn theming below (kept as documentation):
+#if 0
+static const u8 sRegionMapSectionId_To_PopUpThemeIdMapping_BW_OriginalHoenn[] =
 {
     [MAPSEC_LITTLEROOT_TOWN] = MAPPOPUP_THEME_BW_DEFAULT,
     [MAPSEC_OLDALE_TOWN] = MAPPOPUP_THEME_BW_DEFAULT,
@@ -312,6 +325,7 @@ static const u8 sRegionMapSectionId_To_PopUpThemeIdMapping_BW[] =
     [MAPSEC_NAVEL_ROCK - KANTO_MAPSEC_COUNT] = MAPPOPUP_THEME_BW_DEFAULT,
     [MAPSEC_TRAINER_HILL - KANTO_MAPSEC_COUNT] = MAPPOPUP_THEME_BW_DEFAULT,
 };
+#endif // 0 -- end of original Hoenn sRegionMapSectionId_To_PopUpThemeIdMapping_BW reference
 
 static const u8 sText_PyramidFloor1[] = _("PYRAMID FLOOR 1");
 static const u8 sText_PyramidFloor2[] = _("PYRAMID FLOOR 2");
