@@ -2199,3 +2199,4 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 @ Script-label and text-label stubs for residual undef refs from rc-main link.
 	.include "data/scripts/hns_pe_stubs.inc"
 	.include "data/text/hns_pe_stubs.inc"
+	.include "data/text/battle_frontier_orphan_stubs.inc"
