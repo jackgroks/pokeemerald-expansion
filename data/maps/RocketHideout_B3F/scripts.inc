@@ -164,7 +164,7 @@ RocketHideout_B3F_Trigger_Silver::
 	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_ROCKETHIDEOUT3_SILVER (flags) -- port engine surface
 	clearflag FLAG_HIDE_ROCKETHIDEOUT3_SILVER
 	addobject LOCALID_ROCKETHIDEOUT3_SILVER
-	playbgm MUS_HG_ENCOUNTER_RIVAL, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_ENCOUNTER_RIVAL
 	applymovement LOCALID_ROCKETHIDEOUT3_SILVER, RocketHideout_B3F_Movement_SilverEnter
 	waitmovement 0
 	turnobject OBJ_EVENT_ID_PLAYER, DIR_WEST

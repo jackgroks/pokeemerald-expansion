@@ -197,7 +197,7 @@ VermilionCity_EventScript_Snorlax::
 	end
 
 VermilionCity_EventScript_SnorlaxWakeUp::
-    playbgm MUS_HG_RADIO_POKE_FLUTE, TRUE
+    playbgm MUS_DUMMY, TRUE	@ MUS_HG_RADIO_POKE_FLUTE
     msgbox VermilionCity_Text_RadioNearSnorlax, MSGBOX_DEFAULT
     playmoncry SPECIES_SNORLAX, CRY_MODE_ENCOUNTER
     delay 40

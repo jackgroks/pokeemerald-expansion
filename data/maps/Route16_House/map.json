@@ -2,7 +2,7 @@
   "id": "MAP_ROUTE16_HOUSE",
   "name": "Route16_House",
   "layout": "LAYOUT_ROUTE16_HOUSE",
-  "music": "MUS_HG_ROUTE11",
+  "music": "MUS_DUMMY",
   "region_map_section": "MAPSEC_ROUTE_16",
   "requires_flash": false,
   "weather": "WEATHER_NONE",

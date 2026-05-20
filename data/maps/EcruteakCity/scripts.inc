@@ -102,7 +102,7 @@ EcruteakCity_Trigger_Silver::
 	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_ECRUTEAK_SILVER (flags) -- port engine surface
 	clearflag FLAG_HIDE_ECRUTEAK_SILVER
 	addobject LOCALID_ECRUTEK_SILVER
-	playbgm MUS_HG_ENCOUNTER_RIVAL, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_ENCOUNTER_RIVAL
 	playse SE_BANG
 	applymovement LOCALID_ECRUTEK_SILVER, EcruteakCity_Movement_Silver1
 	applymovement OBJ_EVENT_ID_PLAYER, EcruteakCity_Movement_Silver1

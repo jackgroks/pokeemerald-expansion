@@ -2,7 +2,7 @@
   "id": "MAP_VERMILION_CITY_PORT_OUTSIDE",
   "name": "VermilionCity_PortOutside",
   "layout": "LAYOUT_VERMILION_CITY_PORT_OUTSIDE",
-  "music": "MUS_HG_VERMILION",
+  "music": "MUS_DUMMY",
   "region_map_section": "MAPSEC_VERMILION_CITY",
   "requires_flash": false,
   "weather": "WEATHER_NONE",

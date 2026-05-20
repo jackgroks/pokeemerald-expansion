@@ -2,7 +2,7 @@
   "id": "MAP_CELADON_CITY_APARTMENTS_ROOF_DAY",
   "name": "CeladonCity_Apartments_RoofDay",
   "layout": "LAYOUT_CELADON_CITY_APARTMENTS_ROOF_DAY",
-  "music": "MUS_HG_CELADON",
+  "music": "MUS_DUMMY",
   "region_map_section": "MAPSEC_CELADON_CITY",
   "requires_flash": false,
   "weather": "WEATHER_NONE",

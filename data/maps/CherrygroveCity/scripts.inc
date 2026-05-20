@@ -87,7 +87,7 @@ CherryGroveCity_EventScript_TriggerGent_Cancel::
 	end
 
 CherryGroveCity_EventScript_GentTour::
-	playbgm MUS_HG_FOLLOW_ME_1, FALSE
+	playbgm MUS_DUMMY, FALSE	@ MUS_HG_FOLLOW_ME_1
 	applymovement LOCALID_GUIDE_GENT, CherryGroveCity_Movement_Pokecenter
 	applymovement OBJ_EVENT_ID_PLAYER, CherryGroveCity_Movement_Pokecenter
 	waitmovement 0
@@ -237,7 +237,7 @@ CherryGroveCity_EventScript_TriggerSilver_Bottom::
 
 CherryGroveCity_EventScript_TriggerSilver::
 	lock
-	playbgm MUS_HG_ENCOUNTER_RIVAL, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_ENCOUNTER_RIVAL
 	applymovement LOCALID_CHERRYGROVE_SILVER, CherryGroveCity_Movement_Silver_Enter
 	waitmovement 0
 	msgbox CherrygroveCity_Text_RivalSeen, MSGBOX_DEFAULT
@@ -264,7 +264,7 @@ CherryGroveCity_Silver_Battle_Chikorita::
 	goto CherryGroveCity_Silver_AfterBattle
 
 CherryGroveCity_Silver_AfterBattle::
-	playbgm MUS_HG_RIVAL_EXIT, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_RIVAL_EXIT
 	msgbox CherrygroveCity_Text_RivalAfter, MSGBOX_DEFAULT
 	closemessage
 	applymovement OBJ_EVENT_ID_PLAYER, CherryGroveCity_Movement_Silver_Leave1Player

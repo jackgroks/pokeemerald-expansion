@@ -338,7 +338,7 @@ GoldenrodCity_UndergroundSwitches_EventScript_SilverTriggerTop::
 	playse SE_EXIT
 	waitse
 	playse SE_PIN
-	playbgm MUS_HG_ENCOUNTER_RIVAL, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_ENCOUNTER_RIVAL
 	@clearflag FLAG_HIDE_GOLDENROD_UNDERGROUND_SILVER
 	addobject LOCALID_GOLDENROD_UNDERGROUND_SILVER
 	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
@@ -352,7 +352,7 @@ GoldenrodCity_UndergroundSwitches_EventScript_SilverTriggerTop::
 	call_if_eq VAR_STARTER_MON, 0, GoldenrodCity_UndergroundSwitches_EventScript_Cyndaquil
 	call_if_eq VAR_STARTER_MON, 1, GoldenrodCity_UndergroundSwitches_EventScript_Totodile
 	call_if_eq VAR_STARTER_MON, 2, GoldenrodCity_UndergroundSwitches_EventScript_Chikorita
-	playbgm MUS_HG_RIVAL_EXIT, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_RIVAL_EXIT
 	msgbox GoldenrodUnderground_Text_SilverAfter, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_GOLDENROD_UNDERGROUND_SILVER, GoldenrodCity_UndergroundSwitches_Movement_SilverLeaveTop
@@ -373,7 +373,7 @@ GoldenrodCity_UndergroundSwitches_EventScript_SilverTriggerBot::
 	playse SE_EXIT
 	waitse
 	playse SE_PIN
-	playbgm MUS_HG_ENCOUNTER_RIVAL, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_ENCOUNTER_RIVAL
 	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_GOLDENROD_UNDERGROUND_SILVER (flags) -- port engine surface
 	clearflag FLAG_HIDE_GOLDENROD_UNDERGROUND_SILVER
 	addobject LOCALID_GOLDENROD_UNDERGROUND_SILVER
@@ -388,7 +388,7 @@ GoldenrodCity_UndergroundSwitches_EventScript_SilverTriggerBot::
 	call_if_eq VAR_STARTER_MON, 0, GoldenrodCity_UndergroundSwitches_EventScript_Cyndaquil
 	call_if_eq VAR_STARTER_MON, 1, GoldenrodCity_UndergroundSwitches_EventScript_Totodile
 	call_if_eq VAR_STARTER_MON, 2, GoldenrodCity_UndergroundSwitches_EventScript_Chikorita
-	playbgm MUS_HG_RIVAL_EXIT, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_RIVAL_EXIT
 	msgbox GoldenrodUnderground_Text_SilverAfter, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_GOLDENROD_UNDERGROUND_SILVER, GoldenrodCity_UndergroundSwitches_Movement_SilverLeaveBot

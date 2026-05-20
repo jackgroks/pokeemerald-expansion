@@ -49,7 +49,7 @@ TinTower_RoofDay_MapScript_HoohPostStoryEncounter::
 
 TinTower_RoofDay_EventScript_TalkToKimono::
 	lockall
-	playbgm MUS_HG_KIMONO_GIRL_DANCE, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_KIMONO_GIRL_DANCE
 	msgbox TinTower_RoofDay_Text_Kimono_Opening, MSGBOX_DEFAULT
 	closemessage
 
@@ -188,7 +188,7 @@ TinTower_RoofDay_EventScript_HoOh::
 	playmoncry SPECIES_HO_OH, CRY_MODE_ENCOUNTER
 	delay 30
 	waitmoncry
-	playbgm MUS_HG_VS_HO_OH, 0
+	playbgm MUS_DUMMY, 0	@ MUS_HG_VS_HO_OH
 	seteventmon SPECIES_HO_OH, 50
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle
@@ -221,7 +221,7 @@ TinTower_RoofDay_EventScript_HoOhPostgame::
 	playmoncry SPECIES_HO_OH, CRY_MODE_ENCOUNTER
 	delay 30
 	waitmoncry
-	playbgm MUS_HG_VS_HO_OH, 0
+	playbgm MUS_DUMMY, 0	@ MUS_HG_VS_HO_OH
 	seteventmon SPECIES_HO_OH, 70
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle

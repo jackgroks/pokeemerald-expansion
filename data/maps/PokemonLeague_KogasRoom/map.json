@@ -2,7 +2,7 @@
   "id": "MAP_POKEMON_LEAGUE_KOGAS_ROOM",
   "name": "PokemonLeague_KogasRoom",
   "layout": "LAYOUT_POKEMON_LEAGUE_KOGAS_ROOM",
-  "music": "MUS_HG_POKEMON_LEAGUE",
+  "music": "MUS_DUMMY",
   "region_map_section": "MAPSEC_INDIGO_PLATEAU",
   "requires_flash": false,
   "weather": "WEATHER_NONE",

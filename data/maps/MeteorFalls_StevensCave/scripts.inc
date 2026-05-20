@@ -47,7 +47,7 @@ MeteorFalls_StevensCave_EventScript_StevenRematch::
 	msgbox MeteorFalls_StevensCave_Text_ShouldKnowHowGoodIAmExpectWorst2, MSGBOX_DEFAULT
 	// TODO(pe-migration): missing in pe-expansion -- FLAG_SYS_SET_BATTLE_BGM (flags) -- port engine surface
 	setflag FLAG_SYS_SET_BATTLE_BGM
-	setvar VAR_TEMP_F, MUS_HG_VS_CHAMPION
+	setvar VAR_TEMP_F, MUS_DUMMY	@ MUS_HG_VS_CHAMPION
 	// TODO(pe-migration): missing in pe-expansion -- TRAINER_STEVEN2 (trainers) -- port engine surface
 	trainerbattle_no_intro TRAINER_STEVEN2, MeteorFalls_StevensCave_Text_StevenDefeat2
 	msgbox MeteorFalls_StevensCave_Text_MyPredictionCameTrue2, MSGBOX_DEFAULT

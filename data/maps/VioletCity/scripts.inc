@@ -93,7 +93,7 @@ VioletCity_EventScript_Earl::
 VioletCity_EventScript_EarlTrainerSchool::
 	msgbox VioletCity_Text_FollowEarl, MSGBOX_DEFAULT
 	closemessage
-	playbgm MUS_HG_FOLLOW_ME_1, FALSE
+	playbgm MUS_DUMMY, FALSE	@ MUS_HG_FOLLOW_ME_1
 	switch VAR_FACING
 	case DIR_NORTH, VioletCity_EventScript_EarlTrainerSchoolSouth
 	case DIR_WEST, VioletCity_EventScript_EarlTrainerSchoolEast
@@ -224,7 +224,7 @@ VioletCity_EventScript_ElmCall_Trigger::
 
 VioletCity_EventScript_Kimono_Girl::
 	lock
-	playbgm MUS_HG_KIMONO_GIRL, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_KIMONO_GIRL
 	playse SE_PIN
 	applymovement LOCALID_VIOLET_KIMONO, Common_Movement_ExclamationMark
 	delay 60

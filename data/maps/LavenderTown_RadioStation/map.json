@@ -2,7 +2,7 @@
   "id": "MAP_LAVENDER_TOWN_RADIO_STATION",
   "name": "LavenderTown_RadioStation",
   "layout": "LAYOUT_LAVENDER_TOWN_RADIO_STATION",
-  "music": "MUS_HG_LAVENDER",
+  "music": "MUS_DUMMY",
   "region_map_section": "MAPSEC_LAVENDER_TOWN",
   "requires_flash": false,
   "weather": "WEATHER_NONE",

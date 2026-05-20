@@ -45,7 +45,7 @@ SproutTower_3F_EventScript_EscapeRope::
 
 SproutTower_3F_EventScript_TriggerSceneLeft::
 	lock
-	playbgm MUS_HG_ENCOUNTER_RIVAL, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_ENCOUNTER_RIVAL
 	applymovement LOCALID_SPROUT_TOWER_SILVER, SproutTower_3F_Movement_Silver1
 	waitmovement 0
 	msgbox SproutTower_Text_ElderLecturesRival, MSGBOX_DEFAULT
@@ -77,7 +77,7 @@ SproutTower_3F_EventScript_TriggerSceneLeft::
 
 SproutTower_3F_EventScript_TriggerSceneRight::
 	lock
-	playbgm MUS_HG_ENCOUNTER_RIVAL, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_ENCOUNTER_RIVAL
 	applymovement LOCALID_SPROUT_TOWER_SILVER, SproutTower_3F_Movement_Silver1
 	waitmovement 0
 	msgbox SproutTower_Text_ElderLecturesRival, MSGBOX_DEFAULT
