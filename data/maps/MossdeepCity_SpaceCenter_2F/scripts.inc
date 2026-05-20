@@ -361,13 +361,14 @@ MossdeepCity_SpaceCenter_2F_EventScript_StevenFacePlayerWest::
 	return
 
 MossdeepCity_SpaceCenter_2F_EventScript_MaxieTrainer::
-	// TODO(pe-migration): missing in pe-expansion -- TRAINER_ARIANA_1 (trainers) -- port engine surface
-	trainerbattle TRAINER_BATTLE_SET_TRAINER_A, TRAINER_ARIANA_1, 0, MossdeepCity_SpaceCenter_2F_Text_JustWantToExpandLand, MossdeepCity_SpaceCenter_2F_Text_JustWantToExpandLand
+	// Phase 2 minimal-strip: pe-Hoenn unreachable in HnS Johto/Kanto play.
+	// Original SET_TRAINER_A/B chained battle requires cross-block fusion (Diamond R4 deferred).
+	// Map slated for full strip in facility-by-facility cleanup; stub kept compileable.
 	end
 
 MossdeepCity_SpaceCenter_2F_EventScript_TabithaTrainer::
-	// TODO(pe-migration): missing in pe-expansion -- TRAINER_ARCHER_1 (trainers) -- port engine surface
-	trainerbattle TRAINER_BATTLE_SET_TRAINER_B, TRAINER_ARCHER_1, 0, MossdeepCity_SpaceCenter_Text_TabithaDefeat, MossdeepCity_SpaceCenter_Text_TabithaDefeat
+	// Phase 2 minimal-strip: pe-Hoenn unreachable in HnS Johto/Kanto play.
+	// Original SET_TRAINER_B chained battle requires cross-block fusion (Diamond R4 deferred).
 	end
 
 MossdeepCity_SpaceCenter_2F_EventScript_RivalRayquazaCall::
