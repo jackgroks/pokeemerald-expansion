@@ -1819,15 +1819,10 @@ u8 *GetMapName(u8 *dest, mapsec_u16_t regionMapId, u16 padLength)
 // TODO: probably needs a better name
 u8 *GetMapNameGeneric(u8 *dest, mapsec_u16_t mapSecId)
 {
-    switch (mapSecId)
-    {
-    case MAPSEC_DYNAMIC:
-        return StringCopy(dest, gText_Ferry);
-    case MAPSEC_SECRET_BASE:
-        return StringCopy(dest, gText_SecretBase);
-    default:
-        return GetMapName(dest, mapSecId, 0);
-    }
+    // Phase 2 minimal-strip: pe-Hoenn MAPSEC_DYNAMIC + MAPSEC_SECRET_BASE both
+    // stub to MAPSEC_NONE -> duplicate-case. Hoenn-specific name lookups removed;
+    // default handles all HnS-region maps.
+    return GetMapName(dest, mapSecId, 0);
 }
 
 u8 *GetMapNameHandleAquaHideout(u8 *dest, mapsec_u16_t mapSecId)
@@ -2422,22 +2417,14 @@ static void CB_ExitFlyMap(void)
 
 u32 FilterFlyDestination(struct RegionMap* regionMap)
 {
-    switch (regionMap->mapSecId)
-    {
-    case MAPSEC_SOUTHERN_ISLAND:
-        return HEAL_LOCATION_SOUTHERN_ISLAND_EXTERIOR;
-    case MAPSEC_BATTLE_FRONTIER:
-        return HEAL_LOCATION_BATTLE_FRONTIER_OUTSIDE_EAST;
-    case MAPSEC_LITTLEROOT_TOWN:
-        return (gSaveBlock2Ptr->playerGender == MALE ? HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE : HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE);
-    case MAPSEC_EVER_GRANDE_CITY:
-        return (FlagGet(FLAG_LANDMARK_POKEMON_LEAGUE) && regionMap->posWithinMapSec == 0 ? HEAL_LOCATION_EVER_GRANDE_CITY_POKEMON_LEAGUE : HEAL_LOCATION_EVER_GRANDE_CITY);
-    default:
-        if (sMapHealLocations[regionMap->mapSecId][2] != HEAL_LOCATION_NONE)
-            return sMapHealLocations[regionMap->mapSecId][2];
-        else
-            return WARP_ID_NONE;
-    }
+    // Phase 2 minimal-strip: pe-Hoenn fly destinations removed (SOUTHERN_ISLAND,
+    // BATTLE_FRONTIER, LITTLEROOT_TOWN, EVER_GRANDE_CITY all stub to MAPSEC_NONE
+    // -> duplicate-case). HnS-Johto fly destinations TBD; default handles them via
+    // sMapHealLocations lookup.
+    if (sMapHealLocations[regionMap->mapSecId][2] != HEAL_LOCATION_NONE)
+        return sMapHealLocations[regionMap->mapSecId][2];
+    else
+        return WARP_ID_NONE;
 }
 
 void SetFlyDestination(struct RegionMap* regionMap)
