@@ -147,4 +147,7 @@ enum __attribute__((__packed__)) Flavor
 
 #define BERRY_TREES_COUNT 128
 
+// HnS Johto/Kanto berry trees occupy slots 90..127. See header for rationale.
+#include "constants/berry_tree_hns.h"
+
 #endif // GUARD_CONSTANTS_BERRY_H

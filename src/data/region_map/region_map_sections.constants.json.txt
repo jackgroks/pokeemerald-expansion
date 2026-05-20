@@ -23,4 +23,7 @@ enum {
 // for rationale and clean-up plan. Include must be after MAPSEC_NONE etc.
 #include "pe_hoenn_strip_stubs.h"
 
+// Phase 4 R5c: HnS-only MAPSEC stubs (13 entries). See header for rationale.
+#include "constants/region_map_hns.h"
+
 #endif // GUARD_CONSTANTS_REGION_MAP_SECTIONS_H

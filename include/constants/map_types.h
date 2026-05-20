@@ -36,4 +36,7 @@ enum MapBattleScene
 #define MAP_BATTLE_SCENE_LANCE    MAP_BATTLE_SCENE_NORMAL
 #define MAP_BATTLE_SCENE_LINK     MAP_BATTLE_SCENE_NORMAL
 
+// HnS Johto E4 battle-scene aliases (WILL / KOGA / KAREN). See header.
+#include "constants/map_battle_scene_hns.h"
+
 #endif  // GUARD_CONSTANTS_MAP_TYPES_H
