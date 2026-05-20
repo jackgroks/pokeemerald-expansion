@@ -1635,7 +1635,13 @@ const u16 gTilesetPalettes_UnionRoom[][16] =
 
 const u32 gTilesetTiles_UnionRoom[] = INCBIN_U32("data/tilesets/secondary/union_room/tiles.4bpp.fastSmol");
 
-#if IS_FRLG
+// Phase 4 R5f-followup (2026-05-20): IS_FRLG gate softened to #if 1 so pe's
+// FRLG Kanto tileset data tables (gTilesetTiles_PalletTown, _GameCorner,
+// _DepartmentStore, _SilphCo, _PokemonLeague, _HallOfFame, _IndigoPlateau,
+// etc.) are emitted in the emerald build. Companion ungate in headers.h.
+// HnS Johto/Kanto maps reference these by bare name. Pe never builds
+// IS_FRLG=1 in RC; no duplicate symbol risk.
+#if 1 // was: IS_FRLG
 
 const u32 gTilesetTiles_Building_Frlg[] = INCBIN_U32("data/tilesets/primary/building_frlg/tiles.4bpp.smol");
 

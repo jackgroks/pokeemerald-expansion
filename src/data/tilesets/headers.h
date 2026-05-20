@@ -833,7 +833,14 @@ const struct Tileset gTileset_UnionRoom =
     .callback = NULL,
 };
 
-#else
+#endif // was: !IS_FRLG block end. Phase 4 R5f-followup (2026-05-20):
+// the FRLG branch below was previously #else-gated. RC's emerald build needs
+// pe's FRLG-only Kanto tilesets (gTileset_PalletTown, _GameCorner, _SilphCo,
+// _PokemonLeague, _HallOfFame, _IndigoPlateau, _ViridianCity, _SeaCottage,
+// _PewterCity, _SaffronCity, _DepartmentStore, _GameCorner_Light, _GoldRoof,
+// _Lab, _NetCenter, _OakLab) since HnS Johto/Kanto maps reference them by
+// bare name. Pe never builds IS_FRLG=1 in RC, so always-compile is safe.
+#if 1 // was: #else (IS_FRLG branch)
 
 // FRLG tilesets
 const struct Tileset gTileset_BuildingFrlg =
