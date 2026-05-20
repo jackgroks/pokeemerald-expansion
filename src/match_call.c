@@ -1076,10 +1076,10 @@ static bool32 MapAllowsMatchCall(void)
      && FlagGet(FLAG_NEVER_SET_0x0DC) == FALSE)
         return FALSE;
 
-    if (gMapHeader.regionMapSectionId == MAPSEC_MT_CHIMNEY
-     && FlagGet(FLAG_MET_ARCHIE_METEOR_FALLS) == TRUE
-     && FlagGet(FLAG_DEFEATED_EVIL_TEAM_MT_CHIMNEY) == FALSE)
-        return FALSE;
+    // Phase 2 minimal-strip: MAPSEC_MT_CHIMNEY is a Hoenn-only sector (T9-dropped);
+    // the Archie/Magma cinematic gate at the volcano peak is unreachable in HnS play.
+    // Original: if (regionMapSectionId == MAPSEC_MT_CHIMNEY && FLAG_MET_ARCHIE_METEOR_FALLS
+    //              && !FLAG_DEFEATED_EVIL_TEAM_MT_CHIMNEY) return FALSE;
 
     return TRUE;
 }
