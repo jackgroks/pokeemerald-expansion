@@ -620,4 +620,13 @@
 // '(C)ompressed (E)vent'
 #define COMP_OW_TILE_TAG_BASE 0xCE00
 
+// Phase 4 R6c-followup (2026-05-20): wire pe_hoenn_strip_stubs.h so
+// the LOCALID_* / MAPSEC_* / TRAINER_CLASS_* / etc. stubs are visible to
+// the preproc context for any .s/.inc file that pulls event_objects.h
+// (notably data/event_scripts.s where Route111/Faraway/RusturfTunnel
+// scripts reference stripped Hoenn LOCALIDs). Previously the stubs header
+// was only included from region_map_sections.h, leaving event-script
+// LOCALID references unresolved at link.
+#include "constants/pe_hoenn_strip_stubs.h"
+
 #endif  // GUARD_CONSTANTS_EVENT_OBJECTS_H
