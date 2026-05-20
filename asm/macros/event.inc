@@ -2915,3 +2915,7 @@
 	getbraillestringwidth \text
 	call EventScript_BrailleCursorWaitButton
 	.endm
+
+@ Additive HnS script-macro shims (Phase 4 R1, 2026-05-20). See file for
+@ semantic deltas and queued upstream proper-fixes.
+	.include "asm/macros/event_hns.inc"
