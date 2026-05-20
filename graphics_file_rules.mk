@@ -55,11 +55,10 @@ $(TILESETGFXDIR)/secondary/pacifidlog/tiles.4bpp: %.4bpp: %.png
 $(TILESETGFXDIR)/secondary/sootopolis/tiles.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 328 -Wnum_tiles
 
-$(TILESETGFXDIR)/secondary/battle_frontier_outside_west/tiles.4bpp: %.4bpp: %.png
-	$(GFX) $< $@ -num_tiles 508 -Wnum_tiles
-
-$(TILESETGFXDIR)/secondary/battle_frontier_outside_east/tiles.4bpp: %.4bpp: %.png
-	$(GFX) $< $@ -num_tiles 508 -Wnum_tiles
+# Phase-2-minimal-strip (HMS Spey, Wave 2): battle_frontier_outside_{west,east}
+# tileset rules stripped. Source PNGs had 508 tiles each > 384 GBA 4bpp max.
+# Battle Frontier facility queued for deletion in a follow-up feature;
+# PNGs left on disk.
 
 $(TILESETGFXDIR)/primary/building/tiles.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 502 -Wnum_tiles
@@ -139,8 +138,9 @@ $(TILESETGFXDIR)/secondary/secret_base/red_cave/tiles.4bpp: %.4bpp: %.png
 $(TILESETGFXDIR)/secondary/inside_of_truck/tiles.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 62 -Wnum_tiles
 
-$(TILESETGFXDIR)/secondary/contest/tiles.4bpp: %.4bpp: %.png
-	$(GFX) $< $@ -num_tiles 430 -Wnum_tiles
+# Phase-2-minimal-strip (HMS Spey, Wave 2): contest tileset rule stripped.
+# Source PNG had 430 tiles > 384 GBA 4bpp max. Contest hall queued for
+# deletion in a follow-up feature; PNG left on disk.
 
 $(TILESETGFXDIR)/secondary/lilycove_museum/tiles.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 431 -Wnum_tiles
@@ -193,8 +193,9 @@ $(TILESETGFXDIR)/secondary/elite_four/tiles.4bpp: %.4bpp: %.png
 $(TILESETGFXDIR)/secondary/battle_frontier/tiles.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 310 -Wnum_tiles
 
-$(TILESETGFXDIR)/secondary/battle_factory/tiles.4bpp: %.4bpp: %.png
-	$(GFX) $< $@ -num_tiles 424 -Wnum_tiles
+# Phase-2-minimal-strip (HMS Spey, Wave 2): battle_factory tileset rule stripped.
+# Source PNG had 424 tiles > 384 GBA 4bpp max. Battle Frontier facility queued
+# for deletion in a follow-up feature; PNG left on disk.
 
 $(TILESETGFXDIR)/secondary/battle_pike/tiles.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 382 -Wnum_tiles

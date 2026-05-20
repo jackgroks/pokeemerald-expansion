@@ -319,6 +319,7 @@ static void Task_OpenCenterWhiteColumn(u8);
 static void Task_CloseCenterWhiteColumn(u8);
 static void CB2_SaveAndEndWirelessTrade(void);
 
+#include "data/trade_pe_templates.h"
 #include "data/trade.h"
 
 static bool8 SendLinkData(const void *linkData, u32 size)

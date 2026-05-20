@@ -3,6 +3,9 @@ AbandonedShip_Underwater1_MapScripts::
 	.byte 0
 
 AbandonedShip_Underwater1_OnResume:
-	setdivewarp MAP_ABANDONED_SHIP_HIDDEN_FLOOR_CORRIDORS, 0, 10
+	@ Phase 2 minimal-strip: AbandonedShip_HiddenFloor{Corridors,Rooms}
+	@ removed from build (HnS Sevii side-mission, not on Phase 5 path).
+	@ Dive trigger neutered; restore alongside facility-cleanup feature.
+	@ setdivewarp MAP_ABANDONED_SHIP_HIDDEN_FLOOR_CORRIDORS, 0, 10
 	end
 

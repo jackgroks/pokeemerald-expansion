@@ -428,6 +428,12 @@ B_ATK_TRAINER_NAME_WITH_CLASS = FD 45
 B_EFF_TEAM1 = FD 46
 B_EFF_TEAM2 = FD 47
 
+@ Phase 2 minimal-strip: HnS rival-name buffer token stubbed to B_PLAYER_NAME (FD 23).
+@ When the rival-naming UX event is authored (HnS-style early-game encounter
+@ to name the rival), allocate a fresh FD XX slot and wire up the buffer.
+@ Until then, in-game "{B_RIVAL_NAME}" substitutions resolve to the player's name.
+B_RIVAL_NAME = FD 23
+
 @ indicates the end of a town/city name (before " TOWN" or " CITY")
 NAME_END = FC 00
 

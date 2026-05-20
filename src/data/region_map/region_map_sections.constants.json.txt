@@ -19,4 +19,8 @@ enum {
 #define KANTO_MAPSEC_END    MAPSEC_SPECIAL_AREA
 #define KANTO_MAPSEC_COUNT (KANTO_MAPSEC_END - KANTO_MAPSEC_START + 1)
 
+// Phase 2 minimal-strip: pe-Hoenn MAPSEC/LOCALID stub aliases. See header
+// for rationale and clean-up plan. Include must be after MAPSEC_NONE etc.
+#include "pe_hoenn_strip_stubs.h"
+
 #endif // GUARD_CONSTANTS_REGION_MAP_SECTIONS_H

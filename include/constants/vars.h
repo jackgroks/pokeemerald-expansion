@@ -281,7 +281,12 @@
 // (same numeric value as HnS's original 0x40FF). Phase 5-prep R3.
 #define VAR_GARBAGEVAR                                   VAR_UNUSED_0x40FF
 
-#define VARS_END                                         0x40FF
+// HnS-only progression VARs (66 entries) appended additively past pe's
+// vanilla 0x4000..0x40FF range. See pe-expansion/CLAUDE.md "Non-additive
+// bumps" entry. VARS_END below rebases on HNS_VARS_END.
+#include "constants/vars_hns.h"
+
+#define VARS_END                                         HNS_VARS_END
 #define VARS_COUNT                                       (VARS_END - VARS_START + 1)
 
 #define SPECIAL_VARS_START            0x8000
