@@ -61,3 +61,53 @@
 		.byte 0xf5
 		.byte 0xf5
 	.endm
+
+@ More HnS opcodes (0xe9/0xea/0xeb/0xec/0xed/0xf3) — byte-passthrough stubs.
+@ All HnS-engine extensions; pe runtime handlers queued for Phase 4 port.
+@   0xe9 givenamedmon    — give named special mon (KENYA/SHUCKIE/EEVEE)
+@   0xea removenamedmon  — counterpart removal
+@   0xeb remove5mons     — wholesale party removal
+@   0xec setwildbattleshiny — shiny variant of setwildbattle
+@   0xed removegenericmon  — conditional removal by species
+@   0xf3 buffermoncategory — category-string buffer
+
+	.macro givenamedmon number:req
+		.byte 0xe9
+		.2byte \number
+	.endm
+
+	.macro removenamedmon number:req
+		.byte 0xea
+		.2byte \number
+	.endm
+
+	.macro remove5mons
+		.byte 0xeb
+	.endm
+
+	.macro setwildbattleshiny species:req, level:req, item=ITEM_NONE
+		.byte 0xec
+		.2byte \species
+		.byte \level
+		.2byte \item
+	.endm
+
+	.macro removegenericmon number:req
+		.byte 0xed
+		.2byte \number
+	.endm
+
+	.macro buffermoncategory stringVarId:req, species:req
+		.byte 0xf3
+		stringvar \stringVarId
+		.2byte \species
+	.endm
+
+@ chooseitem: HnS composite that calls SPECIAL_ChooseItemFromBag (an HnS
+@ special function not in pe's specials table). Stub as a no-op for Phase 4
+@ R1; proper fix queued: port ChooseItemFromBag into pe's specials.inc +
+@ src/scrcmd.c. Stub uses VAR_TEMP_0/_1 writes only (no engine effect).
+@ Sites: SaffronCity_FightingDojoVIP BP rewards (not on Phase 5 path).
+	.macro chooseitem pocket:req
+		setvar VAR_TEMP_0, \pocket
+	.endm
