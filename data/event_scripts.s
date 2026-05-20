@@ -108,6 +108,17 @@ gSpecialVars::
 
 	.include "data/specials.inc"
 
+@ Phase 4 R6c-followup (2026-05-20): asm-side LOCALID stubs for pe-Hoenn
+@ events that pe still ships scripts for but whose object-event templates
+@ were stripped from the affected map dirs during Phase 2 minimal-strip.
+@ Cannot use pe_hoenn_strip_stubs.h directly here because its #defines would
+@ collide with contest_hall.inc .set lines for LOCALID_CONTESTANT_*. The .set
+@ here is local-scope to event_scripts.s and harmless to other .o files.
+.set LOCALID_FARAWAY_ISLAND_MEW, 0
+.set LOCALID_ROUTE111_PLAYER_FALLING, 0
+.set LOCALID_RUSTURF_TUNNEL_WANDA, 0
+.set LOCALID_RUSTURF_TUNNEL_WANDAS_BF, 0
+
 gStdScripts::
 	.4byte Std_ObtainItem              @ STD_OBTAIN_ITEM
 	.4byte Std_FindItem                @ STD_FIND_ITEM
