@@ -202,7 +202,7 @@ CianwoodCity_EventScript_SuicuneTrigger::
 	delay 30
 	waitmovement 0
 	delay 30
-	playbgm MUS_HG_EUSINE, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_EUSINE
 	// TODO(pe-migration): missing in pe-expansion -- FLAG_HIDE_CIANWOOD_EUSINE (flags) -- port engine surface
 	clearflag FLAG_HIDE_CIANWOOD_EUSINE
 	addobject LOCALID_CIANWOOD_EUSINE
@@ -214,7 +214,7 @@ CianwoodCity_EventScript_SuicuneTrigger::
 	msgbox CianwoodCity_Text_EusineSuicune, MSGBOX_DEFAULT
 	// TODO(pe-migration): missing in pe-expansion -- TRAINER_EUSINE (trainers) -- port engine surface
 	trainerbattle_no_intro TRAINER_EUSINE, CianwoodCity_Text_EusineBeaten
-	playbgm MUS_HG_EUSINE, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_EUSINE
 	msgbox CianwoodCity_Text_EusineAfter, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_CIANWOOD_EUSINE, CianwoodCity_Movement_Eusine3

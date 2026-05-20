@@ -1,5 +1,9 @@
-.set LOCALID_CERULEAN_WOMAN, 2
-.set LOCALID_CERULEAN_SLOWBRO, 3
+@ Phase 4 R3 (HMS Resolute II): LOCALID_CERULEAN_{WOMAN,SLOWBRO} removed.
+@ pe's mapjson tool emits `#define LOCALID_<name> <id>` headers from
+@ CeruleanCity_Frlg/map.json (which declares both names, with Frlg local-IDs
+@ 11 and 5). cpp expands the symbols before GAS sees the `.set`, yielding
+@ `.set 11, 2` -> "expected symbol name". Replaced with literal IDs 2/3 below
+@ to preserve HnS CeruleanCity semantics (HnS map.json has no local_id field).
 
 CeruleanCity_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, CeruleanCity_EventScript_CityEnter
@@ -73,16 +77,16 @@ CeruleanCity_Text_Slowbro:
 
 CeruleanCity_EventScript_SlowbroWoman::
 	msgbox CeruleanCity_Text_CooltrainerF1, MSGBOX_NPC
-	turnobject LOCALID_CERULEAN_WOMAN, DIR_EAST
+	turnobject 2, DIR_EAST @ LOCALID_CERULEAN_WOMAN
 	msgbox CeruleanCity_Text_CooltrainerF2, MSGBOX_DEFAULT
 	delay 20
 	playmoncry SPECIES_SLOWBRO, CRY_MODE_NORMAL
-	applymovement2 LOCALID_CERULEAN_SLOWBRO, Common_Movement_QuestionMark
-	turnobject LOCALID_CERULEAN_SLOWBRO DIR_WEST
+	applymovement2 3, Common_Movement_QuestionMark @ LOCALID_CERULEAN_SLOWBRO
+	turnobject 3 DIR_WEST @ LOCALID_CERULEAN_SLOWBRO (sic: missing comma preserved from HnS)
 	delay 30
-	turnobject LOCALID_CERULEAN_SLOWBRO, DIR_EAST
+	turnobject 3, DIR_EAST @ LOCALID_CERULEAN_SLOWBRO
 	delay 30
-	turnobject LOCALID_CERULEAN_SLOWBRO, DIR_SOUTH
+	turnobject 3, DIR_SOUTH @ LOCALID_CERULEAN_SLOWBRO
 	delay 70
 	msgbox CeruleanCity_Text_CooltrainerF3, MSGBOX_NPC
 	end

@@ -2,7 +2,7 @@
   "id": "MAP_TRAINER_HILL_ELEVATOR",
   "name": "TrainerHill_Elevator",
   "layout": "LAYOUT_BATTLE_ELEVATOR",
-  "music": "MUS_HG_POKEATHLON_LOBBY",
+  "music": "MUS_DUMMY",
   "region_map_section": "MAPSEC_TRAINER_HILL",
   "requires_flash": false,
   "weather": "WEATHER_NONE",

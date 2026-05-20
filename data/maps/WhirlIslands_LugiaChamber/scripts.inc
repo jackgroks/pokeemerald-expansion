@@ -37,7 +37,7 @@ WhirlIslands_LugiaChamber_MapScript_LugiaPostStoryEncounter::
 
 WhirlIslands_LugiaChamber_EventScript_TalkToKimono::
 	lockall
-	playbgm MUS_HG_KIMONO_GIRL_DANCE, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_KIMONO_GIRL_DANCE
 	msgbox WhirlIslands_LugiaChamber_Text_Kimono_Opening, MSGBOX_DEFAULT
 	closemessage
 
@@ -189,7 +189,7 @@ WhirlIslands_LugiaChamber_EventScript_Lugia::
 	playmoncry SPECIES_LUGIA, CRY_MODE_ENCOUNTER
 	delay 30
 	waitmoncry
-	playbgm MUS_HG_VS_LUGIA, 0
+	playbgm MUS_DUMMY, 0	@ MUS_HG_VS_LUGIA
 	seteventmon SPECIES_LUGIA, 50
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle
@@ -222,7 +222,7 @@ WhirlIslands_LugiaChamber_EventScript_LugiaPostgame::
 	playmoncry SPECIES_LUGIA, CRY_MODE_ENCOUNTER
 	delay 30
 	waitmoncry
-	playbgm MUS_HG_VS_LUGIA, 0
+	playbgm MUS_DUMMY, 0	@ MUS_HG_VS_LUGIA
 	seteventmon SPECIES_LUGIA, 70
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle

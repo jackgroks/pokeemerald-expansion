@@ -127,7 +127,7 @@ Route39_EventScript_LegendaryTriggerSilver::
 
 Route39_EventScript_BaobaIntro::
 	msgbox Route39_Text_BaobaIntro, MSGBOX_DEFAULT
-	playse MUS_HG_POKEGEAR_REGISTERED
+	playse MUS_DUMMY	@ MUS_HG_POKEGEAR_REGISTERED
 	msgbox Route39_Text_Registered, MSGBOX_DEFAULT
 	waitse
 	msgbox Route39_Text_WillCall, MSGBOX_DEFAULT

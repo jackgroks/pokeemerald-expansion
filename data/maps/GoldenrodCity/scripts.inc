@@ -90,7 +90,7 @@ GoldenrodCity_Trigger_Music::
 	goto_if_lt VAR_GOLDENROD_CITY_STATE, 6, GoldenrodCity_Trigger_MusicNotYet
 	// TODO(pe-migration): missing in pe-expansion -- VAR_GOLDENROD_CITY_STATE (vars) -- port engine surface
 	goto_if_ge VAR_GOLDENROD_CITY_STATE, 11, GoldenrodCity_Trigger_MusicNotYet
-	playbgm MUS_HG_ROCKET_TAKEOVER, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_ROCKET_TAKEOVER
 	setvar VAR_TEMP_0, 1 
 	end
 

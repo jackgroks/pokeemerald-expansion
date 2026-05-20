@@ -345,13 +345,14 @@ RocketHideout_B2F_EventScript_DoLanceMultiBattle::
 	waitstate
 
 RocketHideout_B2F_EventScript_ArianaTrainer::
-	// TODO(pe-migration): missing in pe-expansion -- TRAINER_ARIANA_1 (trainers) -- port engine surface
-	trainerbattle TRAINER_BATTLE_SET_TRAINER_A, TRAINER_ARIANA_1, 0, RocketHideout_B2F_Text_ArianaLoss, RocketHideout_B2F_Text_ArianaLoss
+	// Phase 4 R3 minimal-strip: TRAINER_BATTLE_SET_TRAINER_A/B (HnS-only frontier variant; needs engine port for Lance/Ariana Mahogany scene).
+	// Stub-stripped per Mossdeep precedent (c8f9c6bc5c). Johto-critical content; Phase 4 R4 engine-port follow-up.
+	// Original: trainerbattle TRAINER_BATTLE_SET_TRAINER_A, TRAINER_ARIANA_1, 0, RocketHideout_B2F_Text_ArianaLoss, RocketHideout_B2F_Text_ArianaLoss
 	end
 
 RocketHideout_B2F_EventScript_GruntTrainer::
-	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GRUNT_23 (trainers) -- port engine surface
-	trainerbattle TRAINER_BATTLE_SET_TRAINER_B, TRAINER_GRUNT_23, 0, RocketHideout_B2F_Text_GruntLoss, RocketHideout_B2F_Text_GruntLoss
+	// Phase 4 R3 minimal-strip: TRAINER_BATTLE_SET_TRAINER_B (paired with ArianaTrainer chain). Phase 4 R4 engine-port follow-up.
+	// Original: trainerbattle TRAINER_BATTLE_SET_TRAINER_B, TRAINER_GRUNT_23, 0, RocketHideout_B2F_Text_GruntLoss, RocketHideout_B2F_Text_GruntLoss
 	end
 
 RocketHideout_B2F_EventScript_DefeatedAriana::

@@ -104,10 +104,18 @@
 	.endm
 
 @ chooseitem: HnS composite that calls SPECIAL_ChooseItemFromBag (an HnS
-@ special function not in pe's specials table). Stub as a no-op for Phase 4
-@ R1; proper fix queued: port ChooseItemFromBag into pe's specials.inc +
-@ src/scrcmd.c. Stub uses VAR_TEMP_0/_1 writes only (no engine effect).
-@ Sites: SaffronCity_FightingDojoVIP BP rewards (not on Phase 5 path).
+@ special function not in pe's specials table). Stub as a true no-op for
+@ Phase 4 R3; proper fix queued: port ChooseItemFromBag into pe's
+@ specials.inc + src/scrcmd.c.
+@ Sites: SaffronCity_FightingDojoVIP BP rewards (not on Phase 5 path),
+@ IcePath_B3F (Swinub/Delibird BERRIES_POCKET), Route14, Route28_House,
+@ IcePath_B1F.
+@ Phase 4 R3 fix (HMS Resolute II): \pocket was BERRIES_POCKET, a C enum
+@ (POCKET_BERRIES in include/constants/item.h) not visible to cpp/GAS, so
+@ the expanded `setvar VAR_TEMP_0, BERRIES_POCKET` resolved to a
+@ non-constant expression and the trailing `.if` macro guard in setvar
+@ rejected it. Replaced \pocket-passthrough with literal 0 (true no-op;
+@ stub already discards the pocket arg downstream).
 	.macro chooseitem pocket:req
-		setvar VAR_TEMP_0, \pocket
+		setvar VAR_TEMP_0, 0 @ stub: \pocket arg discarded (Phase 4 R3)
 	.endm

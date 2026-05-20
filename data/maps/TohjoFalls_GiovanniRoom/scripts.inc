@@ -95,7 +95,7 @@ TohjoFalls_EventScript_GiovanniScene::
 	clearflag FLAG_HIDE_TOHJO_GIOVANNI
 	addobject LOCALID_TOHJOFALLS_GIOVANNI
 	waitse
-	playbgm MUS_HG_RADIO_ROCKET, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_RADIO_ROCKET
 	fadescreen FADE_FROM_WHITE
 	delay 50
 	turnobject  OBJ_EVENT_ID_PLAYER, DIR_NORTH
@@ -115,7 +115,7 @@ TohjoFalls_EventScript_GiovanniScene::
 	msgbox TohjoFalls_GiovanniRoom_Text_GiovanniBeforeBattle, MSGBOX_DEFAULT
 	// TODO(pe-migration): missing in pe-expansion -- TRAINER_GIOVANNI (trainers) -- port engine surface
 	trainerbattle_no_intro TRAINER_GIOVANNI, TohjoFalls_GiovanniRoom_Text_GiovanniDefeat
-	playbgm MUS_HG_RADIO_ROCKET, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_RADIO_ROCKET
 	applymovement2 LOCALID_TOHJOFALLS_GIOVANNI, TohjoFalls_Movement_GiovanniTakenAback
 	waitmovement 0
 	msgbox TohjoFalls_GiovanniRoom_Text_GiovanniAfter, MSGBOX_DEFAULT

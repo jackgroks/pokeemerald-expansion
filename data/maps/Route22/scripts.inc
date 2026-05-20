@@ -130,7 +130,7 @@ Route22_EventScript_Scene::
 	msgbox Route22_Text_Silver5, MSGBOX_DEFAULT
 	closemessage
 	delay 20
-	playbgm MUS_HG_ENCOUNTER_RIVAL, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_ENCOUNTER_RIVAL
 	applymovement2 LOCALID_ROUTE22_SILVER, Route22_Movement_SilverStartLeave
 	applymovement2 OBJ_EVENT_ID_CAMERA, Route22_Movement_CameraPanRight
 	waitmovement LOCALID_ROUTE22_SILVER

@@ -22,7 +22,7 @@ MahoganyTown_Shop_OnFrame::
 	.2byte 0
 
 MahoganyTown_Shop_EventScript_Raid::
-	playbgm MUS_HG_TEAM_ROCKET_HQ, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_TEAM_ROCKET_HQ
 	lock
 	playse SE_PIN
 	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark

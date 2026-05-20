@@ -20,7 +20,7 @@ IcePath_1F_EventScript_Item_HM_Waterfall::
 
 IcePath_1F_EventScript_KimonoGirl::
 	lock
-	playbgm MUS_HG_KIMONO_GIRL, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_KIMONO_GIRL
 	goto_if_eq VAR_FACING, DIR_SOUTH, IcePath_1F_EventScript_KimonoGirlPushPrompt
 	msgbox IcePath_1F_Text_Stuck1, MSGBOX_DEFAULT
 	closemessage

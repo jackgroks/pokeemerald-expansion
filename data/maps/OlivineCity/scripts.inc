@@ -86,7 +86,7 @@ OlivineCity_EventScript_SilverTrigger::
 	clearflag FLAG_HIDE_OLIVINE_SILVER
 	opendoor 11, 27
 	addobject LOCALID_OLIVINE_SILVER
-	playbgm MUS_HG_ENCOUNTER_RIVAL, TRUE
+	playbgm MUS_DUMMY, TRUE	@ MUS_HG_ENCOUNTER_RIVAL
 	delay 20 
 	closedoor 11, 27
 	getplayerxy VAR_TEMP_0, VAR_TEMP_1
