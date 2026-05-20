@@ -31,4 +31,46 @@
  * land them here as additive #defines rather than re-numbering items.h.
  * ============================================================================ */
 
+/* ============================================================================
+ * Phase 4 R6b HnS-only key items (HMS Norfolk, 2026-05-20).
+ *
+ * 17 HnS-only item symbols referenced by HnS-imported scripts (map.json
+ * giveitem / additem / removeitem calls, scripts.inc literals) with no
+ * pe-expansion equivalent. Disposition: BETA-STUB to ITEM_NONE for link
+ * resolution. Reasoning:
+ *
+ *   - ROM-produce-critical path is link-resolution only. Semantic item
+ *     behavior (e.g., ITEM_GS_BALL plot gate to Ilex Forest / Celebi,
+ *     ITEM_SILVER_WING / ITEM_RAINBOW_WING legendary encounter gates,
+ *     ITEM_RADIO + ITEM_PASS quest items) is post-Phase-6 polish.
+ *   - Stubbing to ITEM_NONE makes giveitem / removeitem calls no-op
+ *     gracefully (additem of ITEM_NONE is checked by AddBagItem and
+ *     returns FALSE without modifying inventory). checkitem of ITEM_NONE
+ *     returns FALSE so scripts gating on these items fall through to the
+ *     no-feature path.
+ *   - Proper item ports queued as feat/port-hns-key-items post-Phase-6;
+ *     each item gets a real slot in items.h + items.h data entry +
+ *     bag-pocket assignment.
+ *
+ * Apostrophe-free docstring per gnu17 cpp quirk noted in flags_hns.h.
+ * ============================================================================ */
+
+#define ITEM_CLEAR_BELL              ITEM_NONE
+#define ITEM_EXP_SHARE_SMALL         ITEM_NONE
+#define ITEM_FERTILIZER              ITEM_NONE
+#define ITEM_GS_BALL                 ITEM_NONE
+#define ITEM_INFINITE_RARE_CANDIES   ITEM_NONE
+#define ITEM_INFINITE_REPEL          ITEM_NONE
+#define ITEM_LOST_ITEM               ITEM_NONE
+#define ITEM_MACHINE_PART            ITEM_NONE
+#define ITEM_MYSTERY_EGG             ITEM_NONE
+#define ITEM_PASS                    ITEM_NONE
+#define ITEM_RADIO                   ITEM_NONE
+#define ITEM_RAINBOW_WING            ITEM_NONE
+#define ITEM_RED_SCALE               ITEM_NONE
+#define ITEM_SECRET_POTION           ITEM_NONE
+#define ITEM_SILVER_WING             ITEM_NONE
+#define ITEM_SQUIRT_BOTTLE           ITEM_NONE
+#define ITEM_TIDAL_BELL              ITEM_NONE
+
 #endif // GUARD_CONSTANTS_ITEMS_HNS_H

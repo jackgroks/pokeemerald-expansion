@@ -168,6 +168,8 @@
 #define MULTI_EGGS_VICTORIES_QUIT                        157
 #define MULTI_HOF_EGGS_VICTORIES_QUIT                    158
 
+#include "constants/multi_choice_hns.h"
+
 #define MULTI_NONE 255
 
 // Lilycove SS Tidal Multichoice Selections
