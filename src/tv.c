@@ -5523,23 +5523,10 @@ static void DoTVShowTodaysRivalTrainer(void)
         switch (show->rivalTrainer.location)
         {
         default:
+            // Phase 2 minimal-strip: pe-Hoenn MAPSEC_SECRET_BASE + MAPSEC_DYNAMIC cases
+            // removed (both stub to MAPSEC_NONE -> duplicate-case). Hoenn TV rival
+            // location dispatch is dead in HnS Johto/Kanto play; default branch handles all.
             sTVShowState = 7;
-            break;
-        case MAPSEC_SECRET_BASE:
-            sTVShowState = 8;
-            break;
-        case MAPSEC_DYNAMIC:
-            switch (show->rivalTrainer.mapLayoutId)
-            {
-            case LAYOUT_SS_TIDAL_CORRIDOR:
-            case LAYOUT_SS_TIDAL_LOWER_DECK:
-            case LAYOUT_SS_TIDAL_ROOMS:
-                sTVShowState = 10;
-                break;
-            default:
-                sTVShowState = 9;
-                break;
-            }
             break;
         }
         break;

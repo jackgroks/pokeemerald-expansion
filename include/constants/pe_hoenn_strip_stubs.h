@@ -247,6 +247,8 @@
 #define TRAINER_CLASS_PSYCHIC_M          TRAINER_CLASS_PKMN_TRAINER_1
 #define TRAINER_CLASS_SAGE               TRAINER_CLASS_PKMN_TRAINER_1
 #define TRAINER_CLASS_TEAM_ROCKET        TRAINER_CLASS_PKMN_TRAINER_1
+#define TRAINER_CLASS_MYSTERY_MAN        TRAINER_CLASS_PKMN_TRAINER_1
+#define TRAINER_CLASS_ROCKET_ADMIN       TRAINER_CLASS_PKMN_TRAINER_1
 
 // HnS-specific TRAINER_ENCOUNTER_MUSIC_* (encounter jingles). Pe has HG_*
 // prefixed variants but not HnS's bare names. Alias to closest HG match.
