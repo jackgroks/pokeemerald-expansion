@@ -428,8 +428,10 @@ gStdScripts_End::
 	.include "data/maps/AbandonedShip_Rooms2_1F/scripts.inc"
 	.include "data/maps/AbandonedShip_CaptainsOffice/scripts.inc"
 	.include "data/maps/AbandonedShip_Underwater2/scripts.inc"
-	.include "data/maps/AbandonedShip_HiddenFloorCorridors/scripts.inc"
-	.include "data/maps/AbandonedShip_HiddenFloorRooms/scripts.inc"
+	@ Phase 2 minimal-strip: AbandonedShip_HiddenFloor{Corridors,Rooms} removed
+	@ (HnS Sevii side-mission, not on Phase 5 critical path). Map dirs and
+	@ layout entries deleted; .include lines neutered. Orphan symbol defs
+	@ remain in data/scripts/item_ball_scripts.inc (harmless, no consumers).
 	.include "data/maps/IslandCave/scripts.inc"
 	.include "data/maps/AncientTomb/scripts.inc"
 	.include "data/maps/Underwater_Route134/scripts.inc"
