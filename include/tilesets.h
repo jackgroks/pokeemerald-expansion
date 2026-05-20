@@ -61,4 +61,5 @@ extern const struct Tileset gTileset_SSAnne;
 extern const struct Tileset gTileset_SeaCottage;
 extern const struct Tileset gTileset_TrainerTower;
 
+#include "tilesets_hns.h"
 #endif //GUARD_tilesets_H

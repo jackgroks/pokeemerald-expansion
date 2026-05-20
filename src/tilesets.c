@@ -3,5 +3,8 @@
 #include "tileset_anims.h"
 
 #include "data/tilesets/graphics.h"
+#include "data/tilesets/graphics_hns.h"
 #include "data/tilesets/metatiles.h"
+#include "data/tilesets/metatiles_hns.h"
 #include "data/tilesets/headers.h"
+#include "data/tilesets/headers_hns.h"
