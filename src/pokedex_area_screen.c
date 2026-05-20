@@ -148,27 +148,22 @@ static void LoadHGSSScreenSelectBarSubmenu(void);
 
 static const u16 sSpeciesHiddenFromAreaScreen[] = { SPECIES_WYNAUT };
 
-static const mapsec_u16_t sMovingRegionMapSections[3] =
+// Phase 2 minimal-strip: pe-Hoenn weather-event moving region map sections
+// (Marine Cave, Terra Cave) and pe-Hoenn flag-gated landmark MAPSECs are
+// dropped — none reachable in HnS Johto/Kanto play. Arrays preserve their
+// types with MAPSEC_NONE sentinels so consumer loops terminate immediately.
+static const mapsec_u16_t sMovingRegionMapSections[1] =
 {
-    MAPSEC_MARINE_CAVE,
-    MAPSEC_UNDERWATER_MARINE_CAVE,
-    MAPSEC_TERRA_CAVE
+    MAPSEC_NONE
 };
 
 static const u16 sFeebasData[][3] =
 {
-    {SPECIES_FEEBAS, MAP_GROUP(MAP_ROUTE119), MAP_NUM(MAP_ROUTE119)},
     {NUM_SPECIES}
 };
 
 static const mapsec_u16_t sLandmarkData[][2] =
 {
-    {MAPSEC_SKY_PILLAR,       FLAG_LANDMARK_SKY_PILLAR},
-    {MAPSEC_SEAFLOOR_CAVERN,  FLAG_LANDMARK_SEAFLOOR_CAVERN},
-    {MAPSEC_ALTERING_CAVE,    FLAG_LANDMARK_ALTERING_CAVE},
-    {MAPSEC_MIRAGE_TOWER,     FLAG_LANDMARK_MIRAGE_TOWER},
-    {MAPSEC_DESERT_UNDERPASS, FLAG_LANDMARK_DESERT_UNDERPASS},
-    {MAPSEC_ARTISAN_CAVE,     FLAG_LANDMARK_ARTISAN_CAVE},
     {MAPSEC_NONE}
 };
 
