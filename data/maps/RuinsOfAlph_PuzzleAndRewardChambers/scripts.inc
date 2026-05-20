@@ -109,7 +109,7 @@ RuinsOfAlph_PuzzleAndRewardChambers_EventScript_Receptionist3::
 
 RuinsOfAlph_PuzzleAndRewardChambers_EventScript_KabutoPuzzle::
 	fadescreen FADE_TO_BLACK
-	setvar VAR_0x8004, SLIDING_PUZZLE_KABUTO
+	setvar VAR_0x8004, 0 @ SLIDING_PUZZLE_KABUTO
 	// TODO(pe-migration): missing in pe-expansion -- FLAG_COMPLETED_KABUTO_PUZZLE (flags) -- port engine surface
 	goto_if_set FLAG_COMPLETED_KABUTO_PUZZLE, RuinsOfAlph_PuzzleAndRewardChambers_EventScript_KabutoPuzzleCompleted
 	setvar VAR_0x8005, FALSE // or TRUE if you want to display the solved puzzle
@@ -160,7 +160,7 @@ RuinsOfAlph_PuzzleAndRewardChambers_Movement_Fall:
 
 RuinsOfAlph_PuzzleAndRewardChambers_EventScript_OmanytePuzzle::
 	fadescreen FADE_TO_BLACK
-	setvar VAR_0x8004, SLIDING_PUZZLE_OMANYTE
+	setvar VAR_0x8004, 1 @ SLIDING_PUZZLE_OMANYTE
 	// TODO(pe-migration): missing in pe-expansion -- FLAG_COMPLETED_OMANYTE_PUZZLE (flags) -- port engine surface
 	goto_if_set FLAG_COMPLETED_OMANYTE_PUZZLE, RuinsOfAlph_PuzzleAndRewardChambers_EventScript_OmanytePuzzleCompleted
 	setvar VAR_0x8005, FALSE // or TRUE if you want to display the solved puzzle
@@ -203,7 +203,7 @@ RuinsOfAlph_PuzzleAndRewardChambers_MapScript_OmanyteSuccess::
 
 RuinsOfAlph_PuzzleAndRewardChambers_EventScript_AerodactylPuzzle::
 	fadescreen FADE_TO_BLACK
-	setvar VAR_0x8004, SLIDING_PUZZLE_AERODACTYL
+	setvar VAR_0x8004, 2 @ SLIDING_PUZZLE_AERODACTYL
 	// TODO(pe-migration): missing in pe-expansion -- FLAG_COMPLETED_AERODACTYL_PUZZLE (flags) -- port engine surface
 	goto_if_set FLAG_COMPLETED_AERODACTYL_PUZZLE, RuinsOfAlph_PuzzleAndRewardChambers_EventScript_AerodactylPuzzleCompleted
 	setvar VAR_0x8005, FALSE // or TRUE if you want to display the solved puzzle
@@ -246,7 +246,7 @@ RuinsOfAlph_PuzzleAndRewardChambers_MapScript_AerodactylSuccess::
 
 RuinsOfAlph_PuzzleAndRewardChambers_EventScript_HooHPuzzle::
 	fadescreen FADE_TO_BLACK
-	setvar VAR_0x8004, SLIDING_PUZZLE_HO_OH
+	setvar VAR_0x8004, 3 @ SLIDING_PUZZLE_HO_OH
 	// TODO(pe-migration): missing in pe-expansion -- FLAG_COMPLETED_HOOH_PUZZLE (flags) -- port engine surface
 	goto_if_set FLAG_COMPLETED_HOOH_PUZZLE, RuinsOfAlph_PuzzleAndRewardChambers_EventScript_HoohPuzzleCompleted
 	setvar VAR_0x8005, FALSE // or TRUE if you want to display the solved puzzle

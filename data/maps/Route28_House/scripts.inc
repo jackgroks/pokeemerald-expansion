@@ -4,7 +4,7 @@ Route28_House_MapScripts::
 Route28House_EventScript_Celebrity::
 	lock
 	// TODO(pe-migration): missing in pe-expansion -- FLAG_GOT_TM_STEEL_WING (flags) -- port engine surface
-	goto_if_set FLAG_GOT_TM_STEEL_WING Route28House_EventScript_CelebrityAfter
+	goto_if_set FLAG_GOT_TM_STEEL_WING, Route28House_EventScript_CelebrityAfter @ Phase 4 R3 (admiral): added missing comma (HnS-source typo)
 	msgbox Route28House_Text_Celebrity1, MSGBOX_NPC
 	giveitem ITEM_TM_STEEL_WING
 	// TODO(pe-migration): missing in pe-expansion -- FLAG_GOT_TM_STEEL_WING (flags) -- port engine surface
