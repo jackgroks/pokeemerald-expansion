@@ -1079,4 +1079,8 @@
 #define METATILE_RSMossdeepGym_Switch_Down           0x239
 #define METATILE_RSMossdeepGym_Switch_Up             0x238
 
+// Phase 4 R6c (HMS Plymouth, 2026-05-20): HnS-imported metatile labels live
+// in a sibling header to keep additive HnS work isolated from pe-vanilla.
+#include "constants/metatile_hns.h"
+
 #endif // GUARD_METATILE_LABELS_H

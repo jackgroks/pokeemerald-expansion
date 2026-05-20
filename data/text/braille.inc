@@ -273,3 +273,19 @@ Braille_Text_ForYou::
 	brailleformat 3, 0, 25, 19, 6, 3
 	.braille "FOR YOU.$"
 
+@ Phase 4 R6c (HMS Plymouth, 2026-05-20): HnS-imported braille labels
+@ referenced from AquaHideout_UnusedRubyMap1/2 and a re-used Sapphire
+@ slot. Both maps are pe-Hoenn-unused in HnS Johto/Kanto play; the
+@ labels still need to resolve link-time refs from the script .inc files.
+Regidrago_Braille_Text::
+	brailleformat 3, 0, 25, 19, 6, 3
+	.braille "$"
+
+Regieleki_Braille_Sapphire::
+	brailleformat 3, 0, 25, 19, 6, 3
+	.braille "$"
+
+Regigigas_Braille_Text::
+	brailleformat 3, 0, 25, 19, 6, 3
+	.braille "$"
+

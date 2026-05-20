@@ -35,3 +35,9 @@ bool8 IsMewPlayingHideAndSeek(void)
 {
     return FALSE;
 }
+
+// Phase 4 R6c (HMS Plymouth, 2026-05-20): extend stubs to cover the full
+// pe-Hoenn Faraway Island script-callable surface referenced from data/specials.inc.
+// Both are void(void) script-callable specials; unreachable in HnS Johto/Kanto play.
+void SetMewAboveGrass(void) { }
+void DestroyMewEmergingGrassSprite(void) { }

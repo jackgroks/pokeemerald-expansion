@@ -13,3 +13,13 @@
 void ClearMirageTowerPulseBlendEffect(void) { }
 void ClearMirageTowerPulseBlend(void) { }
 void TryStartMirageTowerPulseBlendEffect(void) { }
+
+// Phase 4 R6c (HMS Plymouth, 2026-05-20): extend stubs to cover the full
+// pe-Hoenn Mirage Tower script-callable surface referenced from data/specials.inc.
+// All are void(void) script-callable specials; unreachable in HnS Johto/Kanto play.
+void DoMirageTowerCeilingCrumble(void) { }
+void SetMirageTowerVisibility(void) { }
+void StartMirageTowerDisintegration(void) { }
+void StartMirageTowerFossilFallAndSink(void) { }
+void StartMirageTowerShake(void) { }
+void StartPlayerDescendMirageTower(void) { }

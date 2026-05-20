@@ -151,6 +151,99 @@ audits can reconcile them.
     past `0x40FF` themselves, anchor `HNS_VARS_START` on the new
     `VARS_END + 1` rather than the literal `+ 0x100` offset.
 
+- **2026-05-20 (HMS Plymouth, Phase 4 R6c) — VARS region extended by 8
+  more slots (66 -> 74); VARS_END re-rebased on VAR_UNUSED_HNS_VAR7.**
+  Extension to the original 2026-05-20 (Defiant) bump above. Added 8 HnS
+  Kanto-progression VARs (`VAR_CELADON_CITY_STATE`, `VAR_LAVENDER_TOWN_STATE`,
+  `VAR_PALLET_TOWN_STATE`, `VAR_VIRIDIAN_CITY_STATE`, plus 4
+  `VAR_UNUSED_HNS_VAR{4..7}` placeholder slots) that the original
+  Johto-focused vars_hns.h pass missed. Slot range extends from
+  `(HNS_VARS_START + 0x42)..(HNS_VARS_START + 0x49)`.
+  - **Auto-derived bumps:** `HNS_VARS_END` rebases from `VAR_VIOLET_CITY_STATE`
+    (= `HNS_VARS_START + 0x41` = `0x4141`) to `VAR_UNUSED_HNS_VAR7`
+    (= `HNS_VARS_START + 0x49` = `0x4149`). `VARS_END` resolves to the new
+    `HNS_VARS_END` (no edit in `vars.h` required). `VARS_COUNT` recomputes
+    via `(VARS_END - VARS_START + 1)` from 322 to 330. `SaveBlock1.vars[]`
+    auto-resizes from 644 to 660 bytes (+16 bytes). The compile-time assert
+    at `src/save.c:82` continues to pass (well within the
+    `SECTOR_DATA_SIZE * 4 = 15872`-byte budget).
+  - **Why this is non-additive (still):** Same reasoning as the original
+    Defiant entry — extending `HNS_VARS_END` shifts the SaveBlock1 byte
+    layout downstream of `vars[]`. Pre-release, no consumer reads VAR
+    offsets as numeric literals.
+  - **Upstream-merge rule:** Same as the original Defiant entry; if RHH
+    defines any of these 8 names (extremely unlikely — Kanto-specific
+    HnS progression), prefer RHH's slot.
+
+- **2026-05-20 (HMS Plymouth, Phase 4 R6c) — TRAINERS_COUNT_EMERALD bumped
+  864 -> 866; MAX_TRAINERS_COUNT_EMERALD bumped 864 -> 866.**
+  Added 3 HnS trainer slots (`TRAINER_KIP` = 863, `TRAINER_KIP2` = 864,
+  `TRAINER_STEVEN2` = 865) referenced from
+  `data/maps/EverGrandeCity_DrakesRoom/scripts.inc` (HnS E4-rematch path)
+  and `data/maps/MeteorFalls_StevensCave/scripts.inc` (Steven-rematch).
+  - **Auto-derived:** Trainer flag range `TRAINER_FLAGS_START` ..
+    `TRAINER_FLAGS_END` (= `TRAINER_FLAGS_START + MAX_TRAINERS_COUNT - 1`)
+    grows by 2 slots. `SYSTEM_FLAGS` (= `TRAINER_FLAGS_END + 1`) shifts
+    by +2 bits (~0 bytes since well within an existing byte). No
+    `NUM_FLAG_BYTES` change observed.
+  - **Why accepted:** RC pre-release; trainerproc emits initializers
+    keyed by these HnS slot names — without the `#define`s, trainers.h
+    fails to compile.
+  - **Upstream-merge rule:** Same as the 2026-05-19 (Defiant) bump.
+
+## Phase 4 R6c additive stubs (HMS Plymouth, 2026-05-20)
+
+Phase 4 R6c is the final-stretch mop-up captain round before Phase 5 mGBA
+smoke. It cleared a residual 56-symbol undef-ref cluster across mixed
+families with the lightest-touch stubs that resolve link-time refs:
+
+- **`src/mirage_tower.c` extended** with 6 additional `void X(void) { }`
+  script-callable specials (DoMirageTowerCeilingCrumble,
+  SetMirageTowerVisibility, StartMirageTowerDisintegration,
+  StartMirageTowerFossilFallAndSink, StartMirageTowerShake,
+  StartPlayerDescendMirageTower). Same Phase 2 minimal-strip stub pattern
+  as the pre-existing 3 stubs. Surface is pe-Hoenn-unreachable in HnS play.
+- **`src/faraway_island.c` extended** with 2 additional `void X(void) { }`
+  specials (SetMewAboveGrass, DestroyMewEmergingGrassSprite). Same pattern.
+- **`src/hns_pe_stubs.c` (NEW)** holds 5 `callnative`-flavor C stubs
+  (`void X(struct ScriptContext *)`) for Berry_Ready, Task_ChallengeViewer,
+  GetObjectEventTrainerRangeFromTemplate, ItemId_GetHoldEffectParam_Script,
+  SetTimeBasedEncounters. All are no-ops; call sites are either Phase-2-
+  deferred (BattleFrontier, tx_challenges) or HnS-rerouted (berry trees
+  via apricorn_tree.inc, repels, time-based encounter swaps).
+- **`data/scripts/hns_pe_stubs.inc` (NEW)** holds 14 script-label stubs
+  for Std_/EventScript_/Common_EventScript_/MoveTutor_/Debug_Script_1_
+  labels referenced by HnS-imported map scripts and the
+  `event_scripts.s` stdscripts table. Each stub is a minimal `end` or
+  `return` (or `closemessage; end` for Debug_Script_1_Closemessage).
+- **`data/text/hns_pe_stubs.inc` (NEW)** holds 9 `.string`-flavor text
+  stubs for gText_*, gBirchDexRatingText_*, MoveTutor_Text_*, and
+  Route123_*_Text_* labels referenced by HnS-imported scripts. All use
+  `::` global visibility.
+- **`data/text/braille.inc` extended** with 3 empty-braille stubs for
+  Regidrago_Braille_Text, Regieleki_Braille_Sapphire,
+  Regigigas_Braille_Text. Map sites (AquaHideout_UnusedRubyMap1/2,
+  GraniteCave_B2F) are pe-Hoenn-unused in HnS play.
+- **`include/constants/metatile_hns.h` (NEW)** stubs
+  METATILE_R26_21_Broken_Window to 0 (METATILE_NONE-equivalent). Wired
+  into the metatile namespace by `#include` from
+  `include/constants/metatile_labels.h` after the vanilla METATILE_RS*
+  block. Single-site reference at
+  `data/maps/NewBarkTown_Lab/scripts.inc:381`.
+- **`include/constants/pe_hoenn_strip_stubs.h` extended** with 2 more
+  LOCALID stubs (LOCALID_RUSTURF_TUNNEL_WANDA,
+  LOCALID_RUSTURF_TUNNEL_WANDAS_BF) - missed in the original strip.
+  Same `0` stub pattern as the existing block.
+- **Wire-up edits:** `data/event_scripts.s` extended with two
+  `.include` lines (the new hns_pe_stubs .incs). `include/constants/metatile_labels.h`
+  extended with `#include "constants/metatile_hns.h"`. `include/constants/opponents.h`
+  TRAINERS_COUNT_EMERALD + MAX_TRAINERS_COUNT_EMERALD bumped to 866.
+
+The 12 remaining BattleFrontier_* undef refs are intentionally deferred to
+a Phase 2 facility-cleanup feature; they have engine-side entanglement
+(saveblock fields, tutoring tables) that requires a proper port rather
+than a stub.
+
 ## Additive renames (HnS-engine-name → pe-native infrastructure)
 
 These are *not* non-additive (no slot bumps, no schema growth, no value

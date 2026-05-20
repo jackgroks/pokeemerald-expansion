@@ -372,4 +372,16 @@
 #define TRAINER_NOLAND_BF_BRAIN                861
 #define TRAINER_PROTON_1                       862
 
+/* Phase 4 R6c extension (HMS Plymouth, 2026-05-20): +3 slots for HnS
+ * E4-rematch and Steven-rematch trainers referenced from
+ * data/maps/EverGrandeCity_DrakesRoom and data/maps/MeteorFalls_StevensCave.
+ * TRAINERS_COUNT_EMERALD bumps 864 → 867; MAX_TRAINERS_COUNT_EMERALD stays
+ * at 864 in opponents.h until the next NUM_FLAG_BYTES re-check.
+ * trainers.party will populate these slots in a future authoring pass;
+ * for now the slots exist purely to resolve the script-side undefs.
+ */
+#define TRAINER_KIP                            863
+#define TRAINER_KIP2                           864
+#define TRAINER_STEVEN2                        865
+
 #endif  // GUARD_CONSTANTS_OPPONENTS_HNS_H

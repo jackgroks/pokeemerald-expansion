@@ -108,6 +108,24 @@
 #define VAR_VIOLET_CITY_KIMONO_GIRL                                  (HNS_VARS_START + 0x40)
 #define VAR_VIOLET_CITY_STATE                                        (HNS_VARS_START + 0x41)
 
-#define HNS_VARS_END                                                 VAR_VIOLET_CITY_STATE
+/* Phase 4 R6c extension (HMS Plymouth, 2026-05-20): +8 slots covering
+ * Kanto city state machines that the R6e Johto-focused pass missed, plus
+ * 4 unused placeholder slots for future HnS Kanto-progression authoring.
+ * VARS_END advances from 0x4141 to 0x4149 (HNS_VARS_END auto-rebases on
+ * VAR_UNUSED_HNS_VAR7). SaveBlock1.vars[] grows from 644 to 660 bytes
+ * (+16); compile-time assert at src/save.c:82 still passes (well within
+ * 15872-byte budget). Documented in pokeemerald-expansion/CLAUDE.md
+ * "Non-additive bumps".
+ */
+#define VAR_CELADON_CITY_STATE                                       (HNS_VARS_START + 0x42)
+#define VAR_LAVENDER_TOWN_STATE                                      (HNS_VARS_START + 0x43)
+#define VAR_PALLET_TOWN_STATE                                        (HNS_VARS_START + 0x44)
+#define VAR_VIRIDIAN_CITY_STATE                                      (HNS_VARS_START + 0x45)
+#define VAR_UNUSED_HNS_VAR4                                          (HNS_VARS_START + 0x46)
+#define VAR_UNUSED_HNS_VAR5                                          (HNS_VARS_START + 0x47)
+#define VAR_UNUSED_HNS_VAR6                                          (HNS_VARS_START + 0x48)
+#define VAR_UNUSED_HNS_VAR7                                          (HNS_VARS_START + 0x49)
+
+#define HNS_VARS_END                                                 VAR_UNUSED_HNS_VAR7
 
 #endif // GUARD_CONSTANTS_VARS_HNS_H

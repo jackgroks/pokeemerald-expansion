@@ -2184,3 +2184,7 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/scripts/dexnav.inc"
 	.include "data/scripts/battle_frontier.inc"
 	.include "data/scripts/apricorn_tree.inc"
+@ Phase 4 R6c (HMS Plymouth, 2026-05-20): HnS-vs-pe stub bridge .incs.
+@ Script-label and text-label stubs for residual undef refs from rc-main link.
+	.include "data/scripts/hns_pe_stubs.inc"
+	.include "data/text/hns_pe_stubs.inc"

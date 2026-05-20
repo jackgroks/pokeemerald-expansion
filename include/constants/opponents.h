@@ -873,10 +873,13 @@
 
 // TRAINERS_COUNT_EMERALD bumped 861 → 864 by HMS Defiant (2026-05-19, Phase 5-prep R5)
 // to accommodate HnS-only trainer slots 861 (NOLAND_BF_BRAIN), 862 (PROTON_1), and 863
-// (KIP2). MAX_TRAINERS_COUNT_EMERALD stays at 864 (already sufficient).
+// (KIP2).
+// Bumped 864 → 866 by HMS Plymouth (2026-05-20, Phase 4 R6c) to add slots 863-865 for
+// TRAINER_KIP / TRAINER_KIP2 / TRAINER_STEVEN2 (HnS E4-rematch + Steven-rematch).
+// MAX_TRAINERS_COUNT_EMERALD bumped 864 → 866 to match.
 // See constants/opponents_hns.h for the HnS-only constants and full disposition note.
-#define TRAINERS_COUNT_EMERALD     864
-#define MAX_TRAINERS_COUNT_EMERALD 864
+#define TRAINERS_COUNT_EMERALD     866
+#define MAX_TRAINERS_COUNT_EMERALD 866
 
 #if IS_FRLG
 #define TRAINERS_COUNT                      TRAINERS_COUNT_FRLG

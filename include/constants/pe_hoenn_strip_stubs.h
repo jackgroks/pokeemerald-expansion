@@ -224,6 +224,11 @@
 #define LOCALID_ROUTE120_TY_2            0
 #define LOCALID_RUSTBORO_MART_CLERK      0
 #define LOCALID_RUSTBORO_NURSE           0
+// Phase 4 R6c (HMS Plymouth, 2026-05-20): Rusturf Tunnel Wanda LOCALIDs missed
+// in the original strip pass — referenced from data/event_scripts.s:1745-1746
+// (cinematic-removeobject for the Wanda/Wanda's-boyfriend pair). Pe-Hoenn flow.
+#define LOCALID_RUSTURF_TUNNEL_WANDA     0
+#define LOCALID_RUSTURF_TUNNEL_WANDAS_BF 0
 #define LOCALID_SLATEPORT_ENERGY_GURU    0
 #define LOCALID_SLATEPORT_MART_CLERK     0
 #define LOCALID_SLATEPORT_NURSE          0
