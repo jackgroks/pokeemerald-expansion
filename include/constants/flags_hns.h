@@ -692,8 +692,14 @@
 #define FLAG_WONDERTRADE_FIRSTIME                           (SYSTEM_FLAGS + 0x350)
 #define FLAG_WT_ENABLED_RANDOMIZER                          (SYSTEM_FLAGS + 0x351)
 
+// Phase 4 R6 (2026-05-20) - HnS flag followup audit additions.
+// Two stragglers found at link stage after R5 close. Slotted contiguously
+// into the existing HnS region.
+#define FLAG_LANDMARK_BillS_HOUSE                           (SYSTEM_FLAGS + 0x352)
+#define FLAG_RECEIVED_DOLL_Bill                             (SYSTEM_FLAGS + 0x353)
+
 // Last HnS flag slot - DAILY_FLAGS_START rebases on this in flags.h to preserve
 // byte-alignment after the HnS region.
-#define FLAG_HNS_LAST_SLOT                          (SYSTEM_FLAGS + 0x351) // = FLAG_WT_ENABLED_RANDOMIZER
+#define FLAG_HNS_LAST_SLOT                          (SYSTEM_FLAGS + 0x353) // = FLAG_RECEIVED_DOLL_Bill
 
 #endif // GUARD_CONSTANTS_FLAGS_HNS_H

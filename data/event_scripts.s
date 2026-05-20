@@ -1635,6 +1635,12 @@ EventScript_BackupMrBrineyLocation::
 	return
 
 	.include "data/scripts/surf.inc"
+	@ Phase 4 R6 (2026-05-20) - pe-shipped script files referenced by pe C code
+	@ but not previously wired into event_scripts.s. bug_contest.inc defines
+	@ BugContestEventScript_Judging + BugContest_EventScript_{TimesUp,WhiteOut}.
+	@ change_deoxys_form.inc defines ChangeDeoxysForm{Normal,Attack,Defense,Speed}.
+	.include "data/scripts/bug_contest.inc"
+	.include "data/scripts/change_deoxys_form.inc"
 	.include "data/scripts/rival_graphics.inc"
 	.include "data/scripts/set_gym_trainers.inc"
 

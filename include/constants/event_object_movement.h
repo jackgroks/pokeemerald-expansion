@@ -87,6 +87,13 @@
 #define MOVEMENT_TYPE_WANDER_AROUND_SLOWER             0x52
 #define NUM_MOVEMENT_TYPES                             0x53
 
+// HnS Johto/Kanto additive movement-type aliases - Phase 4 R6 (2026-05-20).
+// MOVEMENT_TYPE_TOWER_BEAM is used by HnS for stationary Whirlpool decoration
+// objects (DragonsDen_Cavern) and a stationary Twin NPC (EcruteakCity_Theater).
+// Stub to MOVEMENT_TYPE_NONE - the engine effect is no-movement, which matches
+// HnS visual intent for these instances.
+#define MOVEMENT_TYPE_TOWER_BEAM                       MOVEMENT_TYPE_NONE
+
 #define MOVEMENT_ACTION_FACE_DOWN                       0x0
 #define MOVEMENT_ACTION_FACE_UP                         0x1
 #define MOVEMENT_ACTION_FACE_LEFT                       0x2
