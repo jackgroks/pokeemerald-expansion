@@ -210,7 +210,10 @@ const u16 gMetatileAttributes_MysteryEventsHouse[] = INCBIN_U16("data/tilesets/s
 const u16 gMetatiles_UnionRoom[] = INCBIN_U16("data/tilesets/secondary/union_room/metatiles.bin");
 const u16 gMetatileAttributes_UnionRoom[] = INCBIN_U16("data/tilesets/secondary/union_room/metatile_attributes.bin");
 
-#else
+#endif // Phase 4 R5f-followup: was #else (IS_FRLG branch). Ungated so pe's
+// FRLG-only Kanto metatile/attribute arrays compile in emerald build.
+// Companion ungate in graphics.h and headers.h.
+#if 1 // was: #else (IS_FRLG branch)
 
 const u16 gMetatiles_Building_Frlg[] = INCBIN_U16("data/tilesets/primary/building_frlg/metatiles.bin");
 const u16 gMetatileAttributes_Building_Frlg[] = INCBIN_U16("data/tilesets/primary/building_frlg/metatile_attributes.bin");
