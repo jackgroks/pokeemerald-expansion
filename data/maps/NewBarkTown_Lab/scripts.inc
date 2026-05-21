@@ -277,6 +277,15 @@ NewBarkTown_Lab_EventScript_ChoseStarter::
 NewBarkTown_Lab_EventScript_NicknameStarter::
 	setvar VAR_0x8004, 0
 	call Common_EventScript_NameReceivedPartyMon
+	@ Phase 4 zeta followup (2026-05-20): HnS authoring bug - the YES-nickname
+	@ branch from ChoseStarter ends without release and without the follower
+	@ update that the NO-nickname fall-through path calls. The Nuzlocke
+	@ variant below already has release. Mirror it here plus the
+	@ UpdateFollowingPokemon call from ChoseStarter's no-nickname path so
+	@ the field-rebuild after the naming-screen CB2 returns to a consistent
+	@ follower-NPC state.
+	callnative UpdateFollowingPokemon
+	release
 	end
 
 NewBarkTown_Lab_EventScript_ChoseStarter_NicknameStarter_Nuzlocke::
