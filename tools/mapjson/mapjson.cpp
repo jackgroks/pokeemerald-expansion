@@ -772,8 +772,14 @@ string generate_layout_headers_text(Json layouts_data) {
         if (layout_version.empty()) {
             layout_version = "emerald";
         }
-        if ((version == "emerald" && layout_version != "emerald")
-         || (version == "firered" && layout_version != "frlg"))
+        // Phase 4 zeta (2026-05-20): emerald build allows frlg layouts too.
+        // RC's emerald ROM ships HnS Johto/Kanto content as FRLG-budgeted
+        // layouts (NUM_TILES_IN_PRIMARY=640, NUM_PALS_IN_PRIMARY=7, u32
+        // metatile attributes). The struct emission below already handles
+        // isFrlg=TRUE correctly; the runtime `mapLayout->isFrlg` flag does
+        // the right thing per layout. Only the firered build still gates
+        // to frlg-only (it has no HnS Johto content).
+        if (version == "firered" && layout_version != "frlg")
             continue;
         string layoutName = json_to_string(layout, "name");
         string border_label = layoutName + "_Border";
@@ -827,7 +833,9 @@ string generate_layouts_table_text(Json layouts_data) {
         if (layout_version.empty()) {
             layout_version = "emerald";
         }
-        if ((version == "emerald" && layout_version != "emerald") || (version == "firered" && layout_version != "frlg")) {
+        // Phase 4 zeta (2026-05-20): emerald build emits frlg layouts too.
+        // See the struct-emission site above for rationale.
+        if (version == "firered" && layout_version != "frlg") {
             text << "\t.4byte NULL\n";
         } else {
             string layout_name = json_to_string(layout, "name", true);
