@@ -2124,6 +2124,26 @@ bool8 ScrCmd_bufferspeciesname(struct ScriptContext *ctx)
     return FALSE;
 }
 
+// Phase 4 zeta followup (2026-05-20): HnS-side `buffermoncategory` opcode
+// 0xf3 (asm/macros/event_hns.inc). Buffers the species category string
+// (e.g. "Leaf", "Fire", "Water" for Chikorita/Cyndaquil/Totodile in the
+// NewBarkTown_Lab starter selection script). Without this, the starter
+// pokeball script silently terminated after `playmoncry`, leaving the
+// player able to walk around with the lingering showmonpic sprite.
+// Mirrors ScrCmd_bufferspeciesname above; reads from
+// gSpeciesInfo[species].categoryName.
+bool8 ScrCmd_buffermoncategory(struct ScriptContext *ctx)
+{
+    u8 stringVarIndex = ScriptReadByte(ctx);
+    u16 species = VarGet(ScriptReadHalfword(ctx)) & OBJ_EVENT_MON_SPECIES_MASK;
+
+    Script_RequestEffects(SCREFF_V1);
+
+    StringCopy(sScriptStringVars[stringVarIndex],
+               gSpeciesInfo[species].categoryName);
+    return FALSE;
+}
+
 bool8 ScrCmd_bufferleadmonspeciesname(struct ScriptContext *ctx)
 {
     u8 stringVarIndex = ScriptReadByte(ctx);

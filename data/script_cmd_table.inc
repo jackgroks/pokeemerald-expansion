@@ -254,6 +254,31 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_HIDEFOLLOWER                  ScrCmd_hidefollower,                requests_effects=1  @ 0xe5
 	script_cmd_table_entry SCR_OP_GETBRAILLESTRINGWIDTH         ScrCmd_getbraillestringwidth,       requests_effects=1  @ 0xe6
 
+	@ Phase 4 zeta followup (2026-05-20): HnS opcode region 0xe7..0xf3.
+	@ Opcodes 0xe9-0xed are HnS engine extensions (givenamedmon,
+	@ removenamedmon, remove5mons, setwildbattleshiny, removegenericmon)
+	@ stubbed to nop until per-opcode C handlers are ported. Opcodes
+	@ 0xe7, 0xe8, 0xee-0xf2 are unused padding (also nop). Opcode 0xf3 is
+	@ buffermoncategory, the live handler needed by the NewBarkTown_Lab
+	@ starter selection script — without it the script silently
+	@ terminated after playmoncry. See src/scrcmd.c ScrCmd_buffermoncategory.
+	@ WARNING: nop'd HnS opcodes 0xe9-0xed consume only 1 byte but their
+	@ macro emits multi-byte arguments. Scripts using them will misalign
+	@ subsequent opcodes. Proper handlers queued post-Phase-5-smoke.
+	script_cmd_table_entry SCR_OP_UNUSED_0xE7                   ScrCmd_nop,                         requests_effects=0  @ 0xe7
+	script_cmd_table_entry SCR_OP_UNUSED_0xE8                   ScrCmd_nop,                         requests_effects=0  @ 0xe8
+	script_cmd_table_entry SCR_OP_GIVENAMEDMON_HNS_NOP          ScrCmd_nop,                         requests_effects=0  @ 0xe9
+	script_cmd_table_entry SCR_OP_REMOVENAMEDMON_HNS_NOP        ScrCmd_nop,                         requests_effects=0  @ 0xea
+	script_cmd_table_entry SCR_OP_REMOVE5MONS_HNS_NOP           ScrCmd_nop,                         requests_effects=0  @ 0xeb
+	script_cmd_table_entry SCR_OP_SETWILDBATTLESHINY_HNS_NOP    ScrCmd_nop,                         requests_effects=0  @ 0xec
+	script_cmd_table_entry SCR_OP_REMOVEGENERICMON_HNS_NOP      ScrCmd_nop,                         requests_effects=0  @ 0xed
+	script_cmd_table_entry SCR_OP_UNUSED_0xEE                   ScrCmd_nop,                         requests_effects=0  @ 0xee
+	script_cmd_table_entry SCR_OP_UNUSED_0xEF                   ScrCmd_nop,                         requests_effects=0  @ 0xef
+	script_cmd_table_entry SCR_OP_UNUSED_0xF0                   ScrCmd_nop,                         requests_effects=0  @ 0xf0
+	script_cmd_table_entry SCR_OP_UNUSED_0xF1                   ScrCmd_nop,                         requests_effects=0  @ 0xf1
+	script_cmd_table_entry SCR_OP_UNUSED_0xF2                   ScrCmd_nop,                         requests_effects=0  @ 0xf2
+	script_cmd_table_entry SCR_OP_BUFFERMONCATEGORY             ScrCmd_buffermoncategory,           requests_effects=1  @ 0xf3
+
 	.if ALLOCATE_SCRIPT_CMD_TABLE
 gScriptCmdTableEnd::
 	.4byte ScrCmd_nop
